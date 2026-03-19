@@ -2,11 +2,18 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { createQuizSchema } from "@/lib/validators";
 import { createServiceClient } from "@/lib/supabase/server";
+import { ensureUser } from "@/lib/ensure-user";
 
 export async function POST(request: Request) {
   const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Ensure user exists in Supabase before inserting quiz
+  const ensuredUserId = await ensureUser();
+  if (!ensuredUserId) {
+    return NextResponse.json({ error: "Failed to sync user" }, { status: 500 });
   }
 
   const body = await request.json();
@@ -28,7 +35,7 @@ export async function POST(request: Request) {
       user_id: userId,
       title,
       description: description ?? null,
-      questions: JSON.stringify(questions),
+      questions,
       is_public: isPublic,
       source_type: sourceType,
       question_count: questions.length,

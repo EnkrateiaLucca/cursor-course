@@ -1,0 +1,25 @@
+{
+  "title": "JavaScript Basics",
+  "description": "Test your JS fundamentals",
+  "questions": [
+    {
+      "type": "multiple-choice",
+      "question": "What does `typeof null` return?",
+      "options": ["null", "undefined", "object", "boolean"],
+      "answer": 2,
+      "explanation": "This is a known JS quirk — typeof null returns 'object'."
+    },
+    {
+      "type": "yes-no",
+      "question": "JavaScript is a statically typed language.",
+      "answer": false,
+      "explanation": "JavaScript is dynamically typed — types are determined at runtime."
+    },
+    {
+      "type": "open-ended",
+      "question": "Explain the difference between let and var.",
+      "hint": "Think about scope and hoisting.",
+      "sampleAnswer": "let is block-scoped while var is function-scoped. Variables declared with var are hoisted to the top of their scope and initialized as undefined, while let variables are hoisted but not initialized (temporal dead zone)."
+    }
+  ]
+}

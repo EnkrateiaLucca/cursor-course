@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { generateQuizQuestions } from "@/lib/quiz-generator";
 import { createServiceClient } from "@/lib/supabase/server";
+import { ensureUser } from "@/lib/ensure-user";
 
 const generateSchema = z.object({
   title: z.string().min(1).max(200),
@@ -14,6 +15,12 @@ export async function POST(request: Request) {
   const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Ensure user exists in Supabase before any DB operations
+  const ensuredUserId = await ensureUser();
+  if (!ensuredUserId) {
+    return NextResponse.json({ error: "Failed to sync user" }, { status: 500 });
   }
 
   const body = await request.json();
@@ -75,7 +82,7 @@ export async function POST(request: Request) {
         user_id: userId,
         title,
         description: `AI-generated quiz with ${questions.length} questions`,
-        questions: JSON.stringify(questions),
+        questions,
         is_public: false,
         source_type: "ai-generated",
         question_count: questions.length,

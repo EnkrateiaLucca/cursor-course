@@ -2,16 +2,18 @@
 
 ## Phase 0: Project Setup ✅
 
-**Goal**: Initialize project with all tooling configured
+**Goal**: Initialize project with all tooling configu**r**ed
 
 **Completed**:
-- [x] Created Next.js 16 app with TypeScript, Tailwind CSS 4, App Router, `src/` directory
-- [x] Installed Shadcn/ui with components: button, card, input, textarea, dialog, dropdown-menu, badge, checkbox, sonner (toast replacement), tabs, progress, separator, avatar
-- [x] Installed all dependencies: framer-motion, @clerk/nextjs, @supabase/supabase-js, @supabase/ssr, stripe, @anthropic-ai/sdk, zod, svix
-- [x] Created `.env.local.example` with all required environment variables
-- [x] App builds and runs locally (`npm run build` passes)
+
+- Created Next.js 16 app with TypeScript, Tailwind CSS 4, App Router, `src/` directory
+- Installed Shadcn/ui with components: button, card, input, textarea, dialog, dropdown-menu, badge, checkbox, sonner (toast replacement), tabs, progress, separator, avatar
+- Installed all dependencies: framer-motion, @clerk/nextjs, @supabase/supabase-js, @supabase/ssr, stripe, @anthropic-ai/sdk, zod, svix
+- Created `.env.local.example` with all required environment variables
+- App builds and runs locally (`npm run build` passes)
 
 **Notes**:
+
 - Next.js 16 renamed `middleware.ts` → `proxy.ts` (breaking change)
 - Clerk Core 3 replaced `SignedIn`/`SignedOut` with unified `<Show when="signed-in">` component
 - Clerk `UserButton` removed `afterSignOutUrl` prop
@@ -24,86 +26,31 @@
 **Goal**: Users can sign up, sign in, and have their profile stored in Supabase
 
 **Completed**:
-- [x] Root layout with `ClerkProvider` wrapping the entire app
-- [x] Sign-in page at `/sign-in/[[...sign-in]]` using Clerk's `<SignIn />` component
-- [x] Sign-up page at `/sign-up/[[...sign-up]]` using Clerk's `<SignUp />` component
-- [x] Clerk proxy (`src/proxy.ts`) protecting `/dashboard/*` and `/quiz/create/*` routes
-- [x] Navbar with Clerk `<UserButton />`, conditional signed-in/signed-out navigation using `<Show>`
-- [x] Clerk webhook handler at `/api/webhooks/clerk` — syncs user.created, user.updated, user.deleted events to Supabase `users` table via svix signature verification
-- [x] Supabase browser client (`src/lib/supabase/client.ts`)
-- [x] Supabase server client with cookie handling (`src/lib/supabase/server.ts`)
-- [x] Supabase service role client for webhook operations
-- [x] Initial database migration SQL (`supabase/migrations/001_initial_schema.sql`) with:
+
+- Root layout with `ClerkProvider` wrapping the entire app
+- Sign-in page at `/sign-in/[[...sign-in]]` using Clerk's `<SignIn />` component
+- Sign-up page at `/sign-up/[[...sign-up]]` using Clerk's `<SignUp />` component
+- Clerk proxy (`src/proxy.ts`) protecting `/dashboard/`* and `/quiz/create/*` routes
+- Navbar with Clerk `<UserButton />`, conditional signed-in/signed-out navigation using `<Show>`
+- Clerk webhook handler at `/api/webhooks/clerk` — syncs user.created, user.updated, user.deleted events to Supabase `users` table via svix signature verification
+- Supabase browser client (`src/lib/supabase/client.ts`)
+- Supabase server client with cookie handling (`src/lib/supabase/server.ts`)
+- Supabase service role client for webhook operations
+- Initial database migration SQL (`supabase/migrations/001_initial_schema.sql`) with:
   - `users`, `quizzes`, `quiz_attempts` tables
   - Indexes for common queries
   - Row Level Security policies
-- [x] TypeScript types for Quiz, Question, QuizAttempt, User (`src/types/quiz.ts`)
-- [x] Dashboard page with stats cards and empty state
-- [x] Landing page with hero section and auth-conditional CTAs
-- [x] Footer component
+- TypeScript types for Quiz, Question, QuizAttempt, User (`src/types/quiz.ts`)
+- Dashboard page with stats cards and empty state
+- Landing page with hero section and auth-conditional CTAs
+- Footer component
 
 **Success Criteria**:
-- [x] App builds without errors
-- [x] Protected routes configured via proxy middleware
-- [x] Webhook handler validates signatures and upserts users
-- [x] Database schema ready for deployment
 
----
-
-## File Structure (Phase 0 + 1)
-
-```
-quiz-app/
-├── .env.local.example
-├── components.json
-├── package.json
-├── progress.md
-├── supabase/
-│   └── migrations/
-│       └── 001_initial_schema.sql
-└── src/
-    ├── proxy.ts                          # Clerk middleware (Next.js 16 proxy)
-    ├── app/
-    │   ├── globals.css
-    │   ├── layout.tsx                    # Root layout with ClerkProvider
-    │   ├── page.tsx                      # Landing page
-    │   ├── sign-in/[[...sign-in]]/
-    │   │   └── page.tsx
-    │   ├── sign-up/[[...sign-up]]/
-    │   │   └── page.tsx
-    │   ├── dashboard/
-    │   │   ├── layout.tsx
-    │   │   └── page.tsx
-    │   └── api/
-    │       └── webhooks/
-    │           └── clerk/
-    │               └── route.ts          # User sync webhook
-    ├── components/
-    │   ├── layout/
-    │   │   ├── navbar.tsx
-    │   │   └── footer.tsx
-    │   └── ui/                           # Shadcn components
-    │       ├── avatar.tsx
-    │       ├── badge.tsx
-    │       ├── button.tsx
-    │       ├── card.tsx
-    │       ├── checkbox.tsx
-    │       ├── dialog.tsx
-    │       ├── dropdown-menu.tsx
-    │       ├── input.tsx
-    │       ├── progress.tsx
-    │       ├── separator.tsx
-    │       ├── sonner.tsx
-    │       ├── tabs.tsx
-    │       └── textarea.tsx
-    ├── lib/
-    │   ├── utils.ts
-    │   └── supabase/
-    │       ├── client.ts                 # Browser client
-    │       └── server.ts                 # Server + service role clients
-    └── types/
-        └── quiz.ts                       # TypeScript types
-```
+- App builds without errors
+- Protected routes configured via proxy middleware
+- Webhook handler validates signatures and upserts users
+- Database schema ready for deployment
 
 ---
 
@@ -112,104 +59,13 @@ quiz-app/
 **Goal**: CRUD for quizzes in Supabase
 
 **Completed**:
-- [x] Zod schema validation for quiz JSON (`src/lib/validators.ts`):
-  - `multipleChoiceQuestionSchema` — validates MC questions with options, correctAnswer index, optional explanation/sourceUrl
-  - `openEndedQuestionSchema` — validates open-ended questions with acceptedAnswers array
-  - `questionSchema` — discriminated union on `type` field
-  - `createQuizSchema` — full quiz creation input with title, description, questions, isPublic, sourceType
-  - `quizQuestionsSchema` — standalone array validator for question arrays
-  - Exported `CreateQuizInput` type inferred from schema
-- [x] API route: `POST /api/quizzes` — creates a quiz from validated JSON
-  - Clerk auth required (returns 401 if unauthenticated)
-  - Validates request body against `createQuizSchema` (returns 400 with Zod issue details on invalid input)
-  - Inserts into Supabase `quizzes` table via service role client
-  - Returns created quiz row with 201 status
-- [x] API route: `GET /api/quizzes` — lists the authenticated user's quizzes
-  - Clerk auth required
-  - Returns quizzes ordered by `created_at` descending
-- [x] API route: `GET /api/quizzes/[id]` — fetches a single quiz
-  - Public quizzes accessible without auth
-  - Private quizzes require auth + ownership check
-  - Returns 404 for non-existent or unauthorized access
-- [x] API route: `DELETE /api/quizzes/[id]` — deletes a quiz
-  - Clerk auth required + ownership check
-  - Returns 403 if user doesn't own the quiz
-  - Returns `{ success: true }` on deletion
-- [x] RLS policies already configured in Phase 1 migration (service role client bypasses RLS; auth enforced at API layer via Clerk)
 
-**Design Decisions**:
-- Uses Supabase service role client (bypasses RLS) since auth is handled by Clerk, not Supabase Auth
-- Zod validation at the API boundary ensures only well-formed quiz data enters the database
-- `RouteContext` helper type from Next.js 16 used for typed dynamic route params
-
-**Success Criteria**:
-- [x] Can create a quiz via API with valid JSON
-- [x] Invalid JSON is rejected with clear Zod error details
-- [x] Users can only see/modify their own quizzes (enforced at API layer)
-- [x] Public quizzes accessible without auth
-- [x] App builds without errors (`npm run build` passes)
-
----
-
-## File Structure (Phase 0 + 1 + 2)
-
-```
-quiz-app/
-├── .env.local.example
-├── components.json
-├── package.json
-├── progress.md
-├── supabase/
-│   └── migrations/
-│       └── 001_initial_schema.sql
-└── src/
-    ├── proxy.ts                          # Clerk middleware (Next.js 16 proxy)
-    ├── app/
-    │   ├── globals.css
-    │   ├── layout.tsx                    # Root layout with ClerkProvider
-    │   ├── page.tsx                      # Landing page
-    │   ├── sign-in/[[...sign-in]]/
-    │   │   └── page.tsx
-    │   ├── sign-up/[[...sign-up]]/
-    │   │   └── page.tsx
-    │   ├── dashboard/
-    │   │   ├── layout.tsx
-    │   │   └── page.tsx
-    │   └── api/
-    │       ├── quizzes/
-    │       │   ├── route.ts              # POST (create), GET (list)
-    │       │   └── [id]/
-    │       │       └── route.ts          # GET (single), DELETE
-    │       └── webhooks/
-    │           └── clerk/
-    │               └── route.ts          # User sync webhook
-    ├── components/
-    │   ├── layout/
-    │   │   ├── navbar.tsx
-    │   │   └── footer.tsx
-    │   └── ui/                           # Shadcn components
-    │       ├── avatar.tsx
-    │       ├── badge.tsx
-    │       ├── button.tsx
-    │       ├── card.tsx
-    │       ├── checkbox.tsx
-    │       ├── dialog.tsx
-    │       ├── dropdown-menu.tsx
-    │       ├── input.tsx
-    │       ├── progress.tsx
-    │       ├── separator.tsx
-    │       ├── sonner.tsx
-    │       ├── tabs.tsx
-    │       └── textarea.tsx
-    ├── lib/
-    │   ├── utils.ts
-    │   ├── validators.ts                 # Zod schemas for quiz validation
-    │   └── supabase/
-    │       ├── client.ts                 # Browser client
-    │       └── server.ts                 # Server + service role clients
-    └── types/
-        └── quiz.ts                       # TypeScript types
-```
+- Zod schema validation for quiz JSON (`src/lib/validators.ts`)
+- API route: `POST /api/quizzes` — creates a quiz from validated JSON
+- API route: `GET /api/quizzes` — lists the authenticated user's quizzes
+- API route: `GET /api/quizzes/[id]` — fetches a single quiz
+- API route: `DELETE /api/quizzes/[id]` — deletes a quiz
+- RLS policies configured in migration
 
 ---
 
@@ -218,115 +74,14 @@ quiz-app/
 **Goal**: Users can create quizzes by uploading JSON or pasting content for AI generation
 
 **Completed**:
-- [x] `/quiz/create` page with two tabs: "Upload JSON" and "Generate with AI"
-- [x] `file-upload.tsx` — drag-and-drop JSON file upload with client-side Zod validation
-  - Drag-over visual state, validation spinner, success/error states with Framer Motion transitions
-  - Accepts `.json` files, validates against `quizQuestionsSchema`, supports both raw arrays and `{ questions: [...] }` wrapper
-  - Shows question count on successful validation, then "Create Quiz" button calls `POST /api/quizzes`
-- [x] `json-format-guide.tsx` — collapsible expected format reference
-  - Animated expand/collapse with Framer Motion
-  - Example JSON for both `multiple-choice` and `open-ended` question types
-- [x] `ai-generate-form.tsx` — textarea for content + title input + question count selector (1–30) + generate button
-  - Inline validation: title required, content minimum 20 characters
-  - Loading state with spinner, error display panel
-- [x] `lib/quiz-generator.ts` — Claude API two-stage pipeline
-  - Single prompt to Claude (claude-sonnet-4-20250514) that generates structured quiz JSON directly
-  - Strips markdown code fences if present, parses JSON, validates against `quizQuestionsSchema`
-  - Typed return as `Question[]`
-- [x] API route: `POST /api/generate` — authenticated AI quiz generation endpoint
-  - Zod validation of input (title, content ≥20 chars, questionCount 1–30)
-  - Free tier limit enforcement: 3 AI generations/month, monthly reset
-  - Checks user's `subscription_status`, `ai_generations_used`, `ai_generations_reset_at`
-  - Creates quiz in Supabase on success, increments generation counter
-  - Returns 403 with upgrade message when limit reached
-- [x] Framer Motion animations: page entry, tab content transitions, upload state transitions
-- [x] Redirect to `/quiz/[id]` after successful creation (both upload and AI generation)
-- [x] Toast notifications via Sonner for success/error feedback
 
-**Design Decisions**:
-- File upload validation runs entirely client-side (Zod `quizQuestionsSchema`) for instant feedback — only calls the API after validation passes
-- AI generation uses `createServiceClient()` (service role) since auth is handled by Clerk at the API layer
-- Free tier limit (3/month) tracked in `users` table fields; monthly reset checked on each generation request
-- base-ui Tabs use numeric `value` props (0, 1) for tab/panel matching
-
-**Success Criteria**:
-- [x] Upload valid JSON → quiz created and stored
-- [x] Upload invalid JSON → clear error message with Zod issue details
-- [x] AI generation produces valid quiz from text content
-- [x] Free tier limit enforced on AI generation
-- [x] App builds without errors (`npm run build` passes)
-
----
-
-## File Structure (Phase 0 + 1 + 2 + 3)
-
-```
-quiz-app/
-├── .env.local.example
-├── components.json
-├── package.json
-├── progress.md
-├── supabase/
-│   └── migrations/
-│       └── 001_initial_schema.sql
-└── src/
-    ├── proxy.ts                          # Clerk middleware (Next.js 16 proxy)
-    ├── app/
-    │   ├── globals.css
-    │   ├── layout.tsx                    # Root layout with ClerkProvider
-    │   ├── page.tsx                      # Landing page
-    │   ├── sign-in/[[...sign-in]]/
-    │   │   └── page.tsx
-    │   ├── sign-up/[[...sign-up]]/
-    │   │   └── page.tsx
-    │   ├── dashboard/
-    │   │   ├── layout.tsx
-    │   │   └── page.tsx
-    │   ├── quiz/
-    │   │   └── create/
-    │   │       └── page.tsx              # Two-tab quiz creation (Upload / AI)
-    │   └── api/
-    │       ├── generate/
-    │       │   └── route.ts              # POST — AI quiz generation
-    │       ├── quizzes/
-    │       │   ├── route.ts              # POST (create), GET (list)
-    │       │   └── [id]/
-    │       │       └── route.ts          # GET (single), DELETE
-    │       └── webhooks/
-    │           └── clerk/
-    │               └── route.ts          # User sync webhook
-    ├── components/
-    │   ├── create/
-    │   │   ├── file-upload.tsx           # Drag-and-drop JSON upload
-    │   │   ├── json-format-guide.tsx     # Collapsible format reference
-    │   │   └── ai-generate-form.tsx      # AI generation form
-    │   ├── layout/
-    │   │   ├── navbar.tsx
-    │   │   └── footer.tsx
-    │   └── ui/                           # Shadcn components
-    │       ├── avatar.tsx
-    │       ├── badge.tsx
-    │       ├── button.tsx
-    │       ├── card.tsx
-    │       ├── checkbox.tsx
-    │       ├── dialog.tsx
-    │       ├── dropdown-menu.tsx
-    │       ├── input.tsx
-    │       ├── progress.tsx
-    │       ├── separator.tsx
-    │       ├── sonner.tsx
-    │       ├── tabs.tsx
-    │       └── textarea.tsx
-    ├── lib/
-    │   ├── utils.ts
-    │   ├── validators.ts                 # Zod schemas for quiz validation
-    │   ├── quiz-generator.ts             # Claude API quiz generation logic
-    │   └── supabase/
-    │       ├── client.ts                 # Browser client
-    │       └── server.ts                 # Server + service role clients
-    └── types/
-        └── quiz.ts                       # TypeScript types
-```
+- `/quiz/create` page with two tabs: "Upload JSON" and "Generate with AI"
+- `file-upload.tsx` — drag-and-drop JSON file upload with client-side Zod validation
+- `json-format-guide.tsx` — collapsible expected format reference
+- `ai-generate-form.tsx` — textarea for content + title input + question count selector
+- `lib/quiz-generator.ts` — Claude API quiz generation pipeline
+- API route: `POST /api/generate` — authenticated AI quiz generation with free tier limits
+- Redirect to `/quiz/[id]` after successful creation
 
 ---
 
@@ -335,49 +90,125 @@ quiz-app/
 **Goal**: Full interactive quiz-taking experience
 
 **Completed**:
-- [x] `/quiz/[id]` server page — loads quiz from Supabase, auth check for private quizzes, `notFound()` for missing/unauthorized
-- [x] `quiz-player.tsx` — client-side state machine managing full quiz flow:
-  - Tracks per-question state (unanswered/answered/skipped) with user answers and results
-  - Manages temporary input state (selected MC option, text answer) independently of committed answers
-  - Restores input state when navigating back to previously answered questions (locked state)
-  - On "See Results": marks unanswered questions as skipped, computes score/stats, stores attempt data in `sessionStorage`, navigates to `/quiz/[id]/results`
-- [x] `question-card.tsx` — wraps question text + input component with Framer Motion slide transitions (`AnimatePresence mode="wait"`)
-- [x] `multiple-choice.tsx` — option cards in a vertical grid:
-  - Click to select with `border-primary` highlight and filled circle indicator (A, B, C, D labels)
-  - Hover/tap scale animations via Framer Motion
-  - After submit: correct option shows green border + check icon, wrong selection shows red border + X icon
-  - Disabled state with reduced opacity for answered/locked questions
-- [x] `open-ended-input.tsx` — textarea with "Your Answer" label, disabled state for answered questions
-- [x] `answer-feedback.tsx` — animated feedback panel (Framer Motion height expand):
-  - Correct: green border/bg, CheckCircle icon, "Correct!" text
-  - Incorrect: red border/bg, XCircle icon, shows correct answer
-  - Skipped: amber border/bg, MinusCircle icon, shows correct answer
-  - Displays explanation text and source URL link when present in question data
-- [x] `quiz-navigation.tsx` — contextual button bar:
-  - Previous (disabled on first question), Skip, Submit (disabled until answer selected)
-  - After answering: shows "Next" (or "See Results" on last question)
-- [x] `progress-bar.tsx` — "Question X of Y" label + animated progress bar (Framer Motion width transition)
-- [x] Answer checking logic: MC checks index equality, open-ended does case-insensitive match against `acceptedAnswers` array
 
-**Design Decisions**:
-- Quiz state lives entirely in React `useState` — no external state library needed for this self-contained flow
-- `sessionStorage` used to pass results to the results page (avoids re-fetching and keeps data available across navigation)
-- `checkAnswer` extracted as a pure function outside the component for testability
-- `restoreInputState` callback handles the complexity of syncing temporary input fields when navigating between questions
-- Server page uses `createServiceClient()` (service role) with Clerk auth check at the page level, same pattern as API routes
-
-**Success Criteria**:
-- [x] Can take a full quiz start to finish
-- [x] Can navigate forward and backward
-- [x] Can skip questions
-- [x] Feedback shows immediately after submit/skip
-- [x] Revisiting answered questions shows locked state with result
-- [x] Last question shows "See Results" button after answering
-- [x] App builds without errors (`npm run build` passes)
+- `/quiz/[id]` server page — loads quiz from Supabase, auth check for private quizzes
+- `quiz-player.tsx` — client-side state machine managing full quiz flow
+- `question-card.tsx`, `multiple-choice.tsx`, `open-ended-input.tsx`
+- `answer-feedback.tsx` — correct/incorrect/skipped feedback with explanations
+- `quiz-navigation.tsx` — contextual button bar
+- `progress-bar.tsx` — animated question progress indicator
+- Results stored in `sessionStorage`, navigates to `/quiz/[id]/results`
 
 ---
 
-## File Structure (Phase 0 + 1 + 2 + 3 + 4)
+## Phase 5: Results Page & Export ✅
+
+**Goal**: Show results with export options
+
+**Completed**:
+
+- `/quiz/[id]/results` client page — reads attempt data from `sessionStorage`
+  - Score summary with animated reveal (ResultsSummary component)
+  - Question-by-question breakdown with status badges (correct/incorrect/skipped)
+  - Checkbox selection per question for filtered exports
+  - Select All / Deselect All controls with selection count
+  - Retake Quiz, New Quiz, and Dashboard navigation buttons
+- `results-summary.tsx` — big score display with percentage, badge counts, Framer Motion animations
+- `question-breakdown.tsx` — per-question cards with colored left border, checkbox selection, user/correct answer display, explanation text
+- `select-controls.tsx` — select all checkbox + count display
+- `export-buttons.tsx` — CSV, LLM Review (Markdown), Anki Cards export buttons with toast feedback
+- `lib/export.ts` — client-side export logic:
+  - `exportCSV()` — CSV with Question, Your Answer, Correct Answer, Result columns
+  - `exportLLMReviewMarkdown()` — structured markdown with date, score, LLM review prompt, per-question breakdown, incorrect/skipped summaries
+  - `exportAnkiCards()` — semicolon-separated `question; answer` format
+  - `downloadFile()` — Blob + URL.createObjectURL helper for browser downloads
+- API route: `POST /api/attempts` — saves attempt to Supabase (Zod validated)
+- API route: `GET /api/attempts` — returns user's attempt history with quiz titles (joined)
+- Attempt save is fire-and-forget from the results page (best-effort, non-blocking)
+
+**Design Decisions**:
+
+- Results page is a client component (reads sessionStorage)
+- Exports run entirely client-side — no server round-trip needed
+- Attempt save happens in a `useEffect` on mount — even if it fails, the user sees their results
+- Selection state filters all three export formats consistently
+
+---
+
+## Phase 6: Dashboard ✅
+
+**Goal**: User's home base — quiz library and performance stats
+
+**Completed**:
+
+- Dashboard page rewritten with real Supabase data (parallel queries via `Promise.all`)
+- `stats-overview.tsx` — 3 stat cards (total quizzes, quizzes taken, average score) computed from DB
+- `quiz-library.tsx` — grid of quiz cards with title, question count, source type, date, Take/Delete actions
+  - Empty state with "Create a Quiz" CTA
+  - Optimistic delete with toast feedback
+- `recent-attempts.tsx` — list of recent quiz attempts with quiz title (joined), score badge, date
+  - Empty state messaging
+- `/dashboard/results` page — full attempt history with score, skip/incorrect counts, dates
+- `loading.tsx` — skeleton loading state for dashboard with animated pulse placeholders
+- "Create Quiz" button in dashboard header
+
+**Design Decisions**:
+
+- Dashboard is a server component; quiz library is a client component for interactive delete
+- Stats computed server-side from attempts data (no separate analytics table)
+- Supabase join `quizzes(title)` fetches quiz names without a separate query
+
+---
+
+## Phase 7: Stripe Payments ✅
+
+**Goal**: Premium tier with AI generation limits
+
+**Completed**:
+
+- `lib/stripe.ts` — Stripe client initialization + PLANS config
+- API route: `POST /api/stripe/checkout` — creates Stripe Checkout session
+  - Lazy Stripe customer creation (creates on first purchase, stores `stripe_customer_id`)
+  - Links Clerk user ID via `metadata.clerk_user_id`
+  - Success/cancel redirect URLs to dashboard
+- API route: `POST /api/webhooks/stripe` — Stripe webhook handler
+  - Signature verification via `stripe.webhooks.constructEvent`
+  - `checkout.session.completed` → upgrades user to pro
+  - `customer.subscription.deleted` → downgrades to cancelled
+  - `customer.subscription.updated` → syncs active/cancelled status
+- API route: `GET /api/user/subscription` — returns user's subscription status + usage
+- `hooks/use-subscription.ts` — client-side hook to fetch subscription status
+- Free tier limit (3 AI generations/month) enforced in `POST /api/generate` (already from Phase 3)
+- `.env.local.example` updated with `STRIPE_PRO_PRICE_ID`
+
+**Design Decisions**:
+
+- Lazy customer creation: Stripe customer only created when user initiates checkout
+- `clerk_user_id` in Stripe metadata enables webhook → Supabase user lookup
+- Webhook handles full subscription lifecycle (create, update, delete)
+
+---
+
+## Phase 8: Landing Page & Polish ✅
+
+**Goal**: Public landing page + production readiness
+
+**Completed**:
+
+- Landing page enhanced with:
+  - Hero section with auth-conditional CTAs
+  - Feature grid (6 cards): Upload, AI Generation, Progress Tracking, Export, Privacy, Instant Feedback
+  - Pricing section with Free vs Pro tiers, feature lists, CTAs
+- Footer rendered in root layout
+- Global error boundary (`error.tsx`) with "Try Again" reset button
+- 404 page (`not-found.tsx`) with navigation back to home/dashboard
+- Dashboard loading skeleton (`loading.tsx`)
+- SEO metadata in root layout (title, description)
+- App builds without errors (`npm run build` passes — all 16 routes)
+
+---
+
+## Final File Structure
 
 ```
 quiz-app/
@@ -389,82 +220,88 @@ quiz-app/
 │   └── migrations/
 │       └── 001_initial_schema.sql
 └── src/
-    ├── proxy.ts                          # Clerk middleware (Next.js 16 proxy)
+    ├── proxy.ts                              # Clerk middleware (Next.js 16 proxy)
     ├── app/
     │   ├── globals.css
-    │   ├── layout.tsx                    # Root layout with ClerkProvider
-    │   ├── page.tsx                      # Landing page
+    │   ├── layout.tsx                        # Root layout with ClerkProvider + Footer
+    │   ├── page.tsx                          # Landing page (hero + features + pricing)
+    │   ├── error.tsx                         # Global error boundary
+    │   ├── not-found.tsx                     # 404 page
     │   ├── sign-in/[[...sign-in]]/
     │   │   └── page.tsx
     │   ├── sign-up/[[...sign-up]]/
     │   │   └── page.tsx
     │   ├── dashboard/
     │   │   ├── layout.tsx
-    │   │   └── page.tsx
+    │   │   ├── page.tsx                      # Dashboard with real stats + quiz library
+    │   │   ├── loading.tsx                   # Skeleton loading state
+    │   │   └── results/
+    │   │       └── page.tsx                  # Full results history
     │   ├── quiz/
     │   │   ├── [id]/
-    │   │   │   └── page.tsx              # Server: loads quiz, renders QuizPlayer
+    │   │   │   ├── page.tsx                  # Server: loads quiz, renders QuizPlayer
+    │   │   │   └── results/
+    │   │   │       └── page.tsx              # Client: results + export + actions
     │   │   └── create/
-    │   │       └── page.tsx              # Two-tab quiz creation (Upload / AI)
+    │   │       └── page.tsx                  # Two-tab quiz creation (Upload / AI)
     │   └── api/
+    │       ├── attempts/
+    │       │   └── route.ts                  # POST (save attempt), GET (history)
     │       ├── generate/
-    │       │   └── route.ts              # POST — AI quiz generation
+    │       │   └── route.ts                  # POST — AI quiz generation
     │       ├── quizzes/
-    │       │   ├── route.ts              # POST (create), GET (list)
+    │       │   ├── route.ts                  # POST (create), GET (list)
     │       │   └── [id]/
-    │       │       └── route.ts          # GET (single), DELETE
+    │       │       └── route.ts              # GET (single), DELETE
+    │       ├── stripe/
+    │       │   └── checkout/
+    │       │       └── route.ts              # POST — Stripe Checkout session
+    │       ├── user/
+    │       │   └── subscription/
+    │       │       └── route.ts              # GET — subscription status
     │       └── webhooks/
-    │           └── clerk/
-    │               └── route.ts          # User sync webhook
+    │           ├── clerk/
+    │           │   └── route.ts              # User sync webhook
+    │           └── stripe/
+    │               └── route.ts              # Stripe subscription webhook
     ├── components/
     │   ├── create/
-    │   │   ├── file-upload.tsx           # Drag-and-drop JSON upload
-    │   │   ├── json-format-guide.tsx     # Collapsible format reference
-    │   │   └── ai-generate-form.tsx      # AI generation form
+    │   │   ├── file-upload.tsx
+    │   │   ├── json-format-guide.tsx
+    │   │   └── ai-generate-form.tsx
     │   ├── quiz/
-    │   │   ├── quiz-player.tsx           # State machine for quiz flow
-    │   │   ├── question-card.tsx         # Question wrapper with transitions
-    │   │   ├── multiple-choice.tsx       # MC option cards with selection
-    │   │   ├── open-ended-input.tsx      # Textarea for open-ended answers
-    │   │   ├── answer-feedback.tsx       # Correct/incorrect/skipped feedback
-    │   │   ├── quiz-navigation.tsx       # Prev/Next/Skip/Submit buttons
-    │   │   └── progress-bar.tsx          # Question progress indicator
+    │   │   ├── quiz-player.tsx
+    │   │   ├── question-card.tsx
+    │   │   ├── multiple-choice.tsx
+    │   │   ├── open-ended-input.tsx
+    │   │   ├── answer-feedback.tsx
+    │   │   ├── quiz-navigation.tsx
+    │   │   └── progress-bar.tsx
+    │   ├── results/
+    │   │   ├── results-summary.tsx
+    │   │   ├── question-breakdown.tsx
+    │   │   ├── select-controls.tsx
+    │   │   └── export-buttons.tsx
+    │   ├── dashboard/
+    │   │   ├── quiz-library.tsx
+    │   │   ├── stats-overview.tsx
+    │   │   └── recent-attempts.tsx
     │   ├── layout/
     │   │   ├── navbar.tsx
     │   │   └── footer.tsx
-    │   └── ui/                           # Shadcn components
-    │       ├── avatar.tsx
-    │       ├── badge.tsx
-    │       ├── button.tsx
-    │       ├── card.tsx
-    │       ├── checkbox.tsx
-    │       ├── dialog.tsx
-    │       ├── dropdown-menu.tsx
-    │       ├── input.tsx
-    │       ├── progress.tsx
-    │       ├── separator.tsx
-    │       ├── sonner.tsx
-    │       ├── tabs.tsx
-    │       └── textarea.tsx
+    │   └── ui/                               # Shadcn components (14 total)
+    ├── hooks/
+    │   └── use-subscription.ts               # Stripe subscription status hook
     ├── lib/
     │   ├── utils.ts
-    │   ├── validators.ts                 # Zod schemas for quiz validation
-    │   ├── quiz-generator.ts             # Claude API quiz generation logic
+    │   ├── validators.ts                     # Zod schemas for quiz validation
+    │   ├── quiz-generator.ts                 # Claude API quiz generation
+    │   ├── export.ts                         # CSV, Markdown, Anki export logic
+    │   ├── stripe.ts                         # Stripe client + plans config
     │   └── supabase/
-    │       ├── client.ts                 # Browser client
-    │       └── server.ts                 # Server + service role clients
+    │       ├── client.ts                     # Browser client
+    │       └── server.ts                     # Server + service role clients
     └── types/
-        └── quiz.ts                       # TypeScript types
+        └── quiz.ts                           # TypeScript types
 ```
 
----
-
-## Next Up: Phase 5 — Results Page & Export
-
-- `results-summary.tsx` — big score display with percentage, skip/incorrect counts
-- `question-breakdown.tsx` — per-question result cards with status badges
-- `select-controls.tsx` — select all checkbox + count
-- `export-buttons.tsx` — CSV, LLM Review (Markdown), Anki Cards
-- Retake Quiz + New Quiz buttons
-- `POST /api/attempts` — saves attempt to database
-- `lib/export.ts` — client-side export logic (CSV, Markdown, Anki)

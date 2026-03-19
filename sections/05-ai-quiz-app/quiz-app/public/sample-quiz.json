@@ -1,0 +1,88 @@
+{
+  "title": "Web Development Fundamentals",
+  "description": "Test your knowledge of core web development concepts including HTML, CSS, JavaScript, and modern frameworks.",
+  "isPublic": true,
+  "sourceType": "upload",
+  "questions": [
+    {
+      "type": "multiple-choice",
+      "question": "Which HTML element is used to define the structure of an HTML document?",
+      "options": ["<body>", "<html>", "<!DOCTYPE html>", "<head>"],
+      "correctAnswer": 1,
+      "explanation": "The <html> element is the root element that wraps all content in an HTML document. <!DOCTYPE html> is a declaration, not an element."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "What does the CSS property 'box-sizing: border-box' do?",
+      "options": [
+        "Adds a border around every element",
+        "Includes padding and border in the element's total width and height",
+        "Removes all margins from the element",
+        "Sets the element's display to block"
+      ],
+      "correctAnswer": 1,
+      "explanation": "With border-box, the width and height properties include the content, padding, and border — but not the margin. This makes layout calculations much more predictable."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Which of the following is NOT a valid JavaScript data type?",
+      "options": ["Symbol", "BigInt", "Float", "undefined"],
+      "correctAnswer": 2,
+      "explanation": "JavaScript does not have a separate Float type. Numbers are represented by the Number type (IEEE 754 double-precision floating point) or BigInt for arbitrary-precision integers."
+    },
+    {
+      "type": "open-ended",
+      "question": "What does the acronym 'REST' stand for in the context of web APIs?",
+      "acceptedAnswers": [
+        "Representational State Transfer",
+        "representational state transfer"
+      ],
+      "explanation": "REST (Representational State Transfer) is an architectural style for designing networked applications, introduced by Roy Fielding in his 2000 doctoral dissertation."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "In React, what hook is used to perform side effects in function components?",
+      "options": ["useState", "useEffect", "useContext", "useReducer"],
+      "correctAnswer": 1,
+      "explanation": "useEffect lets you synchronize a component with an external system — it runs after render and can handle subscriptions, data fetching, and DOM manipulation."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "What HTTP status code indicates a resource was successfully created?",
+      "options": ["200 OK", "201 Created", "204 No Content", "301 Moved Permanently"],
+      "correctAnswer": 1,
+      "explanation": "201 Created is returned when a request has been fulfilled and a new resource has been created. It is typically used in response to POST requests."
+    },
+    {
+      "type": "open-ended",
+      "question": "What command initializes a new Git repository in the current directory?",
+      "acceptedAnswers": ["git init", "git init ."],
+      "explanation": "Running 'git init' creates a new .git subdirectory in the current folder, setting up all the files Git needs to begin tracking changes."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Which CSS layout system is best suited for two-dimensional layouts (rows and columns)?",
+      "options": ["Flexbox", "CSS Grid", "Float", "Inline-block"],
+      "correctAnswer": 1,
+      "explanation": "CSS Grid is designed for two-dimensional layouts, allowing you to control both rows and columns simultaneously. Flexbox is better suited for one-dimensional layouts."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "What does the 'async' keyword do when placed before a function declaration?",
+      "options": [
+        "Makes the function run in a separate thread",
+        "Makes the function return a Promise",
+        "Pauses the function until all other code finishes",
+        "Prevents the function from throwing errors"
+      ],
+      "correctAnswer": 1,
+      "explanation": "An async function always returns a Promise. If the function returns a value, the Promise resolves with that value. This enables the use of 'await' inside the function body."
+    },
+    {
+      "type": "open-ended",
+      "question": "What is the default port number used by a Next.js development server?",
+      "acceptedAnswers": ["3000", "port 3000", "localhost:3000"],
+      "explanation": "Next.js runs its development server on port 3000 by default. You can change this with the -p flag, e.g., 'next dev -p 4000'."
+    }
+  ]
+}
