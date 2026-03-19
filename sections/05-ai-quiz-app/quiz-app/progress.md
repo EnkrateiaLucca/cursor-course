@@ -330,12 +330,141 @@ quiz-app/
 
 ---
 
-## Next Up: Phase 4 — Quiz Player (Core Experience)
+## Phase 4: Quiz Player (Core Experience) ✅
 
-- `/quiz/[id]` page — loads quiz from Supabase
-- `quiz-player.tsx` — state machine managing quiz flow
-- `question-card.tsx`, `multiple-choice.tsx`, `open-ended-input.tsx`
-- `answer-feedback.tsx` — correct/incorrect/skipped panel
-- `quiz-navigation.tsx` — Previous, Submit, Skip, Next buttons
-- `progress-bar.tsx` — "Question X of Y"
-- Framer Motion transitions between questions
+**Goal**: Full interactive quiz-taking experience
+
+**Completed**:
+- [x] `/quiz/[id]` server page — loads quiz from Supabase, auth check for private quizzes, `notFound()` for missing/unauthorized
+- [x] `quiz-player.tsx` — client-side state machine managing full quiz flow:
+  - Tracks per-question state (unanswered/answered/skipped) with user answers and results
+  - Manages temporary input state (selected MC option, text answer) independently of committed answers
+  - Restores input state when navigating back to previously answered questions (locked state)
+  - On "See Results": marks unanswered questions as skipped, computes score/stats, stores attempt data in `sessionStorage`, navigates to `/quiz/[id]/results`
+- [x] `question-card.tsx` — wraps question text + input component with Framer Motion slide transitions (`AnimatePresence mode="wait"`)
+- [x] `multiple-choice.tsx` — option cards in a vertical grid:
+  - Click to select with `border-primary` highlight and filled circle indicator (A, B, C, D labels)
+  - Hover/tap scale animations via Framer Motion
+  - After submit: correct option shows green border + check icon, wrong selection shows red border + X icon
+  - Disabled state with reduced opacity for answered/locked questions
+- [x] `open-ended-input.tsx` — textarea with "Your Answer" label, disabled state for answered questions
+- [x] `answer-feedback.tsx` — animated feedback panel (Framer Motion height expand):
+  - Correct: green border/bg, CheckCircle icon, "Correct!" text
+  - Incorrect: red border/bg, XCircle icon, shows correct answer
+  - Skipped: amber border/bg, MinusCircle icon, shows correct answer
+  - Displays explanation text and source URL link when present in question data
+- [x] `quiz-navigation.tsx` — contextual button bar:
+  - Previous (disabled on first question), Skip, Submit (disabled until answer selected)
+  - After answering: shows "Next" (or "See Results" on last question)
+- [x] `progress-bar.tsx` — "Question X of Y" label + animated progress bar (Framer Motion width transition)
+- [x] Answer checking logic: MC checks index equality, open-ended does case-insensitive match against `acceptedAnswers` array
+
+**Design Decisions**:
+- Quiz state lives entirely in React `useState` — no external state library needed for this self-contained flow
+- `sessionStorage` used to pass results to the results page (avoids re-fetching and keeps data available across navigation)
+- `checkAnswer` extracted as a pure function outside the component for testability
+- `restoreInputState` callback handles the complexity of syncing temporary input fields when navigating between questions
+- Server page uses `createServiceClient()` (service role) with Clerk auth check at the page level, same pattern as API routes
+
+**Success Criteria**:
+- [x] Can take a full quiz start to finish
+- [x] Can navigate forward and backward
+- [x] Can skip questions
+- [x] Feedback shows immediately after submit/skip
+- [x] Revisiting answered questions shows locked state with result
+- [x] Last question shows "See Results" button after answering
+- [x] App builds without errors (`npm run build` passes)
+
+---
+
+## File Structure (Phase 0 + 1 + 2 + 3 + 4)
+
+```
+quiz-app/
+├── .env.local.example
+├── components.json
+├── package.json
+├── progress.md
+├── supabase/
+│   └── migrations/
+│       └── 001_initial_schema.sql
+└── src/
+    ├── proxy.ts                          # Clerk middleware (Next.js 16 proxy)
+    ├── app/
+    │   ├── globals.css
+    │   ├── layout.tsx                    # Root layout with ClerkProvider
+    │   ├── page.tsx                      # Landing page
+    │   ├── sign-in/[[...sign-in]]/
+    │   │   └── page.tsx
+    │   ├── sign-up/[[...sign-up]]/
+    │   │   └── page.tsx
+    │   ├── dashboard/
+    │   │   ├── layout.tsx
+    │   │   └── page.tsx
+    │   ├── quiz/
+    │   │   ├── [id]/
+    │   │   │   └── page.tsx              # Server: loads quiz, renders QuizPlayer
+    │   │   └── create/
+    │   │       └── page.tsx              # Two-tab quiz creation (Upload / AI)
+    │   └── api/
+    │       ├── generate/
+    │       │   └── route.ts              # POST — AI quiz generation
+    │       ├── quizzes/
+    │       │   ├── route.ts              # POST (create), GET (list)
+    │       │   └── [id]/
+    │       │       └── route.ts          # GET (single), DELETE
+    │       └── webhooks/
+    │           └── clerk/
+    │               └── route.ts          # User sync webhook
+    ├── components/
+    │   ├── create/
+    │   │   ├── file-upload.tsx           # Drag-and-drop JSON upload
+    │   │   ├── json-format-guide.tsx     # Collapsible format reference
+    │   │   └── ai-generate-form.tsx      # AI generation form
+    │   ├── quiz/
+    │   │   ├── quiz-player.tsx           # State machine for quiz flow
+    │   │   ├── question-card.tsx         # Question wrapper with transitions
+    │   │   ├── multiple-choice.tsx       # MC option cards with selection
+    │   │   ├── open-ended-input.tsx      # Textarea for open-ended answers
+    │   │   ├── answer-feedback.tsx       # Correct/incorrect/skipped feedback
+    │   │   ├── quiz-navigation.tsx       # Prev/Next/Skip/Submit buttons
+    │   │   └── progress-bar.tsx          # Question progress indicator
+    │   ├── layout/
+    │   │   ├── navbar.tsx
+    │   │   └── footer.tsx
+    │   └── ui/                           # Shadcn components
+    │       ├── avatar.tsx
+    │       ├── badge.tsx
+    │       ├── button.tsx
+    │       ├── card.tsx
+    │       ├── checkbox.tsx
+    │       ├── dialog.tsx
+    │       ├── dropdown-menu.tsx
+    │       ├── input.tsx
+    │       ├── progress.tsx
+    │       ├── separator.tsx
+    │       ├── sonner.tsx
+    │       ├── tabs.tsx
+    │       └── textarea.tsx
+    ├── lib/
+    │   ├── utils.ts
+    │   ├── validators.ts                 # Zod schemas for quiz validation
+    │   ├── quiz-generator.ts             # Claude API quiz generation logic
+    │   └── supabase/
+    │       ├── client.ts                 # Browser client
+    │       └── server.ts                 # Server + service role clients
+    └── types/
+        └── quiz.ts                       # TypeScript types
+```
+
+---
+
+## Next Up: Phase 5 — Results Page & Export
+
+- `results-summary.tsx` — big score display with percentage, skip/incorrect counts
+- `question-breakdown.tsx` — per-question result cards with status badges
+- `select-controls.tsx` — select all checkbox + count
+- `export-buttons.tsx` — CSV, LLM Review (Markdown), Anki Cards
+- Retake Quiz + New Quiz buttons
+- `POST /api/attempts` — saves attempt to database
+- `lib/export.ts` — client-side export logic (CSV, Markdown, Anki)
