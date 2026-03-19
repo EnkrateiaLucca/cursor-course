@@ -708,6 +708,161 @@
         transform: translateY(0);
       }
 
+      /* ===== SCROLL PROGRESS ===== */
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0;
+        background: linear-gradient(90deg, var(--coral), var(--gold), var(--teal));
+        z-index: 9999;
+        transition: width 0.05s linear;
+      }
+
+      /* ===== ANIMATED GRADIENT TITLE ===== */
+      .gradient-text {
+        background: linear-gradient(135deg, var(--dark) 0%, var(--coral) 40%, var(--gold) 60%, var(--dark) 100%);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 6s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      /* ===== NAV LINK UNDERLINES ===== */
+      nav a { position: relative; }
+
+      nav a::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--coral);
+        border-radius: 2px;
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover::after { width: 100%; }
+
+      /* ===== LOGO HOVER ===== */
+      .logo-icon { transition: transform 0.3s ease; }
+      .logo:hover .logo-icon { transform: rotate(15deg) scale(1.1); }
+
+      /* ===== CTA PULSE ===== */
+      .cta-btn { position: relative; overflow: visible; }
+
+      .cta-btn::before {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border-radius: inherit;
+        background: var(--coral);
+        opacity: 0;
+        z-index: -1;
+        animation: ctaPulse 2.5s ease-in-out infinite;
+      }
+
+      @keyframes ctaPulse {
+        0%, 100% { opacity: 0; transform: scale(1); }
+        50% { opacity: 0.25; transform: scale(1.1); }
+      }
+
+      /* ===== STAGGERED REVEALS ===== */
+      .reveal.stagger-1  { transition-delay: 0.05s; }
+      .reveal.stagger-2  { transition-delay: 0.1s; }
+      .reveal.stagger-3  { transition-delay: 0.15s; }
+      .reveal.stagger-4  { transition-delay: 0.2s; }
+      .reveal.stagger-5  { transition-delay: 0.25s; }
+      .reveal.stagger-6  { transition-delay: 0.3s; }
+      .reveal.stagger-7  { transition-delay: 0.35s; }
+      .reveal.stagger-8  { transition-delay: 0.4s; }
+      .reveal.stagger-9  { transition-delay: 0.45s; }
+      .reveal.stagger-10 { transition-delay: 0.5s; }
+
+      /* ===== FLOATING SHAPE ANIMATIONS ===== */
+      @keyframes drift {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        25%  { transform: translate(15px, -20px) rotate(90deg); }
+        50%  { transform: translate(-10px, -35px) rotate(180deg); }
+        75%  { transform: translate(20px, -15px) rotate(270deg); }
+      }
+
+      .float-drift   { animation: drift 12s ease-in-out infinite; }
+      .float-drift-2  { animation: drift 16s ease-in-out infinite reverse; }
+      .float-drift-3  { animation: drift 10s ease-in-out infinite; animation-delay: -3s; }
+
+      /* ===== ARC ARROW BOUNCE ===== */
+      .arc-arrow {
+        display: inline-block;
+        animation: arrowBounce 1.5s ease-in-out infinite;
+      }
+
+      @keyframes arrowBounce {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(4px); }
+      }
+
+      /* ===== ARC STEP HOVER ===== */
+      .arc-step {
+        transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+        cursor: default;
+      }
+
+      .arc-step:hover {
+        transform: scale(1.05);
+        background: var(--coral);
+        color: white;
+        border-color: var(--coral);
+      }
+
+      /* ===== 3D CARD TILT ===== */
+      .section-card {
+        transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+      }
+
+      /* ===== TECH ITEM GLOW ===== */
+      .tech-item:hover {
+        box-shadow: 4px 4px 0 var(--dark), 0 0 20px rgba(217, 82, 64, 0.08);
+      }
+
+      /* ===== PREREQ CHECK RIPPLE ===== */
+      .prereq-check { position: relative; }
+
+      .prereq-check.checked::after {
+        content: '';
+        position: absolute;
+        inset: -6px;
+        border-radius: 12px;
+        border: 2px solid var(--coral);
+        opacity: 0;
+        animation: checkRipple 0.6s ease-out forwards;
+      }
+
+      @keyframes checkRipple {
+        0%   { transform: scale(0.8); opacity: 0.8; }
+        100% { transform: scale(1.5); opacity: 0; }
+      }
+
+      /* ===== HERO PARALLAX ===== */
+      .hero-left .big-circle,
+      .hero-left .pink-blob {
+        transition: transform 0.4s ease-out;
+      }
+
+      /* ===== STAT COUNTER ===== */
+      .stat-value {
+        display: inline-block;
+        min-width: 2ch;
+      }
+
       /* ===== RESPONSIVE ===== */
       @media (max-width: 900px) {
         .hero { flex-direction: column; min-height: auto; padding: 3rem 1.5rem; }
@@ -733,6 +888,7 @@
     </style>
   </head>
   <body>
+    <div class="scroll-progress"></div>
     <div class="page-frame">
 
       <!-- ========== NAV ========== -->
@@ -766,16 +922,16 @@
         <div class="corner-br"></div>
 
         <!-- Floating deco shapes -->
-        <div class="geo geo-4star deco-star-1"></div>
-        <div class="geo geo-4star deco-star-2" style="width:18px;height:18px;background:var(--gold)"></div>
-        <div class="geo geo-4star deco-4star-1" style="width:16px;height:16px;background:var(--coral)"></div>
-        <div class="geo deco-umbrella"></div>
-        <div class="geo geo-rainbow deco-rainbow"></div>
+        <div class="geo geo-4star deco-star-1 float-drift"></div>
+        <div class="geo geo-4star deco-star-2 float-drift-2" style="width:18px;height:18px;background:var(--gold)"></div>
+        <div class="geo geo-4star deco-4star-1 float-drift-3" style="width:16px;height:16px;background:var(--coral)"></div>
+        <div class="geo deco-umbrella float-drift"></div>
+        <div class="geo geo-rainbow deco-rainbow float-drift-2"></div>
 
         <div class="hero-content">
           <div class="badge"><span class="dot"></span> O'Reilly Live Training</div>
           <h1>
-            WELCOME
+            <span class="gradient-text">WELCOME</span>
             <span class="accent">to the Cursor AI Course</span>
           </h1>
           <p class="subtitle">
@@ -1076,11 +1232,73 @@
     </div><!-- .page-frame -->
 
     <script>
+      // Scroll-triggered reveals
       const io = new IntersectionObserver(
         (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
         { threshold: 0.15 }
       );
       document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      // Stagger classes on grid children
+      document.querySelectorAll('.sections-grid .section-card').forEach((c, i) => c.classList.add('stagger-' + (i + 1)));
+      document.querySelectorAll('.tech-grid .tech-item').forEach((c, i) => c.classList.add('stagger-' + (i + 1)));
+      document.querySelectorAll('.prereq-grid .prereq-item').forEach((c, i) => c.classList.add('stagger-' + (i + 1)));
+
+      // Scroll progress bar
+      const progressBar = document.querySelector('.scroll-progress');
+      window.addEventListener('scroll', () => {
+        const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        progressBar.style.width = pct + '%';
+      });
+
+      // Number counting animation
+      function animateCount(el, target) {
+        let current = 0;
+        const step = target / (1400 / 16);
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) { el.textContent = target; clearInterval(timer); }
+          else { el.textContent = Math.floor(current); }
+        }, 16);
+      }
+
+      const statsObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const val = parseInt(e.target.textContent);
+            e.target.textContent = '0';
+            animateCount(e.target, val);
+            statsObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('.stat-value').forEach(el => statsObs.observe(el));
+
+      // 3D tilt on section cards
+      document.querySelectorAll('.section-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          const rx = ((e.clientY - r.top) / r.height - 0.5) * -8;
+          const ry = ((e.clientX - r.left) / r.width - 0.5) * 8;
+          card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+          card.style.boxShadow = `${-ry}px ${rx + 6}px 0 var(--dark)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+          card.style.boxShadow = '';
+        });
+      });
+
+      // Hero parallax on scroll
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        const hero = document.querySelector('.hero');
+        if (!hero || y > hero.offsetTop + hero.offsetHeight) return;
+        const bc = document.querySelector('.big-circle');
+        const pb = document.querySelector('.pink-blob');
+        if (bc) bc.style.transform = `translate(-50%, calc(-50% + ${y * 0.15}px))`;
+        if (pb) pb.style.transform = `translateY(${y * -0.1}px)`;
+      });
     </script>
   </body>
 </html>
