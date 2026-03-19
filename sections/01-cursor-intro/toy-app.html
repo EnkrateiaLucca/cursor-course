@@ -1,0 +1,1086 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cursor AI IDE: Building Production Applications</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --frame: #1b2838;
+        --bg: #f4ede4;
+        --bg-alt: #ebe3d8;
+        --card: #ffffff;
+        --text: #1b2838;
+        --muted: #6b7a8a;
+        --coral: #d95240;
+        --coral-light: #f0877c;
+        --pink: #e4b8ca;
+        --gold: #d4a843;
+        --dark: #232323;
+        --navy: #1b2838;
+        --teal: #2b7a78;
+        --orange: #e8854a;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background: var(--frame);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        padding: 16px;
+      }
+
+      .page-frame {
+        background: var(--bg);
+        border-radius: 18px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      h1, h2, h3, .section-title, .arc-step, .card-title, .stat-value {
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      /* ===== GEOMETRIC DECORATIONS ===== */
+      .geo { position: absolute; pointer-events: none; z-index: 0; }
+
+      .geo-circle {
+        border-radius: 50%;
+      }
+
+      .geo-half-circle {
+        border-radius: 0 0 999px 999px;
+        overflow: hidden;
+      }
+
+      .geo-star {
+        width: 28px; height: 28px;
+        background: var(--gold);
+        clip-path: polygon(50% 0%, 61% 35%, 100% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 0% 35%, 39% 35%);
+      }
+
+      .geo-4star {
+        width: 24px; height: 24px;
+        background: var(--dark);
+        clip-path: polygon(50% 0%, 56% 44%, 100% 50%, 56% 56%, 50% 100%, 44% 56%, 0% 50%, 44% 44%);
+      }
+
+      .geo-triangle {
+        width: 0; height: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        border-bottom: 52px solid var(--gold);
+      }
+
+      .geo-rainbow {
+        width: 80px; height: 40px;
+        border-radius: 80px 80px 0 0;
+        border: 10px solid var(--coral);
+        border-bottom: none;
+        position: relative;
+      }
+      .geo-rainbow::before {
+        content: "";
+        position: absolute;
+        bottom: 0; left: 50%; transform: translateX(-50%);
+        width: 40px; height: 20px;
+        border-radius: 40px 40px 0 0;
+        border: 8px solid var(--gold);
+        border-bottom: none;
+      }
+
+      /* ===== NAV ===== */
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.4rem 2.5rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text);
+      }
+
+      .logo-icon {
+        width: 32px; height: 32px;
+        background: var(--coral);
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        position: relative;
+      }
+
+      .logo-icon::before {
+        content: "";
+        width: 14px; height: 14px;
+        background: var(--dark);
+        border-radius: 50%;
+      }
+
+      .logo-icon::after {
+        content: "";
+        position: absolute;
+        top: 4px; right: 4px;
+        width: 8px; height: 8px;
+        background: var(--gold);
+        border-radius: 50%;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        transition: color 0.2s;
+      }
+
+      nav a:hover { color: var(--coral); }
+
+      /* ===== HERO ===== */
+      .hero {
+        position: relative;
+        display: flex;
+        align-items: center;
+        min-height: 88vh;
+        padding: 2rem 2.5rem 4rem;
+        overflow: hidden;
+      }
+
+      .hero-left {
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 42%;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+      /* Large dark circle */
+      .hero-left .big-circle {
+        position: absolute;
+        width: 420px; height: 420px;
+        border-radius: 50%;
+        background: var(--dark);
+        top: 50%; left: 30%;
+        transform: translate(-50%, -50%);
+      }
+
+      .hero-left .big-circle::before {
+        content: "";
+        position: absolute;
+        width: 200px; height: 200px;
+        border-radius: 50%;
+        background: var(--bg);
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Pink blob */
+      .hero-left .pink-blob {
+        position: absolute;
+        width: 280px; height: 280px;
+        border-radius: 50%;
+        background: var(--pink);
+        bottom: 5%; left: -8%;
+      }
+
+      /* Coral stripe */
+      .hero-left .stripe-1 {
+        position: absolute;
+        width: 200%; height: 40px;
+        background: var(--coral);
+        bottom: 22%;
+        left: -20%;
+        transform: rotate(-25deg);
+      }
+
+      .hero-left .stripe-2 {
+        position: absolute;
+        width: 200%; height: 24px;
+        background: var(--gold);
+        bottom: 18%;
+        left: -20%;
+        transform: rotate(-25deg);
+      }
+
+      .hero-left .stripe-3 {
+        position: absolute;
+        width: 200%; height: 16px;
+        background: var(--pink);
+        bottom: 28%;
+        left: -20%;
+        transform: rotate(-25deg);
+      }
+
+      /* Corner accents */
+      .corner-tl {
+        position: absolute;
+        top: 0; right: 0;
+        width: 120px; height: 120px;
+        overflow: hidden;
+      }
+
+      .corner-tl::before {
+        content: "";
+        position: absolute;
+        top: -40px; right: -40px;
+        width: 100px; height: 100px;
+        background: var(--coral);
+        border-radius: 50%;
+      }
+
+      .corner-br {
+        position: absolute;
+        bottom: 0; right: 0;
+        width: 0; height: 0;
+        border-right: 100px solid var(--gold);
+        border-top: 100px solid transparent;
+        z-index: 0;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        margin-left: 46%;
+        max-width: 540px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 1.1rem;
+        border-radius: 999px;
+        background: var(--card);
+        border: 2px solid var(--dark);
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--dark);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+        animation: fadeInDown 0.6s ease-out;
+      }
+
+      .badge .dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: var(--coral);
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 5.5vw, 4rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+        color: var(--dark);
+        animation: fadeInDown 0.6s ease-out 0.1s both;
+      }
+
+      h1 .accent {
+        color: var(--coral);
+        display: block;
+        font-size: 0.55em;
+        letter-spacing: 0.04em;
+        margin-top: 0.2em;
+      }
+
+      .hero .subtitle {
+        font-size: 1rem;
+        color: var(--muted);
+        max-width: 420px;
+        margin-bottom: 2rem;
+        animation: fadeInDown 0.6s ease-out 0.2s both;
+      }
+
+      .hero-meta {
+        display: flex;
+        gap: 1.8rem;
+        margin-bottom: 2rem;
+        animation: fadeInDown 0.6s ease-out 0.3s both;
+      }
+
+      .stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--dark);
+        line-height: 1;
+      }
+
+      .stat-label {
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 600;
+      }
+
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.85rem 2rem;
+        border-radius: 999px;
+        background: var(--coral);
+        color: white;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        animation: fadeInDown 0.6s ease-out 0.4s both;
+      }
+
+      .cta-btn:hover {
+        background: #c14436;
+        transform: translateY(-2px);
+      }
+
+      .scroll-hint {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--muted);
+        font-size: 0.75rem;
+        animation: float 2.5s ease-in-out infinite;
+        z-index: 2;
+      }
+
+      .scroll-hint svg { width: 22px; height: 22px; stroke: var(--muted); }
+
+      /* Floating geo deco on hero */
+      .hero .deco-star-1 { top: 18%; right: 22%; }
+      .hero .deco-star-2 { top: 38%; right: 8%; }
+      .hero .deco-star-3 { bottom: 30%; left: 38%; }
+      .hero .deco-rainbow { top: 25%; left: 48%; }
+      .hero .deco-4star-1 { top: 55%; right: 32%; }
+      .hero .deco-umbrella {
+        top: 28%; left: 52%;
+        width: 30px; height: 16px;
+        border-radius: 30px 30px 0 0;
+        background: var(--coral);
+      }
+      .hero .deco-umbrella::after {
+        content: "";
+        position: absolute;
+        left: 50%; top: 100%;
+        width: 2px; height: 14px;
+        background: var(--dark);
+        transform: translateX(-50%);
+      }
+
+      /* ===== SHARED SECTION STYLES ===== */
+      section { padding: 4.5rem 2.5rem; position: relative; }
+      .container { max-width: 1020px; margin: 0 auto; }
+
+      .section-label {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--coral);
+        margin-bottom: 0.5rem;
+      }
+
+      .section-title {
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        margin-bottom: 0.5rem;
+        color: var(--dark);
+      }
+
+      .section-desc {
+        color: var(--muted);
+        font-size: 0.95rem;
+        max-width: 520px;
+        margin-bottom: 2.5rem;
+      }
+
+      /* ===== ARC ===== */
+      .arc {
+        background: var(--bg-alt);
+        border-top: 3px solid var(--dark);
+        border-bottom: 3px solid var(--dark);
+      }
+
+      .arc-steps {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.6rem;
+        align-items: center;
+      }
+
+      .arc-step {
+        padding: 0.65rem 1.3rem;
+        border-radius: 999px;
+        background: var(--card);
+        border: 2px solid var(--dark);
+        font-weight: 600;
+        font-size: 0.88rem;
+        white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+
+      .arc-arrow {
+        color: var(--coral);
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+
+      /* ===== SECTION CARDS ===== */
+      .sections-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+        gap: 1rem;
+      }
+
+      .section-card {
+        position: relative;
+        padding: 1.5rem;
+        border-radius: 16px;
+        background: var(--card);
+        border: 2px solid var(--dark);
+        transition: transform 0.25s, box-shadow 0.25s;
+      }
+
+      .section-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 6px 6px 0 var(--dark);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .card-num {
+        width: 40px; height: 40px;
+        border-radius: 12px;
+        display: grid; place-items: center;
+        font-weight: 700; font-size: 0.85rem;
+        flex-shrink: 0;
+        color: white;
+        font-family: "Space Grotesk", sans-serif;
+        border: 2px solid var(--dark);
+      }
+
+      .card-title {
+        font-weight: 700;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.01em;
+      }
+
+      .card-duration {
+        font-size: 0.72rem;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .card-desc {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 0.75rem;
+      }
+
+      .card-topics { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+      .topic-tag {
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        border: 1.5px solid;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      .c1  .card-num { background: var(--coral); }
+      .c2  .card-num { background: var(--navy); }
+      .c3  .card-num { background: var(--teal); }
+      .c4  .card-num { background: var(--dark); }
+      .c5  .card-num { background: var(--gold); color: var(--dark); }
+      .c6  .card-num { background: var(--coral); }
+      .c7  .card-num { background: var(--navy); }
+      .c8  .card-num { background: var(--orange); }
+      .c9  .card-num { background: var(--teal); }
+      .c10 .card-num { background: var(--dark); }
+
+      .c1  .topic-tag { color: var(--coral);  border-color: var(--coral);  background: rgba(217,82,64,0.08); }
+      .c2  .topic-tag { color: var(--navy);   border-color: var(--navy);   background: rgba(27,40,56,0.06); }
+      .c3  .topic-tag { color: var(--teal);   border-color: var(--teal);   background: rgba(43,122,120,0.08); }
+      .c4  .topic-tag { color: var(--dark);   border-color: var(--dark);   background: rgba(35,35,35,0.06); }
+      .c5  .topic-tag { color: #9a7a1e;       border-color: var(--gold);   background: rgba(212,168,67,0.1); }
+      .c6  .topic-tag { color: var(--coral);  border-color: var(--coral);  background: rgba(217,82,64,0.08); }
+      .c7  .topic-tag { color: var(--navy);   border-color: var(--navy);   background: rgba(27,40,56,0.06); }
+      .c8  .topic-tag { color: var(--orange); border-color: var(--orange); background: rgba(232,133,74,0.1); }
+      .c9  .topic-tag { color: var(--teal);   border-color: var(--teal);   background: rgba(43,122,120,0.08); }
+      .c10 .topic-tag { color: var(--dark);   border-color: var(--dark);   background: rgba(35,35,35,0.06); }
+
+      /* ===== TECH STACK ===== */
+      .tech-section {
+        background: var(--bg-alt);
+        border-top: 3px solid var(--dark);
+        border-bottom: 3px solid var(--dark);
+      }
+
+      .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .tech-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.9rem 1rem;
+        border-radius: 14px;
+        background: var(--card);
+        border: 2px solid var(--dark);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .tech-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 4px 4px 0 var(--dark);
+      }
+
+      .tech-icon {
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        display: grid; place-items: center;
+        font-size: 1rem;
+        font-weight: 700;
+        flex-shrink: 0;
+        font-family: "Space Grotesk", sans-serif;
+        border: 2px solid var(--dark);
+      }
+
+      .tech-name { font-weight: 700; font-size: 0.9rem; }
+      .tech-role { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+
+      /* ===== PREREQUISITES ===== */
+      .prereq-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .prereq-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.65rem;
+        padding: 1rem;
+        border-radius: 14px;
+        background: var(--card);
+        border: 2px solid var(--dark);
+      }
+
+      .prereq-check {
+        width: 24px; height: 24px;
+        border-radius: 8px;
+        border: 2.5px solid var(--dark);
+        display: grid; place-items: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .prereq-check.checked {
+        background: var(--coral);
+        border-color: var(--coral);
+      }
+
+      .prereq-check svg {
+        width: 14px; height: 14px;
+        stroke: white; stroke-width: 3;
+        opacity: 0; transition: opacity 0.2s;
+      }
+
+      .prereq-check.checked svg { opacity: 1; }
+
+      .prereq-text { font-size: 0.9rem; font-weight: 500; }
+
+      /* ===== RESOURCES ===== */
+      .resources-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .resource-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.2rem;
+        border-radius: 999px;
+        background: var(--card);
+        border: 2px solid var(--dark);
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      }
+
+      .resource-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 4px 4px 0 var(--dark);
+        background: var(--coral);
+        color: white;
+      }
+
+      .resource-link .arrow {
+        margin-left: auto;
+        font-weight: 700;
+        transition: transform 0.2s;
+      }
+
+      .resource-link:hover .arrow { transform: translateX(3px); }
+
+      /* ===== FOOTER ===== */
+      footer {
+        padding: 2.5rem 2.5rem;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.82rem;
+        border-top: 3px solid var(--dark);
+        font-weight: 500;
+      }
+
+      /* ===== ANIMATIONS ===== */
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-14px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50%      { transform: translateX(-50%) translateY(6px); }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ===== RESPONSIVE ===== */
+      @media (max-width: 900px) {
+        .hero { flex-direction: column; min-height: auto; padding: 3rem 1.5rem; }
+        .hero-left { display: none; }
+        .hero-content { margin-left: 0; text-align: center; max-width: 100%; }
+        .hero-meta { justify-content: center; }
+        .subtitle { margin-left: auto; margin-right: auto; }
+        .cta-btn { margin: 0 auto; }
+        nav { padding: 1rem 1.5rem; }
+        nav ul { gap: 1rem; }
+        section { padding: 3rem 1.5rem; }
+      }
+
+      @media (max-width: 600px) {
+        body { padding: 8px; }
+        .sections-grid { grid-template-columns: 1fr; }
+        .tech-grid { grid-template-columns: 1fr 1fr; }
+        .prereq-grid { grid-template-columns: 1fr; }
+        .resources-grid { grid-template-columns: 1fr; }
+        nav ul { display: none; }
+        h1 { font-size: 2.2rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-frame">
+
+      <!-- ========== NAV ========== -->
+      <nav>
+        <div class="logo">
+          <div class="logo-icon"></div>
+          <span>Cursor<br/>Course.</span>
+        </div>
+        <ul>
+          <li><a href="#arc">Arc</a></li>
+          <li><a href="#sections">Sections</a></li>
+          <li><a href="#stack">Stack</a></li>
+          <li><a href="#prereqs">Setup</a></li>
+          <li><a href="#resources">Resources</a></li>
+        </ul>
+      </nav>
+
+      <!-- ========== HERO ========== -->
+      <section class="hero">
+        <!-- Geometric art panel -->
+        <div class="hero-left">
+          <div class="big-circle"></div>
+          <div class="pink-blob"></div>
+          <div class="stripe-1"></div>
+          <div class="stripe-2"></div>
+          <div class="stripe-3"></div>
+        </div>
+
+        <!-- Corner accents -->
+        <div class="corner-tl"></div>
+        <div class="corner-br"></div>
+
+        <!-- Floating deco shapes -->
+        <div class="geo geo-4star deco-star-1"></div>
+        <div class="geo geo-4star deco-star-2" style="width:18px;height:18px;background:var(--gold)"></div>
+        <div class="geo geo-4star deco-4star-1" style="width:16px;height:16px;background:var(--coral)"></div>
+        <div class="geo deco-umbrella"></div>
+        <div class="geo geo-rainbow deco-rainbow"></div>
+
+        <div class="hero-content">
+          <div class="badge"><span class="dot"></span> O'Reilly Live Training</div>
+          <h1>
+            WELCOME
+            <span class="accent">to the Cursor AI Course</span>
+          </h1>
+          <p class="subtitle">
+            Master AI-assisted development by building a full-stack AI quiz app
+            from scratch using Cursor, MCP, and modern tooling.
+          </p>
+          <div class="hero-meta">
+            <div class="stat"><span class="stat-value">6</span><span class="stat-label">Hours</span></div>
+            <div class="stat"><span class="stat-value">10</span><span class="stat-label">Sections</span></div>
+            <div class="stat"><span class="stat-value">62</span><span class="stat-label">Slides</span></div>
+          </div>
+          <a href="#sections" class="cta-btn">Show me &darr;</a>
+        </div>
+
+        <div class="scroll-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+          </svg>
+        </div>
+      </section>
+
+      <!-- ========== COURSE ARC ========== -->
+      <section class="arc" id="arc">
+        <div class="container reveal">
+          <div class="section-label">Course Arc</div>
+          <div class="section-title">From Zero to Production</div>
+          <p class="section-desc">One project, built end-to-end across all 10 sections.</p>
+          <div class="arc-steps">
+            <span class="arc-step">HTML Toy App</span>
+            <span class="arc-arrow">&rarr;</span>
+            <span class="arc-step">Simple Quiz</span>
+            <span class="arc-arrow">&rarr;</span>
+            <span class="arc-step">AI-Powered Quiz</span>
+            <span class="arc-arrow">&rarr;</span>
+            <span class="arc-step">Backend / Auth / Pay</span>
+            <span class="arc-arrow">&rarr;</span>
+            <span class="arc-step">Deploy</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SECTIONS ========== -->
+      <section id="sections">
+        <div class="container">
+          <div class="reveal">
+            <div class="section-label">Curriculum</div>
+            <div class="section-title">10 Sections, One Journey</div>
+            <p class="section-desc">Each section builds on the last. By the end you'll have shipped a production-ready AI app.</p>
+          </div>
+          <div class="sections-grid">
+
+            <div class="section-card c1 reveal">
+              <div class="card-header">
+                <div class="card-num">01</div>
+                <div><div class="card-title">Cursor Intro</div><div class="card-duration">~45 min</div></div>
+              </div>
+              <div class="card-desc">Meet Cursor's four interaction modes and build your first HTML app from an empty file.</div>
+              <div class="card-topics">
+                <span class="topic-tag">Chat</span>
+                <span class="topic-tag">Agent</span>
+                <span class="topic-tag">Inline Edit</span>
+                <span class="topic-tag">Tab</span>
+              </div>
+            </div>
+
+            <div class="section-card c2 reveal">
+              <div class="card-header">
+                <div class="card-num">02</div>
+                <div><div class="card-title">Explore-Plan-Build</div><div class="card-duration">~45 min</div></div>
+              </div>
+              <div class="card-desc">Learn the three-phase workflow, master @ symbols, and build a simple quiz app.</div>
+              <div class="card-topics">
+                <span class="topic-tag">@ Symbols</span>
+                <span class="topic-tag">Context Files</span>
+                <span class="topic-tag">Two-Stage Workflow</span>
+              </div>
+            </div>
+
+            <div class="section-card c3 reveal">
+              <div class="card-header">
+                <div class="card-num">03</div>
+                <div><div class="card-title">Project Rules</div><div class="card-duration">~20 min</div></div>
+              </div>
+              <div class="card-desc">Encode team conventions into .cursor/rules so AI follows your standards automatically.</div>
+              <div class="card-topics">
+                <span class="topic-tag">.mdc Rules</span>
+                <span class="topic-tag">AGENTS.md</span>
+                <span class="topic-tag">CLAUDE.md</span>
+              </div>
+            </div>
+
+            <div class="section-card c4 reveal">
+              <div class="card-header">
+                <div class="card-num">04</div>
+                <div><div class="card-title">MCP &amp; Tooling</div><div class="card-duration">~30 min</div></div>
+              </div>
+              <div class="card-desc">Connect external tools via Model Context Protocol &mdash; "USB for AI."</div>
+              <div class="card-topics">
+                <span class="topic-tag">MCP Protocol</span>
+                <span class="topic-tag">Playwright</span>
+                <span class="topic-tag">GitHub MCP</span>
+              </div>
+            </div>
+
+            <div class="section-card c5 reveal">
+              <div class="card-header">
+                <div class="card-num">05</div>
+                <div><div class="card-title">AI Quiz App Build</div><div class="card-duration">~60 min</div></div>
+              </div>
+              <div class="card-desc">The main event: build a full AI-powered quiz generator using context-driven development.</div>
+              <div class="card-topics">
+                <span class="topic-tag">OpenAI / DeepSeek</span>
+                <span class="topic-tag">Context File</span>
+                <span class="topic-tag">Iterative Build</span>
+              </div>
+            </div>
+
+            <div class="section-card c6 reveal">
+              <div class="card-header">
+                <div class="card-num">06</div>
+                <div><div class="card-title">Testing</div><div class="card-duration">~20 min</div></div>
+              </div>
+              <div class="card-desc">Write failing tests first, then let AI implement. Unit, component, and E2E coverage.</div>
+              <div class="card-topics">
+                <span class="topic-tag">TDD</span>
+                <span class="topic-tag">Vitest</span>
+                <span class="topic-tag">Playwright E2E</span>
+              </div>
+            </div>
+
+            <div class="section-card c7 reveal">
+              <div class="card-header">
+                <div class="card-num">07</div>
+                <div><div class="card-title">Diagrams &amp; Design</div><div class="card-duration">~30 min</div></div>
+              </div>
+              <div class="card-desc">Generate architecture diagrams and convert sketches or screenshots into working code.</div>
+              <div class="card-topics">
+                <span class="topic-tag">Mermaid</span>
+                <span class="topic-tag">Figma to Code</span>
+                <span class="topic-tag">ERD Diagrams</span>
+              </div>
+            </div>
+
+            <div class="section-card c8 reveal">
+              <div class="card-header">
+                <div class="card-num">08</div>
+                <div><div class="card-title">Backend, Auth &amp; Payments</div><div class="card-duration">~45 min</div></div>
+              </div>
+              <div class="card-desc">Wire up Supabase, Clerk auth, and Stripe payments with Next.js Server Actions.</div>
+              <div class="card-topics">
+                <span class="topic-tag">Supabase</span>
+                <span class="topic-tag">Clerk</span>
+                <span class="topic-tag">Stripe</span>
+                <span class="topic-tag">Drizzle</span>
+              </div>
+            </div>
+
+            <div class="section-card c9 reveal">
+              <div class="card-header">
+                <div class="card-num">09</div>
+                <div><div class="card-title">Deployment</div><div class="card-duration">~30 min</div></div>
+              </div>
+              <div class="card-desc">Ship to Vercel, configure environment variables, and run the production checklist.</div>
+              <div class="card-topics">
+                <span class="topic-tag">Vercel</span>
+                <span class="topic-tag">Env Vars</span>
+                <span class="topic-tag">Production Checklist</span>
+              </div>
+            </div>
+
+            <div class="section-card c10 reveal">
+              <div class="card-header">
+                <div class="card-num">10</div>
+                <div><div class="card-title">Finishing</div><div class="card-duration">~15 min</div></div>
+              </div>
+              <div class="card-desc">Recap the full journey, key takeaways, continued learning resources, and Q&amp;A.</div>
+              <div class="card-topics">
+                <span class="topic-tag">Recap</span>
+                <span class="topic-tag">10 Takeaways</span>
+                <span class="topic-tag">Q&amp;A</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== TECH STACK ========== -->
+      <section class="tech-section" id="stack">
+        <div class="container">
+          <div class="reveal">
+            <div class="section-label">Tech Stack</div>
+            <div class="section-title">What We're Building With</div>
+            <p class="section-desc">All demos build on McKay's App Template.</p>
+          </div>
+          <div class="tech-grid">
+            <div class="tech-item reveal"><div class="tech-icon" style="background:rgba(217,82,64,0.1);color:var(--coral)">N</div><div><div class="tech-name">Next.js 15</div><div class="tech-role">App Router</div></div></div>
+            <div class="tech-item reveal"><div class="tech-icon" style="background:rgba(27,40,56,0.08);color:var(--navy)">TS</div><div><div class="tech-name">TypeScript</div><div class="tech-role">Language</div></div></div>
+            <div class="tech-item reveal"><div class="tech-icon" style="background:rgba(43,122,120,0.1);color:var(--teal)">T</div><div><div class="tech-name">Tailwind CSS</div><div class="tech-role">Styling</div></div></div>
+            <div class="tech-item reveal"><div class="tech-icon" style="background:rgba(35,35,35,0.06);color:var(--dark)">S</div><div><div class="tech-name">shadcn/ui</div><div class="tech-role">Components</div></div></div>
+            <div class="tech-item reveal"><div class="tech-icon" style="background:rgba(43,122,120,0.1);color:var(--teal)">S</div><div><div class="tech-name">Supabase</div><div class="tech-role">Database</div></div></div>
+            <div class="tech-item reveal"><div class="tech-icon" style="background:rgba(212,168,67,0.12);color:#9a7a1e">D</div><div><div class="tech-name">Drizzle ORM</div><div class="tech-role">Schema &amp; Queries</div></div></div>
+            <div class="tech-item reveal"><div class="tech-icon" style="background:rgba(27,40,56,0.08);color:var(--navy)">C</div><div><div class="tech-name">Clerk</div><div class="tech-role">Auth</div></div></div>
+            <div class="tech-item reveal"><div class="tech-icon" style="background:rgba(232,133,74,0.12);color:var(--orange)">$</div><div><div class="tech-name">Stripe</div><div class="tech-role">Payments</div></div></div>
+            <div class="tech-item reveal"><div class="tech-icon" style="background:rgba(217,82,64,0.1);color:var(--coral)">AI</div><div><div class="tech-name">OpenAI / DeepSeek</div><div class="tech-role">AI Provider</div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== PREREQUISITES ========== -->
+      <section id="prereqs">
+        <div class="container">
+          <div class="reveal">
+            <div class="section-label">Before We Start</div>
+            <div class="section-title">Prerequisites Checklist</div>
+            <p class="section-desc">Click to check off each item as you go.</p>
+          </div>
+          <div class="prereq-grid">
+            <div class="prereq-item reveal">
+              <div class="prereq-check" onclick="this.classList.toggle('checked')"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div><div class="prereq-text">Cursor IDE installed &amp; signed in</div></div>
+            </div>
+            <div class="prereq-item reveal">
+              <div class="prereq-check" onclick="this.classList.toggle('checked')"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div><div class="prereq-text">Node.js 20+</div></div>
+            </div>
+            <div class="prereq-item reveal">
+              <div class="prereq-check" onclick="this.classList.toggle('checked')"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div><div class="prereq-text">GitHub account with PAT</div></div>
+            </div>
+            <div class="prereq-item reveal">
+              <div class="prereq-check" onclick="this.classList.toggle('checked')"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div><div class="prereq-text">Supabase account</div></div>
+            </div>
+            <div class="prereq-item reveal">
+              <div class="prereq-check" onclick="this.classList.toggle('checked')"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div><div class="prereq-text">Vercel account</div></div>
+            </div>
+            <div class="prereq-item reveal">
+              <div class="prereq-check" onclick="this.classList.toggle('checked')"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div><div class="prereq-text">Clerk account</div></div>
+            </div>
+            <div class="prereq-item reveal">
+              <div class="prereq-check" onclick="this.classList.toggle('checked')"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div><div class="prereq-text">Stripe account</div></div>
+            </div>
+            <div class="prereq-item reveal">
+              <div class="prereq-check" onclick="this.classList.toggle('checked')"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div><div class="prereq-text">OpenAI or DeepSeek API key</div></div>
+            </div>
+            <div class="prereq-item reveal">
+              <div class="prereq-check" onclick="this.classList.toggle('checked')"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div><div class="prereq-text">McKay's App Template cloned</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== RESOURCES ========== -->
+      <section class="tech-section" id="resources">
+        <div class="container">
+          <div class="reveal">
+            <div class="section-label">Resources</div>
+            <div class="section-title">Key Links</div>
+            <p class="section-desc">Bookmark these &mdash; you'll use them throughout the course.</p>
+          </div>
+          <div class="resources-grid">
+            <a href="https://docs.cursor.com/" target="_blank" class="resource-link reveal">
+              <span>Cursor Docs</span><span class="arrow">&rarr;</span>
+            </a>
+            <a href="https://github.com/mckaywrigley/mckays-app-template" target="_blank" class="resource-link reveal">
+              <span>McKay's App Template</span><span class="arrow">&rarr;</span>
+            </a>
+            <a href="https://github.com/modelcontextprotocol/servers" target="_blank" class="resource-link reveal">
+              <span>MCP Servers Registry</span><span class="arrow">&rarr;</span>
+            </a>
+            <a href="https://nextjs.org/docs" target="_blank" class="resource-link reveal">
+              <span>Next.js Docs</span><span class="arrow">&rarr;</span>
+            </a>
+            <a href="https://supabase.com/docs" target="_blank" class="resource-link reveal">
+              <span>Supabase Docs</span><span class="arrow">&rarr;</span>
+            </a>
+            <a href="https://clerk.com/docs" target="_blank" class="resource-link reveal">
+              <span>Clerk Docs</span><span class="arrow">&rarr;</span>
+            </a>
+            <a href="https://stripe.com/docs" target="_blank" class="resource-link reveal">
+              <span>Stripe Docs</span><span class="arrow">&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== FOOTER ========== -->
+      <footer>
+        O'Reilly Live Training &middot; Cursor AI IDE: Building Production Applications &middot; Lucas Soares
+      </footer>
+
+    </div><!-- .page-frame -->
+
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

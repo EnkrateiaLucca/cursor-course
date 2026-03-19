@@ -16,19 +16,21 @@
 
 ## Demo Checklist
 
-- [ ] Show Cursor interface — panels, Chat (Cmd+L), Agent mode
-- [ ] Build a toy HTML app live (see [demo-toy-app.md](demo-toy-app.md))
-- [ ] Demonstrate Inline Edit (Cmd+K) on the HTML app
-- [ ] Show Tab autocomplete predicting code
-- [ ] Show Agent mode making multi-step changes
-- [ ] Discuss when to use each mode
+- **Show Cursor interface — panels, Chat (Cmd+L), Agent mode**
+- Build a toy HTML app live (see [demo-toy-app.md](demo-toy-app.md))
+- Demonstrate Inline Edit (Cmd+K) on the HTML app
+- Show Tab autocomplete predicting code
+- Show Agent mode making multi-step changes
+- Discuss when to use each mode
 
 ## Files in This Section
 
-| File | Purpose |
-|------|---------|
+
+| File                               | Purpose                               |
+| ---------------------------------- | ------------------------------------- |
 | [demo-toy-app.md](demo-toy-app.md) | Step-by-step: build a simple HTML app |
-| [prompts.md](prompts.md) | Copy-paste prompts for live demos |
+| [prompts.md](prompts.md)           | Copy-paste prompts for live demos     |
+
 
 ## Key Talking Points
 
@@ -36,3 +38,4 @@
 - The four modes serve different needs: quick edits vs. multi-file changes vs. exploration
 - Emphasize the "try 5 times" rule — if a prompt doesn't work, rephrase and retry
 - Git commits are critical — Cursor's checkpoint system is NOT a replacement for git
+
