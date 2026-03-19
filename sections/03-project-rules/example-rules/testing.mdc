@@ -1,0 +1,43 @@
+---
+description: Testing conventions and patterns
+glob: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts"]
+---
+
+## Framework
+
+- Use Vitest for unit and component tests
+- Use Playwright for E2E tests
+- Use React Testing Library for component tests
+
+## File Organization
+
+- Test files colocated next to source: `Component.tsx` → `Component.test.tsx`
+- E2E tests in `e2e/` directory at project root
+- Test utilities in `tests/utils/`
+
+## Naming
+
+- Describe behavior, not implementation: `"should display error when form is invalid"`
+- Group related tests with `describe` blocks
+- Use `it` or `test` consistently (prefer `it`)
+
+## Patterns
+
+- Arrange → Act → Assert structure
+- One assertion per test when possible
+- Mock external dependencies (API calls, database)
+- Don't mock internal implementation details
+- Test user-visible behavior, not internal state
+
+## What to Test
+
+- User interactions (clicks, form submissions)
+- Conditional rendering (loading, error, empty states)
+- Edge cases (empty data, very long strings, special characters)
+- API error handling (network failures, 4xx/5xx responses)
+
+## What NOT to Test
+
+- Implementation details (internal state, private methods)
+- Third-party library behavior
+- Exact CSS styling

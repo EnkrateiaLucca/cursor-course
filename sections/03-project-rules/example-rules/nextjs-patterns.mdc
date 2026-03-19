@@ -1,0 +1,34 @@
+---
+description: Next.js App Router patterns and conventions
+glob: ["app/**/*.tsx", "app/**/*.ts"]
+---
+
+## Routing
+
+- Use the App Router (not Pages Router)
+- Colocate page-specific components in the route directory
+- Use layout.tsx for shared layouts
+- Use loading.tsx for Suspense boundaries
+- Use error.tsx for error boundaries
+
+## Components
+
+- Server Components by default
+- Add "use client" directive only for: event handlers, useState, useEffect, browser APIs
+- Keep client components small and leaf-level
+- Pass server data as props to client components
+
+## Data Fetching
+
+- Use Server Actions for mutations (forms, button actions)
+- Use server components for data reads
+- Cache with unstable_cache or React cache when appropriate
+- Revalidate with revalidatePath / revalidateTag
+
+## File Conventions
+
+- page.tsx — route page
+- layout.tsx — shared layout
+- loading.tsx — loading UI
+- error.tsx — error boundary
+- not-found.tsx — 404 page

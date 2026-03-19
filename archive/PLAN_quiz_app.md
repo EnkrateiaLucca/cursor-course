@@ -5,6 +5,7 @@
 An intelligent quiz application that allows students to upload study materials (PDFs, images, text), generate AI-powered quizzes, practice with those quizzes, and track their performance over time. Built with a lightweight architecture that processes and extracts content from uploads without permanent file storage.
 
 ### Target Users
+
 - Students preparing for exams who need targeted practice questions
 - Learners who want AI-generated quizzes based on their specific study materials
 - Teachers/instructors who want to create custom quizzes from their course content
@@ -15,6 +16,7 @@ An intelligent quiz application that allows students to upload study materials (
 ## Core Features
 
 ### 1. User Authentication
+
 - **Sign Up / Sign In**: Email/password authentication via Clerk
 - **Session Management**: Persistent sessions across devices
 - **Protected Routes**: All quiz operations require authentication
@@ -23,6 +25,7 @@ An intelligent quiz application that allows students to upload study materials (
 ### 2. Material Upload & Processing
 
 #### Upload Interface
+
 - Drag-and-drop file upload zone
 - Support multiple file types:
   - PDFs (extract text via pdf-parse or similar)
@@ -34,6 +37,7 @@ An intelligent quiz application that allows students to upload study materials (
 - Progress indicators during upload and processing
 
 #### Content Extraction Pipeline
+
 ```
 User uploads file → Frontend sends to API
                   → API stores temporarily in memory/tmp
@@ -44,6 +48,7 @@ User uploads file → Frontend sends to API
 ```
 
 #### Material Management
+
 - View list of uploaded materials (title, upload date, word count)
 - Preview extracted text content
 - Edit material title/description
@@ -53,6 +58,7 @@ User uploads file → Frontend sends to API
 ### 3. AI Quiz Generation
 
 #### Generation Interface
+
 - Select one or multiple materials as source
 - Configure quiz parameters:
   - Number of questions (5, 10, 15, 20, 30)
@@ -63,16 +69,18 @@ User uploads file → Frontend sends to API
 - Preview generated questions before saving
 
 #### AI Integration
+
 - Use Claude API (Anthropic) for question generation: 
-  - https://platform.claude.com/docs/en/home
+  - [https://platform.claude.com/docs/en/home](https://platform.claude.com/docs/en/home)
   - the model to use is the new claude sonnet 4.5: `claude-sonnet-4-5`
-    - https://platform.claude.com/docs/en/about-claude/models/overview
+    - [https://platform.claude.com/docs/en/about-claude/models/overview](https://platform.claude.com/docs/en/about-claude/models/overview)
 - Structured prompt engineering for consistent output format
 - Parse AI response into structured question objects
 - Validate generated questions (ensure all fields present)
 - Retry mechanism for failed generations
 
 #### Question Format
+
 - **Multiple Choice**: Question + 4 options + correct answer + explanation
 - **True/False**: Statement + correct answer + explanation
 - **Short Answer**: Question + model answer + grading criteria
@@ -80,6 +88,7 @@ User uploads file → Frontend sends to API
 ### 4. Quiz Taking Experience
 
 #### Quiz Interface
+
 - Clean, distraction-free quiz view
 - Question counter (e.g., "Question 5 of 10")
 - Progress bar
@@ -89,6 +98,7 @@ User uploads file → Frontend sends to API
 - Submit quiz with confirmation dialog
 
 #### Question Display
+
 - Large, readable question text
 - For Multiple Choice: Radio buttons with clear labels
 - For True/False: Large True/False buttons
@@ -96,6 +106,7 @@ User uploads file → Frontend sends to API
 - "Explain Answer" toggle (shows explanation after answering)
 
 #### Quiz Submission
+
 - Review screen showing flagged questions
 - Confirmation before final submission
 - Immediate scoring for objective questions
@@ -104,6 +115,7 @@ User uploads file → Frontend sends to API
 ### 5. Results & Performance Tracking
 
 #### Quiz Results View
+
 - Overall score percentage
 - Questions correct/incorrect breakdown
 - Time taken to complete
@@ -115,6 +127,7 @@ User uploads file → Frontend sends to API
 - Option to retake quiz
 
 #### Performance Dashboard
+
 - Overall statistics:
   - Total quizzes taken
   - Average score
@@ -126,6 +139,7 @@ User uploads file → Frontend sends to API
 - Weak areas identification (topics with low scores)
 
 #### Progress Tracking
+
 - Quiz attempts linked to specific materials
 - Track improvement over time per material
 - Identify knowledge gaps
@@ -134,6 +148,7 @@ User uploads file → Frontend sends to API
 ### 6. Question Bank & Custom Quizzes
 
 #### Question Bank View
+
 - Browse all generated questions across all materials
 - Filter by:
   - Source material
@@ -145,6 +160,7 @@ User uploads file → Frontend sends to API
 - Preview question with answer and explanation
 
 #### Custom Quiz Builder
+
 - Select questions manually from question bank
 - Drag and drop to reorder questions
 - Mix questions from different materials
@@ -152,6 +168,7 @@ User uploads file → Frontend sends to API
 - Share custom quiz (future feature)
 
 #### Smart Quiz Suggestions
+
 - "Practice Weak Areas" - auto-generates quiz from lowest-scoring topics
 - "Review Recent Material" - quiz from recently uploaded content
 - "Random Challenge" - mixed difficulty and topics
@@ -161,6 +178,7 @@ User uploads file → Frontend sends to API
 ## Technical Architecture
 
 ### Frontend Stack
+
 - **Framework**: Next.js 15+ (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS + shadcn/ui components
@@ -171,6 +189,7 @@ User uploads file → Frontend sends to API
 - **Rich Text**: Markdown rendering for explanations (react-markdown)
 
 ### Backend Stack
+
 - **API Layer**: Next.js API Routes (server-side)
 - **Authentication**: Clerk (server-side validation)
 - **Database**: Supabase (PostgreSQL)
@@ -181,6 +200,7 @@ User uploads file → Frontend sends to API
 ### Architecture Pattern: Server-Side API with Ephemeral File Processing
 
 **Why This Approach:**
+
 - Security: File processing happens server-side, never exposes API keys
 - Cost-effective: No permanent file storage costs
 - Privacy: User files not retained after content extraction
@@ -188,6 +208,7 @@ User uploads file → Frontend sends to API
 - Flexibility: Easy to swap AI providers or add new processing methods
 
 **Data Flow - Material Upload:**
+
 ```
 User uploads file → Frontend (React)
                   → API Route /api/materials/upload
@@ -200,6 +221,7 @@ User uploads file → Frontend (React)
 ```
 
 **Data Flow - Quiz Generation:**
+
 ```
 User requests quiz → Frontend (React)
                    → API Route /api/quizzes/generate
@@ -213,6 +235,7 @@ User requests quiz → Frontend (React)
 ```
 
 **Data Flow - Quiz Taking:**
+
 ```
 User takes quiz → Frontend tracks answers locally
                 → User submits quiz
@@ -228,6 +251,7 @@ User takes quiz → Frontend tracks answers locally
 ## Database Schema
 
 ### Materials Table
+
 Stores extracted text content from uploaded files (not the files themselves).
 
 ```sql
@@ -250,6 +274,7 @@ CREATE INDEX idx_materials_created_at ON materials(created_at DESC);
 ```
 
 ### Questions Table
+
 Stores all generated questions from AI.
 
 ```sql
@@ -273,6 +298,7 @@ CREATE INDEX idx_questions_question_type ON questions(question_type);
 ```
 
 ### Quizzes Table
+
 Represents a collection of questions (generated or custom).
 
 ```sql
@@ -291,6 +317,7 @@ CREATE INDEX idx_quizzes_user_id ON quizzes(user_id);
 ```
 
 ### Quiz_Questions Table
+
 Junction table linking quizzes to questions with ordering.
 
 ```sql
@@ -306,6 +333,7 @@ CREATE INDEX idx_quiz_questions_quiz_id ON quiz_questions(quiz_id);
 ```
 
 ### Quiz_Attempts Table
+
 Stores each attempt at taking a quiz.
 
 ```sql
@@ -328,6 +356,7 @@ CREATE INDEX idx_quiz_attempts_created_at ON quiz_attempts(created_at DESC);
 ```
 
 ### Quiz_Answers Table
+
 Stores individual answers for each question in an attempt.
 
 ```sql
@@ -345,6 +374,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ```
 
 **Security Approach:**
+
 - Row Level Security (RLS) disabled
 - Security enforced in API routes via Clerk authentication
 - All queries filter by authenticated user's ID
@@ -356,6 +386,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ## API Endpoints
 
 ### POST /api/materials/upload
+
 **Purpose**: Upload and process a file to extract content
 
 **Authentication**: Required (Clerk session)
@@ -363,6 +394,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 **Request**: FormData with file
 
 **Process**:
+
 1. Receive file upload
 2. Validate file type and size
 3. Extract text content based on file type
@@ -371,6 +403,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 6. Return material metadata
 
 **Response**:
+
 ```json
 {
   "material": {
@@ -387,6 +420,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ```
 
 **Error Codes**:
+
 - 400: Bad request (invalid file type, too large)
 - 401: Unauthorized
 - 500: Server error (processing failed)
@@ -394,16 +428,19 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### GET /api/materials
+
 **Purpose**: Fetch all materials for authenticated user
 
 **Authentication**: Required (Clerk session)
 
 **Query Parameters**:
+
 - `sort`: 'recent' | 'oldest' | 'title' (default: 'recent')
 - `limit`: number (default: 50)
 - `offset`: number (default: 0)
 
 **Response**:
+
 ```json
 {
   "materials": [
@@ -423,6 +460,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### GET /api/materials/[id]
+
 **Purpose**: Fetch a specific material with content
 
 **Authentication**: Required (Clerk session)
@@ -430,6 +468,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 **Ownership Check**: Verifies material belongs to authenticated user
 
 **Response**:
+
 ```json
 {
   "material": {
@@ -447,6 +486,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### DELETE /api/materials/[id]
+
 **Purpose**: Delete a material and its associated questions (if not used in completed quizzes)
 
 **Authentication**: Required (Clerk session)
@@ -454,6 +494,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 **Ownership Check**: Verifies material belongs to authenticated user
 
 **Response**:
+
 ```json
 {
   "success": true,
@@ -464,11 +505,13 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### POST /api/quizzes/generate
+
 **Purpose**: Generate AI quiz from selected materials
 
 **Authentication**: Required (Clerk session)
 
 **Request Body**:
+
 ```json
 {
   "materialIds": ["uuid1", "uuid2"],
@@ -480,6 +523,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ```
 
 **Process**:
+
 1. Fetch content from specified materials
 2. Construct AI prompt with parameters
 3. Call Claude/GPT API
@@ -490,6 +534,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 8. Return quiz with questions
 
 **Response**:
+
 ```json
 {
   "quiz": {
@@ -513,6 +558,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ```
 
 **Error Codes**:
+
 - 400: Bad request (invalid parameters)
 - 401: Unauthorized
 - 429: Rate limit exceeded (AI API)
@@ -521,15 +567,18 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### GET /api/quizzes
+
 **Purpose**: Fetch all quizzes for authenticated user
 
 **Authentication**: Required (Clerk session)
 
 **Query Parameters**:
+
 - `sort`: 'recent' | 'oldest' | 'title'
 - `type`: 'generated' | 'custom' | 'smart' | 'all'
 
 **Response**:
+
 ```json
 {
   "quizzes": [
@@ -551,6 +600,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### GET /api/quizzes/[id]
+
 **Purpose**: Fetch a specific quiz with questions
 
 **Authentication**: Required (Clerk session)
@@ -558,6 +608,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 **Ownership Check**: Verifies quiz belongs to authenticated user
 
 **Response**:
+
 ```json
 {
   "quiz": {
@@ -582,11 +633,13 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### POST /api/quizzes/[id]/start
+
 **Purpose**: Start a quiz attempt (creates attempt record)
 
 **Authentication**: Required (Clerk session)
 
 **Response**:
+
 ```json
 {
   "attempt": {
@@ -600,11 +653,13 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### POST /api/quizzes/[id]/submit
+
 **Purpose**: Submit quiz answers and calculate score
 
 **Authentication**: Required (Clerk session)
 
 **Request Body**:
+
 ```json
 {
   "attemptId": "uuid",
@@ -620,6 +675,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ```
 
 **Process**:
+
 1. Validate attempt belongs to user
 2. Grade each answer
 3. Calculate overall score
@@ -628,6 +684,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 6. Return results with correct answers and explanations
 
 **Response**:
+
 ```json
 {
   "attempt": {
@@ -654,11 +711,13 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### GET /api/stats
+
 **Purpose**: Fetch performance statistics for authenticated user
 
 **Authentication**: Required (Clerk session)
 
 **Response**:
+
 ```json
 {
   "overall": {
@@ -693,11 +752,13 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### GET /api/questions
+
 **Purpose**: Fetch all questions for question bank (with filtering)
 
 **Authentication**: Required (Clerk session)
 
 **Query Parameters**:
+
 - `materialId`: UUID (filter by material)
 - `questionType`: string (filter by type)
 - `difficulty`: string (filter by difficulty)
@@ -706,6 +767,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 - `offset`: number
 
 **Response**:
+
 ```json
 {
   "questions": [
@@ -732,11 +794,13 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ---
 
 ### POST /api/quizzes/custom
+
 **Purpose**: Create a custom quiz from selected questions
 
 **Authentication**: Required (Clerk session)
 
 **Request Body**:
+
 ```json
 {
   "title": "My Custom Quiz",
@@ -748,6 +812,7 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ```
 
 **Response**:
+
 ```json
 {
   "quiz": {
@@ -767,20 +832,21 @@ CREATE INDEX idx_quiz_answers_attempt_id ON quiz_answers(attempt_id);
 ## AI Integration Details
 
 ### AI Provider Options
-1. **Anthropic Claude** (Recommended)
-   - Claude 3.5 Sonnet for balanced speed/quality
-   - Claude 3 Opus for highest quality (slower, more expensive)
-   - Better at following structured output instructions
-   - Good at generating explanations
 
+1. **Anthropic Claude** (Recommended)
+  - Claude 3.5 Sonnet for balanced speed/quality
+  - Claude 3 Opus for highest quality (slower, more expensive)
+  - Better at following structured output instructions
+  - Good at generating explanations
 2. **OpenAI GPT**
-   - GPT-4 Turbo for quality
-   - GPT-3.5 Turbo for speed/cost
-   - JSON mode for structured output
+  - GPT-4 Turbo for quality
+  - GPT-3.5 Turbo for speed/cost
+  - JSON mode for structured output
 
 ### Prompt Engineering Strategy
 
 **System Prompt Template**:
+
 ```
 You are an expert educational content creator. Generate quiz questions based on the provided study material.
 
@@ -803,6 +869,7 @@ Ensure questions are clear, unambiguous, and test understanding, not just memori
 ```
 
 **User Prompt Template**:
+
 ```
 Study Material:
 ---
@@ -813,6 +880,7 @@ Generate {count} quiz questions based on this material.
 ```
 
 ### Response Parsing
+
 - Parse JSON response from AI
 - Validate each question has required fields
 - Sanitize question text and options
@@ -820,6 +888,7 @@ Generate {count} quiz questions based on this material.
 - Fallback to manual question entry if AI fails
 
 ### Rate Limiting & Costs
+
 - Implement request queuing for large batches
 - Cache similar requests (same material + same params)
 - Monitor API usage and costs
@@ -831,6 +900,7 @@ Generate {count} quiz questions based on this material.
 ## File Processing Details
 
 ### PDF Processing
+
 ```typescript
 // Using pdf-parse library
 import pdf from 'pdf-parse';
@@ -842,6 +912,7 @@ async function extractPdfText(buffer: Buffer): Promise<string> {
 ```
 
 ### Image OCR Processing
+
 ```typescript
 // Using Tesseract.js for client-side OCR (lighter)
 // OR Google Cloud Vision API for server-side (better accuracy)
@@ -854,6 +925,7 @@ async function extractImageText(buffer: Buffer): Promise<string> {
 ```
 
 ### DOCX Processing
+
 ```typescript
 // Using mammoth library
 import mammoth from 'mammoth';
@@ -865,6 +937,7 @@ async function extractDocxText(buffer: Buffer): Promise<string> {
 ```
 
 ### Text File Processing
+
 ```typescript
 // Simple text extraction
 function extractTextFile(buffer: Buffer): string {
@@ -873,6 +946,7 @@ function extractTextFile(buffer: Buffer): string {
 ```
 
 ### Processing Pipeline
+
 1. Upload endpoint receives file
 2. Detect file type from MIME type
 3. Route to appropriate extraction function
@@ -987,7 +1061,8 @@ GOOGLE_CLOUD_VISION_API_KEY=xxxxx
 ```
 
 **Security Notes:**
-- `NEXT_PUBLIC_*` variables are exposed to the browser
+
+- `NEXT_PUBLIC_`* variables are exposed to the browser
 - API keys (ANTHROPIC, OPENAI, GOOGLE) are server-only
 - Never expose AI API keys to client
 - Use Supabase anon key (has RLS by default, though we disable it)
@@ -999,6 +1074,7 @@ GOOGLE_CLOUD_VISION_API_KEY=xxxxx
 ### Hosting Platform: Vercel
 
 **Why Vercel:**
+
 - Automatic Next.js optimizations
 - Serverless API routes with long timeouts (important for AI calls)
 - Edge middleware support (Clerk)
@@ -1013,8 +1089,8 @@ GOOGLE_CLOUD_VISION_API_KEY=xxxxx
 3. **Environment Variables**: Add all required variables
 4. **Build Settings**: Auto-detected (Next.js)
 5. **API Route Configuration**:
-   - Increase timeout for /api/quizzes/generate (30s+)
-   - Increase memory for file processing routes
+  - Increase timeout for /api/quizzes/generate (30s+)
+  - Increase memory for file processing routes
 6. **Domain Configuration**: Use Vercel subdomain or custom domain
 7. **Clerk Configuration**: Add Vercel URL to allowed domains
 
@@ -1111,6 +1187,7 @@ export interface QuizAnswer {
 ## Authentication Flow
 
 ### 1. Initial Load
+
 ```
 User visits app → Clerk middleware checks session
                 → No session: Redirect to sign-in
@@ -1118,6 +1195,7 @@ User visits app → Clerk middleware checks session
 ```
 
 ### 2. Material Upload
+
 ```
 User uploads file → API validates session
                   → Process file server-side
@@ -1128,6 +1206,7 @@ User uploads file → API validates session
 ```
 
 ### 3. Quiz Generation
+
 ```
 User requests quiz → API validates session
                    → Fetch user's materials (by user_id)
@@ -1137,6 +1216,7 @@ User requests quiz → API validates session
 ```
 
 ### 4. Quiz Taking
+
 ```
 User takes quiz → Store answers locally (React state)
                 → Submit to API
@@ -1150,53 +1230,59 @@ User takes quiz → Store answers locally (React state)
 ## Future Enhancements
 
 ### Phase 2 Features
-- [ ] Spaced repetition algorithm (show questions based on past performance)
-- [ ] Collaborative quizzes (share with classmates)
-- [ ] Quiz templates (save generation parameters)
-- [ ] Flashcard mode (quick review without full quiz)
-- [ ] Mobile app (React Native)
-- [ ] Export quizzes to PDF
-- [ ] Import questions from CSV/JSON
-- [ ] Audio transcription (upload lecture recordings)
+
+- Spaced repetition algorithm (show questions based on past performance)
+- Collaborative quizzes (share with classmates)
+- Quiz templates (save generation parameters)
+- Flashcard mode (quick review without full quiz)
+- Mobile app (React Native)
+- Export quizzes to PDF
+- Import questions from CSV/JSON
+- Audio transcription (upload lecture recordings)
 
 ### Phase 3 Features
-- [ ] Study groups (multiple users working together)
-- [ ] Leaderboards (compare with friends)
-- [ ] Badges and achievements
-- [ ] Study streaks and reminders
-- [ ] Advanced analytics (learning curve, retention rate)
-- [ ] AI tutor chat (ask questions about materials)
-- [ ] Video content support (extract transcripts)
-- [ ] Integration with LMS platforms (Canvas, Blackboard)
+
+- Study groups (multiple users working together)
+- Leaderboards (compare with friends)
+- Badges and achievements
+- Study streaks and reminders
+- Advanced analytics (learning curve, retention rate)
+- AI tutor chat (ask questions about materials)
+- Video content support (extract transcripts)
+- Integration with LMS platforms (Canvas, Blackboard)
 
 ### Technical Improvements
-- [ ] Implement caching for AI responses (Redis)
-- [ ] Add background job queue for file processing (BullMQ)
-- [ ] Implement real-time updates (WebSockets)
-- [ ] Add comprehensive error logging (Sentry)
-- [ ] Add E2E tests (Playwright)
-- [ ] Add unit tests for API routes (Jest)
-- [ ] Implement pagination for all list views
-- [ ] Add full-text search (Postgres FTS or Algolia)
-- [ ] Optimize AI prompts for lower token usage
-- [ ] Add AI response streaming for better UX
+
+- Implement caching for AI responses (Redis)
+- Add background job queue for file processing (BullMQ)
+- Implement real-time updates (WebSockets)
+- Add comprehensive error logging (Sentry)
+- Add E2E tests (Playwright)
+- Add unit tests for API routes (Jest)
+- Implement pagination for all list views
+- Add full-text search (Postgres FTS or Algolia)
+- Optimize AI prompts for lower token usage
+- Add AI response streaming for better UX
 
 ---
 
 ## Performance Targets
 
 ### Core Web Vitals
+
 - **LCP** (Largest Contentful Paint): < 2.5s
 - **FID** (First Input Delay): < 100ms
 - **CLS** (Cumulative Layout Shift): < 0.1
 
 ### Loading Times
+
 - Initial page load: < 2s
 - Material upload + processing: < 10s (depending on file size)
 - Quiz generation: < 15s (AI call is the bottleneck)
 - Quiz submission: < 1s
 
 ### Optimization Strategies
+
 - Server-side rendering for initial load
 - Optimistic UI updates for quiz answers
 - Show progress indicators for long operations
@@ -1212,19 +1298,23 @@ User takes quiz → Store answers locally (React state)
 ### Monthly Costs (for 100 active users)
 
 **Vercel Hosting**: $0 - $20
+
 - Free tier covers most small apps
 - Pro tier ($20/month) if you need more bandwidth
 
 **Supabase Database**: $0 - $25
+
 - Free tier: 500MB database, 2GB bandwidth
 - Pro tier ($25/month): 8GB database, 50GB bandwidth
 
 **AI API Costs**: $50 - $200
+
 - Anthropic Claude: ~$0.01 per quiz generation (1000 tokens)
 - 10 quizzes per user per month = 1000 quizzes = ~$10-20
 - Depends heavily on usage patterns
 
 **Google Cloud Vision** (optional): $0 - $50
+
 - $1.50 per 1000 images
 - Most users will upload PDFs/text, not images
 
@@ -1237,17 +1327,19 @@ User takes quiz → Store answers locally (React state)
 ## Accessibility Requirements
 
 ### WCAG 2.1 Level AA Compliance
-- [ ] Color contrast ratios meet 4.5:1 minimum
-- [ ] All interactive elements keyboard accessible
-- [ ] Focus indicators visible on all focusable elements
-- [ ] Screen reader compatibility (semantic HTML)
-- [ ] Form labels properly associated
-- [ ] Error messages descriptive and helpful
-- [ ] Quiz timer has visual and audio cues
-- [ ] Quiz questions are navigable with keyboard
-- [ ] Results charts have accessible data tables
+
+- Color contrast ratios meet 4.5:1 minimum
+- All interactive elements keyboard accessible
+- Focus indicators visible on all focusable elements
+- Screen reader compatibility (semantic HTML)
+- Form labels properly associated
+- Error messages descriptive and helpful
+- Quiz timer has visual and audio cues
+- Quiz questions are navigable with keyboard
+- Results charts have accessible data tables
 
 ### Implementation Notes
+
 - Use semantic HTML (`<button>`, `<form>`, `<label>`, `<fieldset>`)
 - Add ARIA labels for complex interactions
 - Test with screen readers (VoiceOver, NVDA)
@@ -1260,17 +1352,20 @@ User takes quiz → Store answers locally (React state)
 ## Testing Strategy
 
 ### Unit Tests
+
 - File processing functions
 - AI response parsing
 - Quiz grading logic
 - Input validation functions
 
 ### Integration Tests
+
 - Material upload → content extraction → database storage
 - Quiz generation → AI call → question parsing → database storage
 - Quiz taking → answer submission → grading → results calculation
 
 ### End-to-End Tests
+
 - User sign-up and sign-in flow
 - Complete material upload workflow
 - Generate quiz from material
@@ -1278,24 +1373,26 @@ User takes quiz → Store answers locally (React state)
 - View results and performance stats
 
 ### Manual Testing Checklist
-- [ ] Upload PDF, extract text correctly
-- [ ] Upload image, OCR extracts text
-- [ ] Generate quiz with various parameters
-- [ ] Take quiz, all question types work
-- [ ] Submit quiz, score calculated correctly
-- [ ] View performance dashboard
-- [ ] Create custom quiz from question bank
-- [ ] Test on mobile device
-- [ ] Test on different browsers
-- [ ] Test with slow network (3G simulation)
-- [ ] Test file upload failures (too large, wrong type)
-- [ ] Test AI API failures (timeout, rate limit)
+
+- Upload PDF, extract text correctly
+- Upload image, OCR extracts text
+- Generate quiz with various parameters
+- Take quiz, all question types work
+- Submit quiz, score calculated correctly
+- View performance dashboard
+- Create custom quiz from question bank
+- Test on mobile device
+- Test on different browsers
+- Test with slow network (3G simulation)
+- Test file upload failures (too large, wrong type)
+- Test AI API failures (timeout, rate limit)
 
 ---
 
 ## Security Considerations
 
 ### Authentication & Authorization
+
 - All API routes require Clerk authentication
 - User ID extracted from Clerk session token
 - All database queries filtered by user_id
@@ -1303,6 +1400,7 @@ User takes quiz → Store answers locally (React state)
 - No way to access other users' data
 
 ### File Upload Security
+
 - Validate file types (whitelist approach)
 - Validate file sizes (max 10MB per file)
 - Sanitize file names
@@ -1311,6 +1409,7 @@ User takes quiz → Store answers locally (React state)
 - Delete files immediately after processing
 
 ### AI API Security
+
 - API keys stored server-side only
 - Never expose keys to client
 - Implement rate limiting per user
@@ -1319,6 +1418,7 @@ User takes quiz → Store answers locally (React state)
 - Sanitize user input before sending to AI
 
 ### Database Security
+
 - Use parameterized queries (Supabase handles this)
 - Disable RLS, enforce security in API routes
 - Regular backups
@@ -1326,6 +1426,7 @@ User takes quiz → Store answers locally (React state)
 - Encrypt sensitive data at rest
 
 ### Content Security
+
 - Sanitize AI-generated content before displaying
 - Prevent XSS attacks in question text
 - Validate JSON responses from AI
@@ -1337,6 +1438,7 @@ User takes quiz → Store answers locally (React state)
 ## AI Prompt Examples
 
 ### Multiple Choice Generation
+
 ```typescript
 const prompt = `
 Generate ${count} multiple choice questions based on this material.
@@ -1368,6 +1470,7 @@ Return JSON array:
 ```
 
 ### True/False Generation
+
 ```typescript
 const prompt = `
 Generate ${count} true/false questions based on this material.
@@ -1397,6 +1500,7 @@ Return JSON array:
 ```
 
 ### Short Answer Generation
+
 ```typescript
 const prompt = `
 Generate ${count} short answer questions based on this material.
@@ -1430,6 +1534,7 @@ Return JSON array:
 ## User Experience Flows
 
 ### Flow 1: First-Time User - Upload to Quiz
+
 1. User signs up / signs in
 2. Lands on dashboard (empty state)
 3. Clicks "Upload Material" button
@@ -1449,6 +1554,7 @@ Return JSON array:
 17. Reviews each question with explanations
 
 ### Flow 2: Returning User - Custom Quiz
+
 1. User signs in
 2. Lands on dashboard with performance stats
 3. Sees "Weak Areas" section highlighting poor performance topics
@@ -1466,17 +1572,18 @@ Return JSON array:
 15. Dashboard updates with new attempt data
 
 ### Flow 3: Performance Review
+
 1. User signs in
 2. Clicks "Performance" in navigation
 3. Sees overall stats:
-   - 15 quizzes taken
-   - 76% average score
-   - 300 questions answered
-   - 78% accuracy
+  - 15 quizzes taken
+  - 76% average score
+  - 300 questions answered
+  - 78% accuracy
 4. Sees chart showing score trend over time
 5. Sees "Weak Areas" breakdown:
-   - Cellular Respiration: 55% accuracy
-   - Photosynthesis: 82% accuracy
+  - Cellular Respiration: 55% accuracy
+  - Photosynthesis: 82% accuracy
 6. Clicks on "Cellular Respiration"
 7. Sees all attempts related to this topic
 8. Clicks "Practice This Topic"
@@ -1488,6 +1595,7 @@ Return JSON array:
 ## Rebuild Instructions for AI
 
 ### Step 1: Project Setup
+
 ```bash
 npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias "@/*" --eslint
 npm install @clerk/nextjs @supabase/supabase-js
@@ -1498,11 +1606,13 @@ npx shadcn-ui@latest init
 ```
 
 ### Step 2: Environment Configuration
+
 Create `.env.local` with required variables (see Environment Variables section)
 
 ### Step 3: Implement Core Files
 
 **Authentication & Layout:**
+
 1. Create `middleware.ts` for Clerk authentication
 2. Create `app/layout.tsx` with ClerkProvider
 3. Create navigation component with auth state
@@ -1537,12 +1647,14 @@ Create `.env.local` with required variables (see Environment Variables section)
 24. Add shadcn/ui components (Button, Card, Dialog, Select, etc.)
 
 ### Step 4: Database Setup
+
 1. Create Supabase project
 2. Run `supabase-schema.sql` in SQL Editor
 3. Verify tables created correctly
 4. Test connection from development
 
 ### Step 5: AI Setup
+
 1. Create Anthropic or OpenAI account
 2. Generate API key
 3. Add to `.env.local`
@@ -1550,10 +1662,13 @@ Create `.env.local` with required variables (see Environment Variables section)
 5. Verify structured output parsing
 
 ### Step 6: Test Locally
+
 ```bash
 npm run dev
 ```
+
 Test complete flows:
+
 - Upload material (PDF, image, text)
 - Generate quiz from material
 - Take quiz
@@ -1562,9 +1677,11 @@ Test complete flows:
 - Create custom quiz
 
 ### Step 7: Deploy
+
 ```bash
 gh repo create quiz-app --private --source=. --remote=origin --push
 ```
+
 1. Import to Vercel
 2. Add environment variables
 3. Configure API route timeouts
@@ -1572,6 +1689,7 @@ gh repo create quiz-app --private --source=. --remote=origin --push
 5. Test production
 
 ### Step 8: Verify Production
+
 - Test authentication flow
 - Upload test material
 - Generate test quiz
@@ -1584,6 +1702,7 @@ gh repo create quiz-app --private --source=. --remote=origin --push
 ## Success Metrics
 
 ### User Engagement
+
 - Daily active users (DAU)
 - Average materials uploaded per user
 - Average quizzes generated per user
@@ -1592,12 +1711,14 @@ gh repo create quiz-app --private --source=. --remote=origin --push
 - Time spent in app per session
 
 ### Learning Effectiveness
+
 - Score improvement over time (per user)
 - Quiz retake rate (users practicing same material)
 - Weak area improvement (accuracy increase after targeted practice)
 - Custom quiz creation rate (shows engagement with question bank)
 
 ### Technical Metrics
+
 - Material upload success rate (>95% target)
 - Quiz generation success rate (>95% target)
 - Average generation time (<15s target)
@@ -1605,6 +1726,7 @@ gh repo create quiz-app --private --source=. --remote=origin --push
 - Uptime (99.9% target)
 
 ### Business Metrics
+
 - User retention (Day 1, Day 7, Day 30)
 - Conversion rate (sign-up to first quiz)
 - AI API cost per user
@@ -1615,6 +1737,7 @@ gh repo create quiz-app --private --source=. --remote=origin --push
 ## Known Limitations & Trade-offs
 
 ### Current Limitations
+
 1. **No permanent file storage**: Original files deleted after processing (privacy + cost trade-off)
 2. **Single AI provider**: Must choose Claude OR GPT (not both simultaneously)
 3. **No offline support**: Requires internet for all operations
@@ -1623,6 +1746,7 @@ gh repo create quiz-app --private --source=. --remote=origin --push
 6. **Basic analytics**: Simple stats, no advanced learning insights
 
 ### Trade-offs Made
+
 1. **File deletion vs. storage**: Chose to delete for privacy/cost over keeping for re-processing
 2. **Server-side processing vs. client-side**: Chose server-side for security over client-side for speed
 3. **AI generation vs. manual entry**: Focused on AI generation, limited manual question creation UI
@@ -1634,6 +1758,7 @@ gh repo create quiz-app --private --source=. --remote=origin --push
 ## Conclusion
 
 This quiz application provides a comprehensive learning platform with:
+
 - ✅ Secure server-side authentication
 - ✅ Intelligent file processing (no permanent storage)
 - ✅ AI-powered quiz generation

@@ -1,0 +1,44 @@
+---
+description: REST API and Server Action design standards
+glob: ["**/api/**/*.ts", "**/actions/**/*.ts"]
+---
+
+## Server Actions (Preferred)
+
+- Define in separate files with "use server" directive
+- Validate inputs with Zod before processing
+- Return typed results: `{ success: boolean, data?: T, error?: string }`
+- Use revalidatePath after mutations
+
+## API Routes (When Needed)
+
+- Use for webhooks, external integrations, and streaming responses
+- Validate request body with Zod
+- Return proper HTTP status codes:
+  - 200: Success
+  - 201: Created
+  - 400: Bad request / validation error
+  - 401: Unauthorized
+  - 404: Not found
+  - 500: Internal server error
+- Always wrap in try/catch with meaningful error messages
+
+## Error Handling
+
+```typescript
+// Pattern for Server Actions
+try {
+  const validated = schema.parse(input)
+  const result = await db.insert(table).values(validated)
+  revalidatePath("/path")
+  return { success: true, data: result }
+} catch (error) {
+  return { success: false, error: "Failed to create resource" }
+}
+```
+
+## Security
+
+- Never trust client input — always validate server-side
+- Use Clerk's auth() to verify authentication
+- Check authorization (user owns the resource) before mutations

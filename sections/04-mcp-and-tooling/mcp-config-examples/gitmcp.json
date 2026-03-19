@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "nextjs-docs": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://gitmcp.io/vercel/next.js"]
+    }
+  }
+}

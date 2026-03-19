@@ -1,771 +1,435 @@
 # Presentation Scripts & Speaker Notes
 
-## Section 1: Cursor & Context Management
-
-### Slide: What is Cursor 2.0?
-
-**Speaker Notes:**
-- Cursor is fundamentally different from traditional IDEs - it's built AI-first from the ground up
-- The 2.0 release introduced Composer, a new frontier coding model that's 4x faster than competitors
-- Key differentiator: Multi-agent system can run up to 8 agents in parallel using git worktrees
-- MCP (Model Context Protocol) allows integration with external tools like GitHub, Figma, databases
-- Emphasize: This isn't just autocomplete - it's production development
-
-**Key Points to Cover:**
-- Natural language to code generation
-- Semantic search across entire codebase (not just text matching)
-- Multi-agent parallel execution prevents conflicts
-- MCP standardizes AI connections to your dev ecosystem
-
-**Reference:** Cursor 2.0 Blog Post - https://cursor.com/blog/2-0
+> 10 sections | 62 slides | ~6 hours total
+> Each section links to its folder in `sections/` for demo files and prompts.
 
 ---
 
-### Slide: Core Features Overview
+## Section 01: Cursor Intro (Slides 1–6, ~45 min)
 
-**Speaker Notes:**
-- **Chat Interface**: Multi-tab conversations with context checkpoints - like having multiple consultants
-- **Tab Autocomplete**: Goes beyond single-line - predicts multi-line code based on your recent changes
-- **Agent Mode (Composer)**: Autonomous multi-file editing - give it a goal, it makes a plan and executes
-- **Inline Edit (Cmd+K)**: Quick in-place modifications without leaving your flow
+**[Section folder →](../sections/01-cursor-intro/)**
 
-**Demo Opportunity:**
-- Show opening a new chat tab (Cmd+L)
-- Demonstrate inline edit (Cmd+K) on a simple function
-- Show how Tab autocomplete predicts based on context
+### Slide 1: Title / Welcome
 
----
+- Welcome to the course. Introductions.
+- "By the end of today, you'll have built a full AI-powered quiz app from scratch — and more importantly, you'll have a repeatable workflow for building any production app with Cursor."
+- Quick audience poll: "Who's used Cursor before? Who's used GitHub Copilot? Who's new to AI coding tools?"
 
-### Slide: The Three-Step Framework
+### Slide 2: What is Cursor?
 
-**Speaker Notes:**
-- This framework came from real staff engineers using Cursor in production
-- **EXPLORE**: Don't jump straight to code - share context, discuss options, identify relevant files
-- **PLAN**: Create explicit step-by-step plans, use markdown checklists, break down complex tasks
-- **BUILD**: Execute iteratively, review each step, commit regularly (don't rely on Cursor's checkpoint system alone)
+- Cursor is AI-first — not a plugin bolted onto VS Code
+- Key differentiators: Agent mode, multi-file editing, MCP integrations, codebase-aware AI
+- This isn't autocomplete — it's a development partner
 
-**Why This Matters:**
-- Prevents context overload (the #1 cause of poor AI output)
-- Ensures you're making strategic decisions, not just typing faster
-- AI works best with clear, step-by-step tasks - not vague "fix everything" requests
+**Key point:** "Your value as a developer is in decision-making, not typing speed. Cursor amplifies your decisions."
 
-**Reference:** Cursor for Staff Engineers - https://www.youtube.com/watch?v=sb0y5B3LLUA
+### Slide 3: Core Interaction Modes
 
----
+| Mode | Shortcut | When to Use |
+|------|----------|-------------|
+| Chat | Cmd+L | Explore, ask questions, single-file edits |
+| Agent | Cmd+I | Multi-file changes, feature implementation |
+| Inline Edit | Cmd+K | Quick in-place modifications |
+| Tab | Tab | Accept AI predictions while typing |
 
-### Slide: Why This Framework Matters
+### Slide 4-5: Demo — Build a Toy HTML App
 
-**Speaker Notes:**
-- You're a staff engineer (or aspiring to be one) - your value is in decision-making, not typing speed
-- LLMs need clear, tactical prompts - they struggle with ambiguity
-- Trying to do everything at once leads to hallucinations, security issues, and wasted time
+**→ Follow [demo-toy-app.md](../sections/01-cursor-intro/demo-toy-app.md)**
 
-**The "Try 5 Times" Rule:**
-- If a prompt fails once, don't give up immediately
-- Try it 5 different ways, in a new context window if needed
-- The more you push yourself to use the system, the better you'll understand what works
-- Pattern recognition develops over time
+1. Create `toy-app.html` from scratch
+2. Generate with Chat → show Apply button
+3. Enhance with Inline Edit (Cmd+K) → gradient text
+4. Show Tab autocomplete predictions
+5. Add feature with Agent → dark mode toggle
+6. Open in browser → working app
 
-**Git Commits Are Critical:**
-- Cursor's checkpoint system is NOT a replacement for git
-- Commit frequently - after each working milestone
-- Makes rollback trivial when AI makes mistakes
-- Provides audit trail of what worked
+**Timing:** ~25 min for the demo with explanation
+
+### Slide 6: Key Principles
+
+- **Try 5 times rule:** If a prompt fails, rephrase and retry — don't give up after one attempt
+- **Git is non-negotiable:** Commit after each working milestone. Cursor checkpoints are not a replacement.
+- **One task = one chat:** Start fresh chats to maintain narrative integrity
+
+**⏱ BREAK / RECAP** (~5 min)
 
 ---
 
-### Slide: Context Management: The Foundation
+## Section 02: Explore-Plan-Build (Slides 7–11, ~45 min)
 
-**Speaker Notes:**
-- LLMs have fixed context windows (128k-1M tokens) - but comprehension doesn't scale linearly
-- Think of it like telling a story - when it gets convoluted, the listener loses track
-- Token footprint ≠ understanding quality
-- Poor context = hallucinations, incorrect code, security vulnerabilities
+**[Section folder →](../sections/02-explore-plan-build/)**
 
-**Real-World Example:**
-- Dumping an entire `node_modules` folder into context is useless noise
-- Better: Reference specific files with @-mentions, use semantic search for relevant code
+### Slide 7: The Framework
 
-**Key Insight:**
-- You need to curate what the AI sees, just like you would for a junior developer
-- More context != better results
-
----
-
-### Slide: Codebase Indexing Process
-
-**Speaker Notes:**
-Walk through the 7 steps:
-
-1. **File Synchronization** - Encrypted paths tracked (privacy-preserving)
-2. **Chunking** - Code split into semantic segments (not just line-based)
-3. **Vector Conversion** - Create semantic "fingerprints" of code
-4. **Vector Database Storage** - Enables efficient similarity search
-5. **Query Encoding** - Your natural language questions become vectors
-6. **Similarity Matching** - Find code that matches semantically (not just keyword matching)
-7. **Results Ranking** - Best matches prioritized based on relevance
-
-**Why This Matters:**
-- You can ask "where is authentication logic?" instead of grepping for specific function names
-- Works even if variable names or file structures change
-- Understands intent, not just syntax
-
----
-
-### Slide: The @ Symbol: Your Context Navigator
-
-**Speaker Notes:**
-
-**@file** - Reference specific files
-- Example: `@src/components/Header.tsx`
-- Use when you know exactly what file you need
-
-**@folder** - Include entire directories
-- Example: `@src/utils/`
-- Careful with large folders - causes context bloat
-
-**@codebase** - Semantic search across project
-- Example: `@codebase "authentication logic"`
-- This is where the magic happens - finds relevant code you might not even know exists
-
-**@docs** - Query indexed documentation
-- Example: `@docs "React hooks API"`
-- Add documentation URLs in settings → documentation
-
-**@git** - Reference git history
-- Example: `@git "last commit changes"`
-- Useful for understanding recent modifications
-
-**@branch** - Get working state from specific branch
-- Example: `@branch feature/new-auth`
-- Compare implementations across branches
-
-**Pro Tip:** Combine @-mentions for precision
-- `@src/components/Header.tsx @src/styles/theme.ts Update the Header to use our new theme system`
-
----
-
-### Slide: Context Management Best Practices
-
-**Speaker Notes:**
-
-**DO:**
-- Use @-mentions for precision (don't rely on AI guessing what you mean)
-- Start new chats frequently (one task = one chat session to maintain "narrative integrity")
-- Configure .cursorignore (exclude build artifacts, node_modules, logs)
-- Break large tasks into chunks (10 small tasks > 1 giant task)
-- Provide clear, specific prompts (describe the end state you want)
-- Reference existing code patterns (show examples of what you want)
-- Ask for the plan before code changes (review strategy first)
-
-**AVOID:**
-- Including entire large folders (massive context waste)
-- Reusing same chat for unrelated tasks (context pollution)
-- Vague "fix this" prompts (AI needs specificity)
-- Letting context window fill up (restart chats proactively)
-- Skipping the planning step (leads to poor architectures)
-- Blindly accepting all changes (you're still the engineer in charge)
-
----
-
-### Slide: Effective Prompting Patterns
-
-**Speaker Notes:**
-
-**Bad Prompt: "Make this better"**
-- Vague, no success criteria, no direction
-- AI doesn't know what "better" means to you
-
-**Good Prompt Example:**
 ```
-@src/components/Button.tsx
-
-Refactor this Button component to:
-1. Add TypeScript interfaces for all props
-2. Include disabled state with reduced opacity
-3. Add loading spinner option
-4. Make fully keyboard accessible
-5. Follow our design system @docs/design-tokens.json
+EXPLORE → PLAN → BUILD
 ```
 
-**Why This Works:**
-- Specific, numbered steps
-- Clear success criteria
-- References existing patterns (design system)
-- Provides context (@-mentions)
+- **Explore:** Share context, discuss options, identify relevant files
+- **Plan:** Create step-by-step plans, break down complex tasks
+- **Build:** Execute iteratively, review each step, commit regularly
 
-**Think in Diffs:**
-- Describe the transformation from current state → desired state
-- Not "write a button" but "transform this button to have X, Y, Z"
+"Don't jump straight to code. The best AI-assisted developers spend more time exploring and planning than building."
 
----
+### Slide 8: The @ Symbol — Context Navigator
 
-### Slide: Project Rules: .cursor/rules
+**Live demo:** Open McKay's template in Cursor and demonstrate each:
 
-**Speaker Notes:**
+| Symbol | Example | Purpose |
+|--------|---------|---------|
+| @file | `@app/page.tsx` | Reference specific file |
+| @folder | `@components/` | Reference directory |
+| @codebase | `@codebase "auth logic"` | Semantic search |
+| @docs | `@docs "React hooks"` | Query documentation |
+| @web | `@web "Next.js 15 changes"` | Web search |
 
-**Four Application Modes:**
+**→ Use prompts from [prompts.md](../sections/02-explore-plan-build/prompts.md)**
 
-1. **Always Apply** - Every session automatically (use sparingly)
-2. **Apply Intelligently** - AI determines relevance (recommended default)
-3. **Apply to Specific Files** - Pattern matching like `*.test.ts` (useful for test conventions)
-4. **Apply Manually** - Activated with @-mention (for specialized rules)
+### Slide 9: Context Files
 
-**Best Practices:**
-- Keep rules under 500 lines (AI needs to process these every request)
-- Break into composable components (separate files for different concerns)
-- Store domain knowledge, not just style preferences
-- Example: Database schema, API conventions, security patterns
+Walk through the [context-file-template.md](../sections/02-explore-plan-build/context-file-template.md):
+- Problem statement, users, features, tech stack, schema
+- This becomes your project's "north star"
+- Reference it in every prompt: `@context.md`
 
-**What to Include:**
-- Component architecture patterns
-- Naming conventions
-- Security requirements (e.g., "always sanitize user input")
-- Testing patterns
-- File organization structure
+### Slide 10: Two-Stage Workflow
 
----
+1. **Stage 1 (Planning):** Use ChatGPT or Claude to brainstorm and structure
+2. **Stage 2 (Building):** Bring the plan to Cursor for implementation
 
-### Slide: When NOT to Use Cursor Rules
+"Use the right tool for the right phase. ChatGPT for thinking, Cursor for building."
 
-**Speaker Notes:**
+### Slide 11: Demo — Build Simple Quiz
 
-**Hot Take from Production Engineers:**
-- "I don't use cursor rules. I think what matters is knowing your codebase and providing good context and giving it tactical things to work on."
-- This is from a staff engineer working on multiple production codebases daily
+**→ Follow [demo-simple-quiz.md](../sections/02-explore-plan-build/demo-simple-quiz.md)**
 
-**The Argument Against Over-Using Rules:**
-- Rules can slow you down if overused (processed on every request)
-- Better to rely on LLMs getting better over time naturally
-- Focus on clear context and tactical prompts instead
-- When working on many codebases, rules become impractical to maintain
+1. Explore McKay's template structure with @codebase
+2. Plan the quiz page (ask Cursor to plan, not build)
+3. Build the quiz with Agent mode (hardcoded questions)
+4. Show the working quiz in the browser
 
-**When Rules DO Help:**
-- Catching recurring mistakes the model makes consistently
-- Enforcing critical security patterns (must-haves, not nice-to-haves)
-- Team-wide consistency requirements (shared standards)
-- Onboarding new team members (codified best practices)
-
-**Balance:**
-- Start without rules, add them only when you notice patterns of mistakes
-- Treat rules as last resort, not first instinct
-
-**Reference:** Cursor for Staff Engineers - https://www.youtube.com/watch?v=sb0y5B3LLUA
+**Timing:** ~25 min for demo
 
 ---
 
-### Slide: Example Project Rules
+## Section 03: Project Rules (Slides 12–14, ~20 min)
 
-**Speaker Notes:**
+**[Section folder →](../sections/03-project-rules/)**
 
-Walk through this React + TypeScript + Tailwind example:
+### Slide 12: Four Rule Modes
 
-**Component Structure:**
-- Use functional components (no class components)
-- Props interfaces defined in same file (co-located)
-- Export as default at bottom (consistent pattern)
+| Mode | When Active | Example |
+|------|-------------|---------|
+| Always | Every prompt | Core coding standards |
+| Auto Attached | File pattern match | API validation rules for `**/api/**` |
+| Agent Requested | AI determines relevance | Database patterns |
+| Manual | Explicit @-mention | Performance audit checklist |
 
-**Styling:**
-- Tailwind utility classes (no custom CSS unless absolutely necessary)
-- No inline styles except dynamic values (e.g., calculated widths)
-- Responsive: mobile-first approach (start with base, add `md:` `lg:` breakpoints)
+### Slide 13: Demo — Create Rules
 
-**State Management:**
-- Local state: useState/useReducer (component-specific)
-- Global state: Zustand (cross-component shared state)
-- Server state: React Query (API data, caching, background sync)
+**→ Follow [demo-rules-setup.md](../sections/03-project-rules/demo-rules-setup.md)**
 
-**File Organization:**
-- Components in `src/components/*.tsx`
-- Custom hooks in `src/hooks/*.ts`
-- Helper functions in `src/utils/*.ts`
+1. Create `.cursor/rules/` directory
+2. Create one rule for each mode (live)
+3. Test that rules activate correctly
 
-**Why This Example:**
-- Specific enough to be actionable
-- Not so prescriptive that it kills flexibility
-- Covers common decision points developers face
+### Slide 14: AGENTS.md & CLAUDE.md
+
+- AGENTS.md → Cursor's project context file
+- CLAUDE.md → Claude Code's project context file
+- Show examples from [example-agents-md.md](../sections/03-project-rules/example-agents-md.md) and [example-claude-md.md](../sections/03-project-rules/example-claude-md.md)
+
+**Hot take:** "Start without rules. Add them only when you notice patterns of mistakes. Rules aren't always the answer."
 
 ---
 
-### Slide: Agent Types & When to Use Them
+## Section 04: MCP & Tooling (Slides 15–21, ~30 min)
 
-**Speaker Notes:**
+**[Section folder →](../sections/04-mcp-and-tooling/)**
 
-**Normal Mode (Chat - Cmd+L):**
-- Quick questions and explorations
-- Code explanations ("explain this function")
-- Single-file edits
-- Fast, conversational
+### Slide 15: What is MCP?
 
-**Agent Mode (Composer - Cmd+I):**
-- Multi-file changes (refactoring across components)
-- Feature implementation (end-to-end functionality)
-- Complex refactoring (architectural changes)
-- Autonomous - makes a plan and executes
+- **Model Context Protocol** — open standard by Anthropic
+- "Think of it like USB for AI — one standard interface, many devices"
+- Connects AI to: browsers, GitHub, databases, documentation, Figma
 
-**Background Agents:**
-- Continuous monitoring (watch for patterns)
-- Automated suggestions (proactive assistance)
-- Long-running tasks (while you work on something else)
+### Slide 16-17: MCP Architecture
 
-**Planning Mode:**
-- Task decomposition (break down large features)
-- Architecture decisions (evaluate options)
-- Multi-phase projects (staged implementation)
+Five components: Tools, Prompts, Resources, Roots, Elicitation
 
-**Decision Matrix:**
-- Need answer quickly? → Normal mode
-- Multi-file changes? → Agent mode
-- Want continuous help? → Background agent
-- Need to think through architecture? → Planning mode
-
----
-
-### Slide: Composer: The New Coding Model
-
-**Speaker Notes:**
-
-**Performance Breakthrough:**
-- 4x faster than similarly intelligent models
-- Most tasks complete in under 30 seconds
-- This is a purpose-built coding model, not a general-purpose LLM repurposed for code
-
-**Built-in Capabilities (No Setup Required):**
-- Codebase-wide semantic search (understands your entire project)
-- Full file reading with no 2MB cap (reads massive files)
-- Self-gathering context (finds what it needs)
-- Parallel agent execution up to 8 agents (prevents conflicts via git worktrees)
-- Git worktree isolation (each agent gets its own workspace)
-
-**What This Means:**
-- You can delegate complex, multi-step tasks
-- No more "AI got confused halfway through"
-- Multiple agents can work on frontend + backend + tests simultaneously
-- Results merge cleanly without conflicts
-
-**References:**
-- Cursor 2.0 Blog - https://cursor.com/blog/2-0
-- InfoQ Coverage - https://www.infoq.com/news/2025/11/cursor-composer-multiagent/
-
----
-
-### Slide: Multi-Agent Architecture (Mermaid Diagram)
-
-**Speaker Notes:**
-
-Walk through the flow:
-
-1. **User Prompt** → You give a high-level task
-2. **Agent Orchestrator** → Cursor's system decides how to split the work
-3. **Multiple Agents** → Each gets a specialized subtask
-   - Agent 1: Backend changes
-   - Agent 2: Frontend UI
-   - Agent 3: Test coverage
-4. **Isolated Worktrees** → Each agent works in its own git worktree (no conflicts)
-5. **Merge Results** → Changes are intelligently merged
-6. **Final Output** → Cohesive implementation across all files
-
-**Key Insight:**
-- Git worktrees are the secret sauce - prevents merge conflicts
-- Each agent thinks it has the whole codebase to itself
-- Orchestrator handles coordination and merging
-
-**Real-World Example:**
-- "Add authentication to the app"
-- Agent 1: Backend routes + middleware
-- Agent 2: Login UI components
-- Agent 3: Integration tests
-- All three work simultaneously, results merge cleanly
-
----
-
-### Slide: Model Context Protocol (MCP)
-
-**Speaker Notes:**
-
-**What is MCP:**
-- Open protocol connecting AI to external tools and data
-- Like USB for AI - standardized interface
-- Created by Anthropic, now open source
-
-**Five Key Components:**
-
-1. **Tools** - Functions AI can execute
-   - Example: `create_github_pr`, `query_database`
-
-2. **Prompts** - Templated workflows
-   - Example: Pre-configured prompt for code reviews
-
-3. **Resources** - Structured data sources
-   - Example: Database schemas, API documentation
-
-4. **Roots** - URI/filesystem boundaries
-   - Defines what the AI can access
-
-5. **Elicitation** - User information requests
-   - AI can ask you for clarification
-
-**Goal:**
-- Standardize how AI connects to your development ecosystem
-- No more custom integrations for every tool
-- Community-driven MCP servers (like npm packages)
-
----
-
-### Slide: MCP Server Examples
-
-**Speaker Notes:**
-
-**GitHub MCP:**
-- Direct GitHub operations from Cursor
-- Create PRs, review code, manage issues
-- No need to leave your editor
-
-**Figma MCP:**
-- Read Figma designs programmatically
-- Extract design tokens (colors, spacing, typography)
-- Generate components matching designs
-- Sync UI updates from Figma to code
-
-**GitMCP:**
-- Turn any GitHub repo into MCP
-- Replace github.com with gitmcp.io in URL
-- Instant context access to any public repo
-- No configuration needed (dead simple)
-
-**Database MCPs:**
-- PostgreSQL, SQLite, MySQL
-- Query and inspect data directly
-- Generate migrations from schema changes
-
-**The Power:**
-- Chain these together
-- Example: Read Figma design → Generate React component → Create GitHub PR → All from one prompt
-
-**References:**
-- Figma MCP: https://github.com/grab/cursor-talk-to-figma-mcp
-- GitMCP: https://gitmcp.io
-
----
-
-### Slide: MCP Configuration Example
-
-**Speaker Notes:**
-
-Walk through the JSON config:
-
+Show the configuration format — `.cursor/mcp.json`:
 ```json
 {
   "mcpServers": {
-    "github": {
+    "server-name": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_TOKEN": "your-token-here"
-      }
-    },
-    "figma": {
-      "command": "bunx",
-      "args": ["cursor-talk-to-figma-mcp@latest"],
-      "env": {
-        "FIGMA_TOKEN": "your-figma-token"
-      }
+      "args": ["-y", "package-name"],
+      "env": { "TOKEN": "value" }
     }
   }
 }
 ```
 
-**Where to Save:**
-- `.cursor/mcp.json` in your project root
-- Or global config in Cursor settings
+### Slide 18-19: Demo — Playwright MCP
 
-**Getting Tokens:**
-- GitHub: Settings → Developer settings → Personal access tokens
-- Figma: Account settings → Personal access tokens
+**→ Follow [demo-playwright-mcp.md](../sections/04-mcp-and-tooling/demo-playwright-mcp.md)**
 
-**Security:**
-- Never commit tokens to git
-- Use environment variables for sensitive values
-- Consider using `.env` files with proper .gitignore
+1. Configure Playwright MCP
+2. AI navigates to the running app
+3. AI screenshots and describes the page
+4. AI tests the quiz flow interactively
+5. AI finds and fixes visual bugs
 
----
+### Slide 20: GitMCP & GitHub MCP
 
-## Section 2: Building Your First Full App
+- GitMCP: Replace `github.com` with `gitmcp.io` in any repo URL → instant MCP context
+- GitHub MCP: Manage PRs, issues, code reviews from Cursor
+- Show config examples from [mcp-config-examples/](../sections/04-mcp-and-tooling/mcp-config-examples/)
 
-### Slide: AI-Driven Project Initialization
+### Slide 21: CLI vs MCP
 
-**Speaker Notes:**
+**→ Reference [cli-vs-mcp-comparison.md](../sections/04-mcp-and-tooling/cli-vs-mcp-comparison.md)**
 
-**The Context File Approach:**
+- Cursor: Visual development, UI building, design iteration
+- Claude Code: Infrastructure, scripts, CI/CD, terminal work
+- They complement each other — use both
 
-Start with clarity before touching code:
-
-1. **Describe your app in plain English**
-   - What problem does it solve?
-   - Who are the users? (developers, designers, end-users)
-   - What are the core features? (3-5 key features)
-
-2. **Define your tech stack**
-   - Frontend framework (React, Next.js, Vue)
-   - Backend (Node, Supabase, Firebase, custom API)
-   - Database (PostgreSQL, MongoDB, SQLite)
-   - Authentication provider
-   - Deployment platform (Vercel, Netlify, AWS)
-
-3. **Generate project structure**
-   - Let Cursor create optimal folder organization
-   - Auto-generate database schema based on features
-   - Scaffold component architecture
-   - Set up configuration files
-
-**Why This Works:**
-- Forces you to think before coding
-- Cursor generates consistent, well-architected projects
-- Saves hours of setup time
-- Creates documentation as you go
-
-**Reference:** Building Apps with AI - https://www.youtube.com/watch?v=WZ8g6deOyAk
+**⏱ BREAK** (~10 min)
 
 ---
 
-### Slide: Creating the Context File
+## Section 05: AI Quiz App Build (Slides 22–32, ~60 min)
 
-**Speaker Notes:**
+**[Section folder →](../sections/05-ai-quiz-app/)**
 
-Walk through the DeepWork AI example:
+### Slide 22: Section Overview
 
-**Problem:** Clear, specific problem statement
-- Developers struggle with multitasking and distractions
-- Need a tool to prioritize tasks and maintain deep work focus
+"This is the main build section. We're taking the simple quiz from Section 02 and adding AI-powered question generation."
 
-**Users:** Define who will use this
-- Software engineers, designers, product managers
-- Important: Understanding users shapes UX decisions
+### Slide 23: The Context File
 
-**Core Features:** 3-5 key features (not 20)
-1. Task management with priority levels
-2. Focus timer for single-task concentration
-3. AI chat to quickly add tasks via natural language
+**→ Show [context-file.md](../sections/05-ai-quiz-app/context-file.md)**
 
-**Tech Stack:** Be specific
-- Frontend: Next.js 14 (App Router), TypeScript, Tailwind
-- Backend: Supabase (database + auth in one)
-- AI: OpenAI API for chat functionality
-- Deployment: Vercel (one-click Next.js deployment)
+Walk through the filled-in context file. This drives the entire build.
 
-**Database Schema:** Let Cursor generate
-- Instead of manually designing tables, describe features
-- Cursor generates normalized schema with proper relationships
+### Slide 24: Hierarchy of Leverage
 
-**This Becomes Your North Star:**
-- Reference it in every prompt: `@docs/context.md`
-- Update it as requirements evolve
-- Share with team for alignment
+**→ Reference [hierarchy-of-leverage.md](../sections/05-ai-quiz-app/hierarchy-of-leverage.md)**
 
----
+```
+Rules > Context > Prompts > Model
+```
 
-### Slide: Using ChatGPT + Cursor Together
+"Before blaming the AI, check: Do I have rules? Did I give good context? Was my prompt specific?"
 
-**Speaker Notes:**
+### Slides 25-32: Live Build
 
-**Two-Stage Workflow:**
+**→ Follow [demo-build-steps.md](../sections/05-ai-quiz-app/demo-build-steps.md)**
 
-**Stage 1: ChatGPT (Planning)**
-- Brainstorming features (divergent thinking)
-- Structuring ideas (organize thoughts)
-- Creating context.md (document vision)
-- Planning architecture (high-level design)
+| Step | What | Time |
+|------|------|------|
+| 1 | AI generation Server Action | ~10 min |
+| 2 | Upload/input UI | ~10 min |
+| 3 | Quiz-taking UI upgrade | ~10 min |
+| 4 | Results page | ~10 min |
+| 5 | Database integration | ~15 min |
+| 6 | Polish with Playwright MCP | ~5 min |
 
-**Stage 2: Cursor (Implementation)**
-- Generating actual code (tactical execution)
-- Multi-file operations (cross-cutting changes)
-- Debugging errors (iterative fixing)
-- Refactoring (improving existing code)
+**→ Use prompts from [prompts.md](../sections/05-ai-quiz-app/prompts.md) for each step**
 
-**Why Separate Tools:**
-- ChatGPT: Free-form thinking, no codebase context needed
-- Cursor: Deeply integrated with your actual project
-- Each tool optimized for its phase
-
-**Workflow Example:**
-1. ChatGPT: "Help me plan a task management app with AI"
-2. Save that conversation as context.md
-3. Open Cursor: `@docs/context.md Generate the project structure`
-4. Cursor builds it with full context
-
-**Best Practice:**
-- Use ChatGPT for exploration and planning
-- Use Cursor for implementation and refinement
-- Don't try to use one tool for both jobs
+**⏱ BREAK** (~10 min)
 
 ---
 
-(Continue with remaining sections following same detailed format...)
+## Section 06: Testing (Slides 33–36, ~20 min)
 
-## Quick Reference: Common Prompts
+**[Section folder →](../sections/06-testing/)**
 
-### Exploration Phase
-- "Analyze the architecture of @src/ and suggest improvements"
-- "@codebase where is user authentication handled?"
-- "Explain how @src/components/Header.tsx works"
+### Slide 33: Testing Pyramid
 
-### Planning Phase
-- "Create a step-by-step plan to add dark mode support"
-- "Generate a database schema for [feature description]"
-- "What's the best way to structure components for [feature]?"
+```
+         ╱  E2E  ╲        ← Few, slow, high confidence
+        ╱ Component╲      ← Some, moderate speed
+       ╱    Unit    ╲     ← Many, fast, focused
+```
 
-### Build Phase
-- "Implement the plan from above, step 1 first"
-- "Fix this error: [paste error]"
-- "Refactor @src/utils/api.ts to use async/await"
+### Slide 34-35: Demo — TDD with Cursor
 
-### Testing Phase
-- "Generate comprehensive tests for @src/components/Button.tsx"
-- "Create integration tests for the authentication flow"
-- "Add E2E tests using Playwright for the happy path"
+**→ Follow [demo-tdd-workflow.md](../sections/06-testing/demo-tdd-workflow.md)**
 
-### Deployment Phase
-- "Create a GitHub Actions workflow for CI/CD"
-- "List all environment variables needed for production"
-- "Generate a deployment checklist for production readiness"
+1. Write test first (YOU define behavior)
+2. Run test → RED
+3. Let Cursor implement → GREEN
+4. Add edge cases → iterate
 
-## Troubleshooting Guide
+"You control the WHAT (tests), AI handles the HOW (implementation)."
 
-### AI Output is Poor Quality
-**Likely Causes:**
-- Context overload (too many files in context)
-- Vague prompts (not specific enough)
-- Wrong chat mode (use Agent for multi-file changes)
+### Slide 36: Test Examples
 
-**Solutions:**
-- Start new chat, be more specific
-- Use @-mentions to target exact files
-- Try the prompt 5 different ways
+Show examples from [test-examples/](../sections/06-testing/test-examples/):
+- Unit test for quiz utilities
+- Component test for QuizCard
+- E2E test for the full quiz flow
 
-### Context Window Full
-**Symptoms:**
-- Slow responses
-- AI forgetting earlier conversation
-- Incomplete or confused answers
+---
 
-**Solutions:**
-- Start new chat tab
-- Summarize progress and handoff to new chat
-- Use task handoff pattern (detailed in Section 1)
+## Section 07: Diagrams & Design (Slides 37–45, ~30 min)
 
-### Merge Conflicts from Agents
-**This shouldn't happen with Cursor 2.0, but if it does:**
-- Check git worktree status
-- Manually resolve conflicts
-- Consider breaking task into smaller, sequential steps
+**[Section folder →](../sections/07-diagrams-design/)**
 
-### AI Making Same Mistakes Repeatedly
-**Solutions:**
-- Add project rule to prevent the mistake
-- Be more explicit in prompts about the requirement
-- Check if you need to update context with examples
+### Slide 37-39: Mermaid Diagrams
 
-## Demo Checkpoints
+**→ Follow [demo-mermaid-diagrams.md](../sections/07-diagrams-design/demo-mermaid-diagrams.md)**
 
-### Demo 1: Setting Up Cursor Configuration
-- Create `.cursor/rules` directory
-- Add react.mdc, typescript.mdc, styling.mdc rules
-- Configure application modes (Intelligent, Specific Files)
-- Test with a prompt: "Create a Button component following our rules"
+1. Generate architecture diagram from the codebase
+2. Generate user flow diagram
+3. Generate database ERD
+4. Show examples from [mermaid-examples/](../sections/07-diagrams-design/mermaid-examples/)
 
-### Demo 2: Context Management
-- Configure `.cursorignore` (show examples)
-- Demonstrate `@codebase` semantic search
-- Show combining multiple @-mentions
-- Demonstrate incremental context building
+### Slide 40-43: Design → Code Workflow
 
-### Demo 3: MCP Configuration
-- Install GitHub MCP server
-- Test: "List my open pull requests"
-- Add GitMCP for external repo
-- Query: "How does React handle effects?" using gitmcp.io/facebook/react
+**→ Follow [demo-design-iteration.md](../sections/07-diagrams-design/demo-design-iteration.md)**
 
-### Demo 4: Core Feature Development (Quiz App)
-- Walk through creating context.md
-- Generate database schema with Cursor
-- Create UI components using Agent mode
-- Add real-time features with Supabase
+1. Screenshot → paste in Cursor → get code
+2. Iterate: "make spacing larger", "add animation"
+3. Discuss Figma MCP (advanced)
 
-### Demo 5: Testing & Refining
-- Generate test suite for component
-- Run tests, show failures
-- Let Cursor fix failing tests
-- Demonstrate TDD workflow
+### Slide 44-45: Design Iteration
 
-### Demo 6: Production Setup
-- Create GitHub Actions workflow
-- Configure environment variables
-- Deploy to Vercel
-- Test production deployment
+Show the feedback loop:
+```
+Design reference → AI generates code → Preview → Feedback → Iterate
+```
 
-## Time Management
+"First pass: ~70% right. 2-3 iterations: ~95%. This removes the design gap for developers."
 
-**Section 1: Cursor & Context Management** (90 min)
-- What is Cursor: 15 min
-- Context management: 30 min
-- Project rules & MCP: 25 min
-- Demo & Q&A: 20 min
+**⏱ BREAK** (~10 min)
 
-**Section 2: Building Your First Full App** (60 min)
-- Project initialization: 20 min
-- Data layer & UI components: 25 min
-- Testing & polish: 15 min
+---
 
-**Section 3: Advanced Development** (75 min)
-- Architecture patterns: 25 min
-- Hands-on Quiz App: 35 min
-- Mermaid diagrams & testing: 15 min
+## Section 08: Backend/Auth/Payments (Slides 46–53, ~45 min)
 
-**Section 4: Full-Stack Application** (60 min)
-- Architecture: 15 min
-- Backend & database: 20 min
-- Frontend & state: 15 min
-- Demo: 10 min
+**[Section folder →](../sections/08-backend-auth-payments/)**
 
-**Section 5: Deployment & Production** (75 min)
-- Deployment workflow: 20 min
-- CI/CD & quality gates: 25 min
-- Production setup exercise: 20 min
-- Final Q&A: 10 min
+### Slide 46: Backend Architecture
 
-**Total: 6 hours + breaks**
+Overview of the full stack:
+- Supabase (PostgreSQL) + Drizzle ORM
+- Clerk authentication
+- Stripe payments
+- Next.js Server Actions
 
-## Additional Resources for Presenter
+### Slide 47-48: Supabase + Drizzle
 
-### Must-Have Links
-- Cursor Docs: cursor.com/docs
-- Cursor 2.0 Blog: cursor.com/blog/2-0
-- Cursor Changelog: cursor.com/changelog
-- MCP Servers: github.com/modelcontextprotocol/servers
-- GitMCP: gitmcp.io
-- Figma MCP: github.com/grab/cursor-talk-to-figma-mcp
+**→ Follow [demo-supabase-drizzle.md](../sections/08-backend-auth-payments/demo-supabase-drizzle.md)**
 
-### Recommended Videos
-- Cursor for Staff Engineers: https://www.youtube.com/watch?v=sb0y5B3LLUA
-- Building Apps with AI: https://www.youtube.com/watch?v=WZ8g6deOyAk
-- Cursor 2.0 Announcement: Check cursor.com for official release video
+~10 min: Schema definition, Drizzle config, push to database
 
-### Community
-- Cursor Discord (link from cursor.com)
-- Twitter: @cursor_ai
-- Reddit: r/cursor
+### Slide 49-50: Clerk Auth
 
-### Tools to Have Ready
-- Supabase account
-- Vercel account
-- GitHub account with PAT
-- OpenAI API key (or DeepSeek for demos)
-- Sample project ready to demo
+**→ Follow [demo-clerk-auth.md](../sections/08-backend-auth-payments/demo-clerk-auth.md)**
 
-## Backup Demos (If Ahead of Schedule)
+~10 min: Middleware, sign-in UI, route protection
 
-1. **Integuru Demo** - Reverse engineering API calls
-2. **Advanced Mermaid Diagrams** - Multi-level architecture
-3. **Load Testing with k6** - Generate and run performance tests
-4. **PR Comment Automation** - Screenshot-based workflow
-5. **Feature Flags Pattern** - Safe deployment strategies
+### Slide 51-52: Stripe Payments
+
+**→ Follow [demo-stripe-payments.md](../sections/08-backend-auth-payments/demo-stripe-payments.md)**
+
+~15 min: Checkout, webhooks, premium tiers
+
+### Slide 53: Server Actions Pattern
+
+**→ Follow [demo-server-actions.md](../sections/08-backend-auth-payments/demo-server-actions.md)**
+
+~10 min: CRUD actions with Zod validation
+
+**→ Reference [env-vars-reference.md](../sections/08-backend-auth-payments/env-vars-reference.md) for all env vars**
+
+**⏱ BREAK** (~5 min)
+
+---
+
+## Section 09: Deployment (Slides 54–62, ~30 min)
+
+**[Section folder →](../sections/09-deployment/)**
+
+### Slide 54-56: Production Readiness
+
+**→ Walk through [production-checklist.md](../sections/09-deployment/production-checklist.md)**
+
+Key checks: build passes, env vars set, RLS enabled, auth configured
+
+### Slide 57-60: Deploy to Vercel
+
+**→ Follow [demo-vercel-deploy.md](../sections/09-deployment/demo-vercel-deploy.md)**
+
+1. Push to GitHub
+2. Import to Vercel
+3. Configure env vars
+4. Deploy and verify
+
+### Slide 61: Cost Breakdown
+
+**→ Reference [cost-breakdown.md](../sections/09-deployment/cost-breakdown.md)**
+
+"Free tier gets you surprisingly far. Most side projects never need to upgrade."
+
+### Slide 62: The Full Stack
+
+Show the complete architecture:
+```
+Cursor → GitHub → Vercel → Supabase + Clerk + Stripe + OpenAI
+```
+
+"You just built a production-ready, full-stack AI app in 6 hours."
+
+---
+
+## Section 10: Finishing (~15 min)
+
+**[Section folder →](../sections/10-finishing/)**
+
+### Recap
+
+Quick walk through all 10 sections (1 sentence each):
+1. **Cursor Intro** — Four interaction modes, your development partner
+2. **Explore-Plan-Build** — The framework that makes AI-assisted dev reliable
+3. **Project Rules** — Encode standards for consistent AI output
+4. **MCP & Tooling** — Extend Cursor's reach to browsers, GitHub, docs
+5. **AI Quiz App** — Context file drives the build, two-stage workflow
+6. **Testing** — TDD with AI: you define behavior, AI implements
+7. **Diagrams & Design** — Text-to-diagram, screenshot-to-code
+8. **Backend/Auth/Payments** — Full stack with Supabase, Clerk, Stripe
+9. **Deployment** — Zero-config Vercel, free tier is generous
+10. **Finishing** — Resources and next steps
+
+### Key Takeaway
+
+"AI doesn't replace your engineering judgment — it amplifies it. The developers who thrive with these tools are the ones who think clearly about what they want before asking for it."
+
+### Resources
+
+**→ Reference [resources.md](../sections/10-finishing/resources.md)**
+
+### Q&A
+
+Open floor for questions. (~5 min)
+
+---
+
+## Presenter Quick Reference
+
+### Before the Session
+- [ ] McKay's template cloned and running locally
+- [ ] All API keys tested and working
+- [ ] Cursor signed in with Pro account
+- [ ] MCP servers configured and verified
+- [ ] Browser tabs ready: presentation.html, localhost:3000
+- [ ] Two Cursor windows: course repo + demo project
+
+### Emergency Fallbacks
+- If MCP fails: Show config and explain conceptually
+- If API keys fail: Use hardcoded data and explain the AI integration
+- If build fails: Debug live (this is actually a great teaching moment)
+- If ahead of schedule: Extra Q&A, deeper dives on any section
+- If behind schedule: Abbreviate sections 07 and 09, prioritize 05 and 08
