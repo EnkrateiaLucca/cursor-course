@@ -213,9 +213,129 @@ quiz-app/
 
 ---
 
-## Next Up: Phase 3 — Quiz Creation Page
+## Phase 3: Quiz Creation Page ✅
 
-- `/quiz/create` page with two tabs: "Upload JSON" and "Generate with AI"
-- File upload with drag-and-drop + validation
-- AI generation form with Claude API pipeline
-- Loading states and redirect to `/quiz/[id]` after creation
+**Goal**: Users can create quizzes by uploading JSON or pasting content for AI generation
+
+**Completed**:
+- [x] `/quiz/create` page with two tabs: "Upload JSON" and "Generate with AI"
+- [x] `file-upload.tsx` — drag-and-drop JSON file upload with client-side Zod validation
+  - Drag-over visual state, validation spinner, success/error states with Framer Motion transitions
+  - Accepts `.json` files, validates against `quizQuestionsSchema`, supports both raw arrays and `{ questions: [...] }` wrapper
+  - Shows question count on successful validation, then "Create Quiz" button calls `POST /api/quizzes`
+- [x] `json-format-guide.tsx` — collapsible expected format reference
+  - Animated expand/collapse with Framer Motion
+  - Example JSON for both `multiple-choice` and `open-ended` question types
+- [x] `ai-generate-form.tsx` — textarea for content + title input + question count selector (1–30) + generate button
+  - Inline validation: title required, content minimum 20 characters
+  - Loading state with spinner, error display panel
+- [x] `lib/quiz-generator.ts` — Claude API two-stage pipeline
+  - Single prompt to Claude (claude-sonnet-4-20250514) that generates structured quiz JSON directly
+  - Strips markdown code fences if present, parses JSON, validates against `quizQuestionsSchema`
+  - Typed return as `Question[]`
+- [x] API route: `POST /api/generate` — authenticated AI quiz generation endpoint
+  - Zod validation of input (title, content ≥20 chars, questionCount 1–30)
+  - Free tier limit enforcement: 3 AI generations/month, monthly reset
+  - Checks user's `subscription_status`, `ai_generations_used`, `ai_generations_reset_at`
+  - Creates quiz in Supabase on success, increments generation counter
+  - Returns 403 with upgrade message when limit reached
+- [x] Framer Motion animations: page entry, tab content transitions, upload state transitions
+- [x] Redirect to `/quiz/[id]` after successful creation (both upload and AI generation)
+- [x] Toast notifications via Sonner for success/error feedback
+
+**Design Decisions**:
+- File upload validation runs entirely client-side (Zod `quizQuestionsSchema`) for instant feedback — only calls the API after validation passes
+- AI generation uses `createServiceClient()` (service role) since auth is handled by Clerk at the API layer
+- Free tier limit (3/month) tracked in `users` table fields; monthly reset checked on each generation request
+- base-ui Tabs use numeric `value` props (0, 1) for tab/panel matching
+
+**Success Criteria**:
+- [x] Upload valid JSON → quiz created and stored
+- [x] Upload invalid JSON → clear error message with Zod issue details
+- [x] AI generation produces valid quiz from text content
+- [x] Free tier limit enforced on AI generation
+- [x] App builds without errors (`npm run build` passes)
+
+---
+
+## File Structure (Phase 0 + 1 + 2 + 3)
+
+```
+quiz-app/
+├── .env.local.example
+├── components.json
+├── package.json
+├── progress.md
+├── supabase/
+│   └── migrations/
+│       └── 001_initial_schema.sql
+└── src/
+    ├── proxy.ts                          # Clerk middleware (Next.js 16 proxy)
+    ├── app/
+    │   ├── globals.css
+    │   ├── layout.tsx                    # Root layout with ClerkProvider
+    │   ├── page.tsx                      # Landing page
+    │   ├── sign-in/[[...sign-in]]/
+    │   │   └── page.tsx
+    │   ├── sign-up/[[...sign-up]]/
+    │   │   └── page.tsx
+    │   ├── dashboard/
+    │   │   ├── layout.tsx
+    │   │   └── page.tsx
+    │   ├── quiz/
+    │   │   └── create/
+    │   │       └── page.tsx              # Two-tab quiz creation (Upload / AI)
+    │   └── api/
+    │       ├── generate/
+    │       │   └── route.ts              # POST — AI quiz generation
+    │       ├── quizzes/
+    │       │   ├── route.ts              # POST (create), GET (list)
+    │       │   └── [id]/
+    │       │       └── route.ts          # GET (single), DELETE
+    │       └── webhooks/
+    │           └── clerk/
+    │               └── route.ts          # User sync webhook
+    ├── components/
+    │   ├── create/
+    │   │   ├── file-upload.tsx           # Drag-and-drop JSON upload
+    │   │   ├── json-format-guide.tsx     # Collapsible format reference
+    │   │   └── ai-generate-form.tsx      # AI generation form
+    │   ├── layout/
+    │   │   ├── navbar.tsx
+    │   │   └── footer.tsx
+    │   └── ui/                           # Shadcn components
+    │       ├── avatar.tsx
+    │       ├── badge.tsx
+    │       ├── button.tsx
+    │       ├── card.tsx
+    │       ├── checkbox.tsx
+    │       ├── dialog.tsx
+    │       ├── dropdown-menu.tsx
+    │       ├── input.tsx
+    │       ├── progress.tsx
+    │       ├── separator.tsx
+    │       ├── sonner.tsx
+    │       ├── tabs.tsx
+    │       └── textarea.tsx
+    ├── lib/
+    │   ├── utils.ts
+    │   ├── validators.ts                 # Zod schemas for quiz validation
+    │   ├── quiz-generator.ts             # Claude API quiz generation logic
+    │   └── supabase/
+    │       ├── client.ts                 # Browser client
+    │       └── server.ts                 # Server + service role clients
+    └── types/
+        └── quiz.ts                       # TypeScript types
+```
+
+---
+
+## Next Up: Phase 4 — Quiz Player (Core Experience)
+
+- `/quiz/[id]` page — loads quiz from Supabase
+- `quiz-player.tsx` — state machine managing quiz flow
+- `question-card.tsx`, `multiple-choice.tsx`, `open-ended-input.tsx`
+- `answer-feedback.tsx` — correct/incorrect/skipped panel
+- `quiz-navigation.tsx` — Previous, Submit, Skip, Next buttons
+- `progress-bar.tsx` — "Question X of Y"
+- Framer Motion transitions between questions
