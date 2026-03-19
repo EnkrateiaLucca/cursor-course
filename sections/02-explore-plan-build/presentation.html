@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Section 02 — Explore-Plan-Build Framework</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css" />
+  <style>
+    :root {
+      --r-background-color: #1a1a2e;
+      --r-main-color: #eaeaea;
+      --r-heading-color: #e2e2e2;
+      --r-link-color: #a78bfa;
+      --r-link-color-hover: #c4b5fd;
+    }
+    .reveal { font-family: 'Segoe UI', system-ui, sans-serif; }
+    .reveal h1, .reveal h2, .reveal h3 { font-family: 'Segoe UI', system-ui, sans-serif; text-transform: none; }
+    .reveal h1 { font-size: 2.4em; }
+    .reveal h2 { font-size: 1.8em; }
+    .reveal h3 { font-size: 1.3em; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea, #a78bfa, #f093fb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pill {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 0.55em;
+      margin: 4px;
+      font-weight: 600;
+    }
+    .pill-explore  { background: #1e3a5f; color: #60a5fa; border: 1px solid #3b82f6; }
+    .pill-plan     { background: #3b1f5e; color: #c084fc; border: 1px solid #8b5cf6; }
+    .pill-build    { background: #1a3d2e; color: #6ee7b7; border: 1px solid #34d399; }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: left;
+    }
+    .card h3 { margin-top: 0; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+    .at-symbol {
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      color: #facc15;
+      font-size: 1.05em;
+    }
+    .code-inline {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .reveal ul { list-style: none; padding-left: 0; }
+    .reveal ul li { margin: 14px 0; padding-left: 28px; position: relative; }
+    .reveal ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: #a78bfa;
+    }
+
+    .reveal .slides section .fragment.fade-up { transition: all 0.4s ease; }
+
+    .phase-icon { font-size: 1.6em; margin-bottom: 8px; display: block; }
+
+    .context-table { width: 100%; border-collapse: collapse; font-size: 0.65em; }
+    .context-table th { background: rgba(167,139,250,0.2); padding: 10px 14px; text-align: left; border-bottom: 2px solid rgba(167,139,250,0.3); }
+    .context-table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .context-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+    .big-number {
+      font-size: 3em;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #a78bfa);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.7em;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    .step-row {
+      display: flex;
+      align-items: center;
+      margin: 16px 0;
+      font-size: 0.75em;
+    }
+    .dim { opacity: 0.5; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: Title -->
+      <section>
+        <h1 class="gradient-text">Explore → Plan → Build</h1>
+        <p style="font-size:1.1em; opacity:0.8;">A Framework for AI-Assisted Development</p>
+        <div style="margin-top: 40px;">
+          <span class="pill pill-explore">Explore</span>
+          <span class="pill pill-plan">Plan</span>
+          <span class="pill pill-build">Build</span>
+        </div>
+        <p style="font-size:0.55em; opacity:0.4; margin-top:40px;">Section 02 · ~45 min</p>
+      </section>
+
+      <!-- SLIDE 2: Learning Goals -->
+      <section>
+        <h2>Learning Goals</h2>
+        <ul>
+          <li class="fragment fade-up">Understand the <strong>Explore → Plan → Build</strong> framework</li>
+          <li class="fragment fade-up">Master the <span class="at-symbol">@</span> symbol for context navigation</li>
+          <li class="fragment fade-up">Create a <strong>context file</strong> — your project's "north star"</li>
+          <li class="fragment fade-up">Build a simple quiz app to practice the framework</li>
+        </ul>
+      </section>
+
+      <!-- SLIDE 3: The Problem -->
+      <section>
+        <h2>The #1 Mistake</h2>
+        <p style="font-size:1.6em; margin: 40px 0;" class="fragment fade-up">Jumping straight to code.</p>
+        <div class="fragment fade-up" style="margin-top: 30px;">
+          <p style="opacity:0.7; font-size:0.85em;">The AI has no idea what your codebase looks like,<br/>what patterns you use, or what you actually need.</p>
+        </div>
+        <p class="fragment fade-up" style="font-size:0.8em; margin-top:30px; color:#facc15;">More context ≠ better results — <em>curate</em> what the AI sees.</p>
+      </section>
+
+      <!-- SLIDE 4: The Framework -->
+      <section>
+        <h2>The Framework</h2>
+        <div class="grid-3" style="margin-top: 30px;">
+          <div class="card fragment fade-up">
+            <span class="phase-icon">🔍</span>
+            <h3 style="color:#60a5fa;">Explore</h3>
+            <p style="font-size:0.65em; opacity:0.8;">Understand the codebase. Discover patterns, structure, and conventions before touching anything.</p>
+          </div>
+          <div class="card fragment fade-up">
+            <span class="phase-icon">📋</span>
+            <h3 style="color:#c084fc;">Plan</h3>
+            <p style="font-size:0.65em; opacity:0.8;">Define what to build and how. Get a roadmap from the AI — files, data flow, architecture.</p>
+          </div>
+          <div class="card fragment fade-up">
+            <span class="phase-icon">🛠️</span>
+            <h3 style="color:#6ee7b7;">Build</h3>
+            <p style="font-size:0.65em; opacity:0.8;">Execute the plan with Agent mode. The AI writes code that matches your existing patterns.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: The @ Symbol -->
+      <section>
+        <section>
+          <h2>Your Context Navigator: <span class="at-symbol" style="font-size:1.2em;">@</span></h2>
+          <p style="opacity:0.7; font-size:0.85em;">The @ symbol is how you point Cursor at exactly the right context.</p>
+          <div style="margin-top: 30px;">
+            <table class="context-table">
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>What It Does</th>
+                  <th>When to Use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="fragment fade-up">
+                  <td><span class="at-symbol">@file</span></td>
+                  <td>Reference a specific file</td>
+                  <td>Precise edits, explaining code</td>
+                </tr>
+                <tr class="fragment fade-up">
+                  <td><span class="at-symbol">@folder</span></td>
+                  <td>Reference a directory</td>
+                  <td>Understanding module structure</td>
+                </tr>
+                <tr class="fragment fade-up">
+                  <td><span class="at-symbol">@codebase</span></td>
+                  <td>Semantic search across project</td>
+                  <td>Discovery, "where is X handled?"</td>
+                </tr>
+                <tr class="fragment fade-up">
+                  <td><span class="at-symbol">@docs</span></td>
+                  <td>Query documentation</td>
+                  <td>Framework APIs, library usage</td>
+                </tr>
+                <tr class="fragment fade-up">
+                  <td><span class="at-symbol">@web</span></td>
+                  <td>Search the web</td>
+                  <td>Latest best practices, new APIs</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- SLIDE 5b: @ Examples (vertical) -->
+        <section>
+          <h2>@ Symbol in Action</h2>
+          <div style="text-align:left; font-size:0.7em;">
+            <div class="fragment fade-up" style="margin: 20px 0;">
+              <p style="margin-bottom:6px; color:#60a5fa; font-weight:600;">Explore architecture</p>
+              <pre><code class="language-text" data-trim>@codebase What is the overall architecture of this project?
+What framework does it use, and how are files organized?</code></pre>
+            </div>
+            <div class="fragment fade-up" style="margin: 20px 0;">
+              <p style="margin-bottom:6px; color:#60a5fa; font-weight:600;">Inspect a file</p>
+              <pre><code class="language-text" data-trim>@app/page.tsx Explain what this page does and how it's structured.</code></pre>
+            </div>
+            <div class="fragment fade-up" style="margin: 20px 0;">
+              <p style="margin-bottom:6px; color:#60a5fa; font-weight:600;">Scan a folder</p>
+              <pre><code class="language-text" data-trim>@components/ What components exist? Give me a summary of each.</code></pre>
+            </div>
+            <div class="fragment fade-up" style="margin: 20px 0;">
+              <p style="margin-bottom:6px; color:#60a5fa; font-weight:600;">Search the web</p>
+              <pre><code class="language-text" data-trim>@web What are the latest best practices for Next.js Server Actions?</code></pre>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- SLIDE 6: Context File -->
+      <section>
+        <section>
+          <h2>The Context File</h2>
+          <p style="opacity:0.7; font-size:0.85em;">A single markdown file that serves as your project's "north star".</p>
+          <div class="grid-2 fragment fade-up" style="margin-top: 30px;">
+            <div class="card">
+              <h3 style="color:#f87171;">Without It</h3>
+              <ul style="font-size:0.6em;">
+                <li>Repeat project details in every prompt</li>
+                <li>AI guesses your tech stack</li>
+                <li>Inconsistent output across sessions</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3 style="color:#6ee7b7;">With It</h3>
+              <ul style="font-size:0.6em;">
+                <li>One <span class="code-inline">@context.md</span> gives full picture</li>
+                <li>AI knows stack, patterns, constraints</li>
+                <li>Consistent, aligned code every time</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 6b: Context File Template (vertical) -->
+        <section>
+          <h2>Context File Template</h2>
+          <div style="text-align:left; font-size:0.5em;">
+            <pre><code class="language-markdown" data-trim data-noescape>
+# [Project Name] — Context File
+
+## Problem Statement
+[What problem does this app solve? Who is it for?]
+
+## Core Features
+1. **[Feature]** — Brief description
+2. **[Feature]** — Brief description
+
+## Tech Stack
+| Layer      | Technology         | Why                  |
+|------------|--------------------|----------------------|
+| Framework  | Next.js 15         | Server components    |
+| Styling    | Tailwind + shadcn  | Rapid UI development |
+| Database   | Supabase           | Managed DB + auth    |
+| Auth       | Clerk              | Drop-in auth         |
+
+## Key Routes
+| Route        | Purpose             |
+|--------------|---------------------|
+| /            | Landing page        |
+| /dashboard   | Main user dashboard |
+
+## Design Principles
+- Server components by default
+- Mobile-first responsive design
+- All API calls through Server Actions
+            </code></pre>
+          </div>
+          <p class="fragment fade-up" style="font-size:0.65em; color:#facc15; margin-top:10px;">Save as <span class="code-inline">context.md</span> → reference with <span class="code-inline">@context.md</span> in every prompt</p>
+        </section>
+      </section>
+
+      <!-- SLIDE 7: Demo — Explore Phase -->
+      <section>
+        <h2><span class="pill pill-explore" style="font-size:0.7em;">Explore</span> Phase</h2>
+        <p style="font-size:0.75em; opacity:0.7;">Understand the template before writing a single line.</p>
+        <div style="text-align:left; margin-top:30px;">
+          <div class="step-row fragment fade-up">
+            <span class="step-num">1</span>
+            <span>Open McKay's template in Cursor</span>
+          </div>
+          <div class="step-row fragment fade-up">
+            <span class="step-num">2</span>
+            <span>Ask: <span class="code-inline">@codebase What is the file structure? What patterns does it use?</span></span>
+          </div>
+          <div class="step-row fragment fade-up">
+            <span class="step-num">3</span>
+            <span>Explore <span class="code-inline">app/</span>, <span class="code-inline">components/</span>, <span class="code-inline">lib/</span></span>
+          </div>
+          <div class="step-row fragment fade-up">
+            <span class="step-num">4</span>
+            <span>Check routing patterns and existing pages</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: Demo — Plan Phase -->
+      <section>
+        <h2><span class="pill pill-plan" style="font-size:0.7em;">Plan</span> Phase</h2>
+        <p style="font-size:0.75em; opacity:0.7;">Get a roadmap before touching code.</p>
+        <div style="text-align:left; font-size:0.6em; margin-top:20px;">
+          <pre><code class="language-text" data-trim>
+@codebase I want to add a simple quiz page to this app.
+
+The quiz should:
+- Show one question at a time with 4 multiple-choice answers
+- Track score as the user progresses
+- Show results at the end
+- Use hardcoded questions (no AI, no API)
+
+Create a step-by-step plan. Don't write code yet —
+just outline the files to create/modify.
+          </code></pre>
+        </div>
+        <p class="fragment fade-up" style="font-size:0.7em; margin-top:20px;">Review the plan. Adjust if needed. <em>Then</em> build.</p>
+      </section>
+
+      <!-- SLIDE 9: Demo — Build Phase -->
+      <section>
+        <h2><span class="pill pill-build" style="font-size:0.7em;">Build</span> Phase</h2>
+        <p style="font-size:0.75em; opacity:0.7;">Execute the plan with Agent mode.</p>
+        <div style="text-align:left; margin-top:30px;">
+          <div class="step-row fragment fade-up">
+            <span class="step-num">1</span>
+            <span>Switch to <strong>Agent mode</strong> and implement the plan</span>
+          </div>
+          <div class="step-row fragment fade-up">
+            <span class="step-num">2</span>
+            <span>Run <span class="code-inline">pnpm dev</span> and verify the quiz</span>
+          </div>
+          <div class="step-row fragment fade-up">
+            <span class="step-num">3</span>
+            <span>Iterate — use <strong>Cmd+K</strong> inline edits for quick fixes</span>
+          </div>
+          <div class="step-row fragment fade-up">
+            <span class="step-num">4</span>
+            <span>Add navigation links to the quiz page</span>
+          </div>
+        </div>
+        <p class="fragment fade-up" style="font-size:0.65em; margin-top:30px; color:#6ee7b7;">Build is fast because the AI already has good context from Explore + Plan.</p>
+      </section>
+
+      <!-- SLIDE 10: Two-Stage Workflow -->
+      <section>
+        <h2>Two-Stage Workflow</h2>
+        <div class="grid-2" style="margin-top: 30px;">
+          <div class="card fragment fade-up" style="text-align:center;">
+            <span style="font-size:2em;">🧠</span>
+            <h3 style="color:#c084fc;">Stage 1: Think</h3>
+            <p style="font-size:0.65em; opacity:0.8;">ChatGPT / Claude for<br/><strong>planning &amp; architecture</strong></p>
+          </div>
+          <div class="card fragment fade-up" style="text-align:center;">
+            <span style="font-size:2em;">⚡</span>
+            <h3 style="color:#60a5fa;">Stage 2: Execute</h3>
+            <p style="font-size:0.65em; opacity:0.8;">Cursor for<br/><strong>implementation &amp; iteration</strong></p>
+          </div>
+        </div>
+        <p class="fragment fade-up" style="margin-top:30px; font-size:0.75em; opacity:0.7;">Use the right tool for the right phase.</p>
+      </section>
+
+      <!-- SLIDE 11: Key Takeaways -->
+      <section>
+        <h2>Key Takeaways</h2>
+        <ul>
+          <li class="fragment fade-up"><strong>Explore</strong> prevents building something that doesn't match existing patterns</li>
+          <li class="fragment fade-up"><strong>Plan</strong> gives you a clear roadmap before writing any code</li>
+          <li class="fragment fade-up"><strong>Build</strong> is fast because the AI has good context</li>
+          <li class="fragment fade-up"><span class="at-symbol">@file</span> for precision, <span class="at-symbol">@codebase</span> for discovery</li>
+          <li class="fragment fade-up">A <strong>context file</strong> saves you from repeating yourself every prompt</li>
+        </ul>
+      </section>
+
+      <!-- SLIDE 12: What's Next -->
+      <section>
+        <h2 class="gradient-text">Next Up</h2>
+        <p style="font-size:1.1em; margin-top:30px;">We built a hardcoded quiz.</p>
+        <p style="font-size:1.1em; opacity:0.7;">In Section 05, we'll add <strong>AI-powered question generation</strong>.</p>
+        <div style="margin-top:50px;">
+          <span class="pill pill-explore">Explore ✓</span>
+          <span class="pill pill-plan">Plan ✓</span>
+          <span class="pill pill-build">Build ✓</span>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      plugins: [RevealHighlight]
+    });
+  </script>
+</body>
+</html>

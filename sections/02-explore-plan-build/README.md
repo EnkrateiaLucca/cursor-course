@@ -16,19 +16,21 @@
 
 ## Demo Checklist
 
-- [ ] Open McKay's template in Cursor and explore the codebase using @ symbols
-- [ ] Demonstrate @file, @folder, @codebase, @docs in Chat
-- [ ] Walk through the context file template (see [context-file-template.md](context-file-template.md))
-- [ ] Build a simple hardcoded quiz page (see [demo-simple-quiz.md](demo-simple-quiz.md))
-- [ ] Show the Explore → Plan → Build cycle in action
+- Open McKay's template in Cursor and explore the codebase using @ symbols
+- Demonstrate @file, @folder, @codebase, @docs in Chat
+- Walk through the context file template (see [context-file-template.md](context-file-template.md))
+- Build a simple hardcoded quiz page (see [demo-simple-quiz.md](demo-simple-quiz.md))
+- **Show the Explore → Plan → Build cycle in action**
 
 ## Files in This Section
 
-| File | Purpose |
-|------|---------|
-| [demo-simple-quiz.md](demo-simple-quiz.md) | Build a quiz WITHOUT AI on McKay's template |
-| [context-file-template.md](context-file-template.md) | Reusable context file template |
-| [prompts.md](prompts.md) | @ symbol demos and exploration prompts |
+
+| File                                                 | Purpose                                     |
+| ---------------------------------------------------- | ------------------------------------------- |
+| [demo-simple-quiz.md](demo-simple-quiz.md)           | Build a quiz WITHOUT AI on McKay's template |
+| [context-file-template.md](context-file-template.md) | Reusable context file template              |
+| [prompts.md](prompts.md)                             | @ symbol demos and exploration prompts      |
+
 
 ## Key Talking Points
 
@@ -37,3 +39,4 @@
 - A context file saves you from repeating yourself in every prompt
 - The two-stage workflow: ChatGPT/Claude for planning → Cursor for implementation
 - More context != better results — curate what the AI sees
+

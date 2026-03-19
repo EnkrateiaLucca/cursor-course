@@ -11,12 +11,12 @@ Use this template as a starting point for any project. Save it as `context.md` i
 
 [What problem does this app solve? Who is it for? 2-3 sentences.]
 
-## Target Users
+## Target Users (Optional)
 
 - [User type 1] — [what they need]
 - [User type 2] — [what they need]
 
-## Core Features
+## Core Features 
 
 1. **[Feature Name]** — [Brief description]
 2. **[Feature Name]** — [Brief description]
@@ -72,3 +72,4 @@ Use this template as a starting point for any project. Save it as `context.md` i
 3. Reference it in every major Cursor prompt: `@context.md [your request]`
 4. Update it as requirements evolve — this is a living document
 5. Share with your team for alignment on architecture decisions
+

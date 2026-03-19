@@ -1,5 +1,15 @@
 # Section 02: Prompts
 
+## Creating the plan file with Claude code:
+
+```I want to create a quiz app where students can upload a structured file like a .json or a markdown file and do an interactive quiz on    
+                                                                          
+    the browser. I want to use the template from this repo I like:  
+  https://github.com/mckaywrigley/mckays-app-template right now your      
+  output should be a PLAN.md file with the planning structure for the     
+  full app following the structure inside                                 
+  @sections/02-explore-plan-build/context-file-template.md```
+
 ## Explore: Understanding a Codebase
 
 ```
