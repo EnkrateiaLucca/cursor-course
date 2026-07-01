@@ -24,3 +24,8 @@ npm-debug.log*
 dist/
 build/
 
+
+# Course process artifacts (not student-facing content)
+Plans/
+research/
+walkthrough.md
