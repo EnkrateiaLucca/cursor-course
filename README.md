@@ -43,7 +43,7 @@ See **[SETUP.md](SETUP.md)** for the complete pre-course checklist.
 **Quick version:**
 - Cursor IDE installed
 - Node.js 20+
-- Accounts: GitHub (with PAT), Supabase, Vercel, Clerk, Stripe, OpenAI or DeepSeek
+- Accounts: GitHub (with PAT), Supabase, Vercel, Clerk, Stripe, Anthropic, OpenAI, or DeepSeek
 - McKay's App Template cloned
 
 ---
@@ -100,7 +100,7 @@ Browser Tab: presentation.html (slides)
 - **Database:** Supabase (PostgreSQL) + Drizzle ORM
 - **Auth:** Clerk
 - **Payments:** Stripe
-- **AI:** OpenAI / DeepSeek API
+- **AI:** Anthropic / OpenAI / DeepSeek API
 - **Testing:** Vitest + Playwright
 - **Deployment:** Vercel
 

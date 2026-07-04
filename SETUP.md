@@ -26,7 +26,8 @@ Complete these steps **before** the live training to ensure a smooth experience.
 
 | Provider | Get Key | Purpose |
 |----------|---------|---------|
-| **OpenAI** | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) | AI quiz generation |
+| **Anthropic** | [console.anthropic.com](https://console.anthropic.com) | AI quiz generation (reference code default) |
+| **OpenAI** (alternative) | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) | AI quiz generation |
 | **DeepSeek** (alternative) | [platform.deepseek.com](https://platform.deepseek.com) | Budget-friendly AI alternative |
 
 ## Clone McKay's App Template
@@ -75,6 +76,8 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-stripe-publishable-key
 STRIPE_WEBHOOK_SECRET=your-webhook-secret
 
 # AI
+ANTHROPIC_API_KEY=your-anthropic-key
+# OR
 OPENAI_API_KEY=your-openai-key
 # OR
 DEEPSEEK_API_KEY=your-deepseek-key
