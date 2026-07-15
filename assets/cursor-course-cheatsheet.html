@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor AI IDE: Building Production Applications — Course Cheatsheet</title>
+    <style>
+        /* ========================================
+           MODULAR GRID/CARD LAYOUT TEMPLATE
+           Cursor AI Course Cheatsheet
+           Optimized for A4 printing (210mm × 297mm)
+           ======================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 14mm;
+            @top-left { content: none; }
+            @top-center { content: none; }
+            @top-right { content: none; }
+            @bottom-left { content: none; }
+            @bottom-center { content: none; }
+            @bottom-right { content: none; }
+        }
+
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 9.5pt;
+            line-height: 1.45;
+            color: #000;
+            background: #fff;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 14mm;
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            padding-bottom: 10pt;
+            margin-bottom: 12pt;
+            border-bottom: 3px solid #000;
+        }
+
+        .page-header h1 {
+            font-size: 22pt;
+            font-weight: 700;
+            margin-bottom: 4pt;
+            text-transform: uppercase;
+            letter-spacing: 1.5pt;
+        }
+
+        .page-header .subtitle {
+            font-size: 11pt;
+            color: #333;
+            margin-bottom: 4pt;
+        }
+
+        .page-header .meta {
+            font-size: 8.5pt;
+            color: #666;
+        }
+
+        /* Section Headers */
+        .section-title {
+            font-size: 11pt;
+            font-weight: 700;
+            margin: 12pt 0 8pt 0;
+            padding: 5pt 8pt;
+            background: #000;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.8pt;
+            break-after: avoid;
+        }
+
+        .section-title span.badge {
+            background: #fff;
+            color: #000;
+            padding: 1pt 5pt;
+            font-size: 8pt;
+            margin-right: 6pt;
+            font-weight: 700;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8pt;
+            margin-bottom: 10pt;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8pt;
+            margin-bottom: 10pt;
+        }
+
+        /* Cards */
+        .card {
+            border: 1.5px solid #000;
+            padding: 8pt;
+            background: #fff;
+            break-inside: avoid;
+        }
+
+        .card-title {
+            font-size: 10pt;
+            font-weight: 700;
+            margin-bottom: 6pt;
+            padding-bottom: 4pt;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .card-content {
+            font-size: 8.5pt;
+        }
+
+        .card-light {
+            border: 1.5px solid #000;
+            background: #f9f9f9;
+            padding: 8pt;
+            break-inside: avoid;
+        }
+
+        .card-accent {
+            border: 2px solid #000;
+            background: #f0f0f0;
+            padding: 8pt;
+            break-inside: avoid;
+        }
+
+        /* Code Cards */
+        .code-card {
+            border: 1.5px solid #000;
+            background: #fff;
+            padding: 0;
+            break-inside: avoid;
+        }
+
+        .code-card-header {
+            background: #333;
+            color: #fff;
+            padding: 4pt 8pt;
+            font-weight: 700;
+            font-size: 8.5pt;
+        }
+
+        .code-card pre {
+            margin: 0;
+            padding: 7pt;
+            font-family: 'Courier New', 'Courier', monospace;
+            font-size: 7.5pt;
+            line-height: 1.35;
+            background: #f8f8f8;
+            overflow: hidden;
+            white-space: pre-wrap;
+            word-break: break-all;
+            overflow-wrap: break-word;
+        }
+
+        /* Table Cards */
+        .table-card {
+            border: 1.5px solid #000;
+            background: #fff;
+            padding: 0;
+            break-inside: avoid;
+            margin-bottom: 8pt;
+        }
+
+        .table-card-header {
+            background: #000;
+            color: #fff;
+            padding: 5pt 8pt;
+            font-weight: 700;
+            font-size: 9.5pt;
+        }
+
+        .table-card table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8pt;
+        }
+
+        .table-card th {
+            background: #f0f0f0;
+            color: #000;
+            font-weight: 700;
+            text-align: left;
+            padding: 5pt 7pt;
+            border-bottom: 1.5px solid #000;
+        }
+
+        .table-card td {
+            padding: 4pt 7pt;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        /* Lists */
+        .card ul, .card ol, .card-light ul, .card-accent ul {
+            margin-left: 13pt;
+        }
+
+        .card li, .card-light li, .card-accent li {
+            margin-bottom: 3pt;
+            font-size: 8.5pt;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            border: 1.5px solid #666;
+            border-left: 4px solid #000;
+            padding: 7pt;
+            margin: 8pt 0;
+            background: #f5f5f5;
+            break-inside: avoid;
+        }
+
+        .info-box-title {
+            font-weight: 700;
+            font-size: 9.5pt;
+            margin-bottom: 4pt;
+        }
+
+        /* Step Flow */
+        .step-container {
+            display: flex;
+            gap: 6pt;
+            margin: 8pt 0;
+            align-items: stretch;
+        }
+
+        .step {
+            flex: 1;
+            border: 1.5px solid #000;
+            padding: 7pt;
+            text-align: center;
+            background: #fff;
+            break-inside: avoid;
+        }
+
+        .step-number {
+            background: #000;
+            color: #fff;
+            width: 22pt;
+            height: 22pt;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 5pt auto;
+            font-weight: 700;
+            font-size: 11pt;
+        }
+
+        .step-title {
+            font-weight: 700;
+            font-size: 9.5pt;
+            margin-bottom: 4pt;
+        }
+
+        .step-content {
+            font-size: 8pt;
+        }
+
+        /* Key Points */
+        .key-points {
+            border: 2px solid #000;
+            background: #f9f9f9;
+            padding: 10pt;
+            margin: 10pt 0;
+            break-inside: avoid;
+        }
+
+        .key-points-title {
+            font-weight: 700;
+            font-size: 11pt;
+            margin-bottom: 7pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5pt;
+        }
+
+        .key-points ul {
+            margin-left: 14pt;
+        }
+
+        .key-points li {
+            margin-bottom: 4pt;
+            font-size: 9pt;
+        }
+
+        /* Inline code */
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 8pt;
+            background: #f0f0f0;
+            padding: 1pt 3pt;
+        }
+
+        /* Definition cards */
+        .definition-card {
+            border: 1.5px solid #000;
+            padding: 7pt;
+            background: #fff;
+            break-inside: avoid;
+        }
+
+        .term {
+            font-weight: 700;
+            font-size: 9.5pt;
+            margin-bottom: 3pt;
+        }
+
+        .definition {
+            font-size: 8.5pt;
+            color: #222;
+        }
+
+        /* Badge row for tech stack */
+        .badge-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5pt;
+            margin: 6pt 0;
+        }
+
+        .badge {
+            background: #000;
+            color: #fff;
+            padding: 2pt 7pt;
+            font-size: 8pt;
+            font-weight: 600;
+        }
+
+        /* Highlight strip */
+        .highlight-strip {
+            background: #f0f0f0;
+            border-left: 4px solid #000;
+            padding: 5pt 8pt;
+            margin: 5pt 0;
+            font-size: 8.5pt;
+            break-inside: avoid;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 16pt;
+            padding-top: 8pt;
+            border-top: 2px solid #000;
+            text-align: center;
+            font-size: 7.5pt;
+            color: #666;
+        }
+
+        /* Utility */
+        .mb-small { margin-bottom: 6pt; }
+        .mb-medium { margin-bottom: 10pt; }
+        strong { font-weight: 700; }
+
+        /* Print Optimization */
+        @media print {
+            body { margin: 0; padding: 14mm; }
+            .card, .card-light, .card-accent, .info-box,
+            .code-card, .table-card, .definition-card,
+            .key-points { break-inside: avoid; }
+            .section-title { break-after: avoid; }
+            a { text-decoration: none; color: #000; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>Cursor AI IDE: Building Production Applications</h1>
+        <div class="subtitle">O'Reilly Live Training — 6 Hours · 10 Sections · Instructor: Lucas Soares</div>
+        <div class="meta">Arc: HTML toy app → Simple quiz → AI-powered quiz app → Backend/Auth/Payments → Deployment</div>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="section-title">Tech Stack — Demo Project (AI Quiz App)</div>
+    <div class="badge-row">
+        <span class="badge">Next.js 15+ App Router</span>
+        <span class="badge">TypeScript</span>
+        <span class="badge">Tailwind CSS</span>
+        <span class="badge">shadcn/ui</span>
+        <span class="badge">Supabase (PostgreSQL)</span>
+        <span class="badge">Drizzle ORM</span>
+        <span class="badge">Clerk Auth</span>
+        <span class="badge">Stripe</span>
+        <span class="badge">Anthropic / OpenAI / DeepSeek API</span>
+        <span class="badge">Vitest</span>
+        <span class="badge">Playwright</span>
+        <span class="badge">Vercel</span>
+    </div>
+
+    <!-- SECTION 01 -->
+    <div class="section-title"><span class="badge">01</span>Cursor Intro (~45 min) — Four Interaction Modes</div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">Four Cursor Modes</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>Chat (Cmd+L):</strong> Explore, explain, ask questions</li>
+                    <li><strong>Agent:</strong> Multi-file autonomous changes</li>
+                    <li><strong>Inline Edit (Cmd+K):</strong> Quick targeted edits</li>
+                    <li><strong>Tab Autocomplete:</strong> Predict and accept completions</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Key Principles</div>
+            <div class="card-content">
+                <ul>
+                    <li>Cursor is <strong>AI-first</strong>, not AI-bolted-on</li>
+                    <li><strong>"Try 5 times"</strong> rule — rephrase &amp; retry if a prompt fails</li>
+                    <li>Git commits are critical — Cursor is <strong>NOT</strong> a checkpoint system</li>
+                    <li>Quick edit → Inline; multi-file → Agent; explore → Chat</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="code-card mb-small">
+        <div class="code-card-header">Demo Prompt — Toy HTML App</div>
+        <pre><code>Create a single-file HTML page with embedded CSS and JS: centered card titled "My First Cursor App",
+counter with + and - buttons, color theme picker (3-4 presets), clean modern styling, no external deps.</code></pre>
+    </div>
+
+    <!-- SECTION 02 -->
+    <div class="section-title"><span class="badge">02</span>Explore-Plan-Build Framework (~45 min)</div>
+
+    <div class="step-container">
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-title">EXPLORE</div>
+            <div class="step-content">Understand codebase with @ symbols before writing a line of code</div>
+        </div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-title">PLAN</div>
+            <div class="step-content">Design approach, identify files, think through data flow</div>
+        </div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-title">BUILD</div>
+            <div class="step-content">Implement with clear curated context — not everything</div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">@ Symbol Reference</div>
+            <div class="card-content">
+                <ul>
+                    <li><code>@file</code> — Reference specific file (precision)</li>
+                    <li><code>@folder</code> — Reference a directory (summary)</li>
+                    <li><code>@codebase</code> — Semantic search across project</li>
+                    <li><code>@docs</code> — Query documentation</li>
+                    <li><code>@web</code> — Search the web for current info</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Two-Stage Workflow</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>Stage 1:</strong> Use ChatGPT / Claude for planning &amp; design</li>
+                    <li><strong>Stage 2:</strong> Use Cursor for implementation</li>
+                    <li>Context file = project "north star" (saves repeating yourself)</li>
+                    <li>More context ≠ better results — curate what AI sees</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 03 -->
+    <div class="section-title"><span class="badge">03</span>Project Rules (~20 min) — Hierarchy of Leverage</div>
+
+    <div class="highlight-strip"><strong>Hierarchy of Leverage:</strong> Rules &gt; Context &gt; Prompts &gt; Model Capability</div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">Four Rule Application Modes</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>Always:</strong> Applied to every request</li>
+                    <li><strong>Auto Attached:</strong> Triggers on file pattern (e.g., <code>*.tsx</code>)</li>
+                    <li><strong>Agent Requested:</strong> AI decides when to apply</li>
+                    <li><strong>Manual:</strong> Only when explicitly referenced</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Rules Best Practices</div>
+            <div class="card-content">
+                <ul>
+                    <li>Rules = onboarding docs for your AI (encode team standards)</li>
+                    <li>Start <strong>without</strong> rules, add only when mistakes repeat</li>
+                    <li><code>AGENTS.md</code> (Cursor) and <code>CLAUDE.md</code> (Claude Code) = project context</li>
+                    <li>Don't over-engineer — rules add overhead to every request</li>
+                    <li>Location: <code>.cursor/rules/*.mdc</code></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 04 -->
+    <div class="section-title"><span class="badge">04</span>MCP &amp; Tooling (~30 min) — "USB for AI"</div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">MCP (Model Context Protocol)</div>
+            <div class="card-content">
+                <ul>
+                    <li>Open protocol by Anthropic — standardizes AI ↔ tool connections</li>
+                    <li>One interface, many devices (like USB)</li>
+                    <li>Key integrations: <strong>Playwright, GitHub, GitMCP, databases</strong></li>
+                    <li><strong>GitMCP trick:</strong> Replace <code>github.com</code> → <code>gitmcp.io</code> in any repo URL</li>
+                    <li>Playwright MCP: AI sees &amp; interacts with your running app</li>
+                </ul>
+            </div>
+        </div>
+        <div class="code-card">
+            <div class="code-card-header">Playwright MCP Config</div>
+            <pre><code>{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp"]
+    }
+  }
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="table-card mb-small">
+        <div class="table-card-header">CLI vs MCP Comparison</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Interface</th>
+                    <th>Best For</th>
+                    <th>Git</th>
+                    <th>Visual Context</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Cursor (IDE + MCP)</strong></td>
+                    <td>Visual IDE</td>
+                    <td>UI/visual work, live demos</td>
+                    <td>Basic</td>
+                    <td>Playwright MCP</td>
+                </tr>
+                <tr>
+                    <td><strong>Claude Code (CLI)</strong></td>
+                    <td>Terminal</td>
+                    <td>Infrastructure, scripts, SSH</td>
+                    <td>Deep (auto-commits)</td>
+                    <td>Screenshot tools</td>
+                </tr>
+                <tr>
+                    <td><strong>Aider (CLI)</strong></td>
+                    <td>Terminal</td>
+                    <td>Quick targeted code changes</td>
+                    <td>Deep</td>
+                    <td>No</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SECTION 05 -->
+    <div class="section-title"><span class="badge">05</span>AI Quiz App Build (~60 min) — Full-Stack SaaS</div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">App Architecture</div>
+            <div class="card-content">
+                <ul>
+                    <li>Landing → Dashboard → Create Quiz → Take Quiz → Results</li>
+                    <li>AI gen: text/PDF → Claude API (two-stage) → structured JSON</li>
+                    <li>Quiz state managed in React hook (no Redux/Zustand)</li>
+                    <li>Questions stored as JSONB in Postgres (no separate table)</li>
+                    <li>AI generation server-side only — API key never touches client</li>
+                    <li>Exports (CSV, Markdown, Anki) run client-side</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Implementation Phases</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>Phase 0:</strong> Project setup (Next.js + Shadcn + dependencies)</li>
+                    <li><strong>Phase 1:</strong> Auth &amp; user sync (Clerk + webhook → Supabase)</li>
+                    <li><strong>Phase 2:</strong> Quiz data layer (Zod + CRUD API routes + RLS)</li>
+                    <li><strong>Phase 3:</strong> Quiz creation page (upload JSON + AI generate)</li>
+                    <li><strong>Phase 4:</strong> Quiz player (state machine + Framer Motion)</li>
+                    <li><strong>Phase 5:</strong> Results page + export (CSV, Markdown, Anki)</li>
+                    <li><strong>Phase 6:</strong> Dashboard (quiz library + performance stats)</li>
+                    <li><strong>Phase 7:</strong> Stripe payments + plan gating</li>
+                    <li><strong>Phase 8:</strong> Landing page + polish + SEO</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">Database Schema (key tables)</div>
+            <div class="card-content">
+                <ul>
+                    <li><code>users</code> (id, email, stripe_customer_id, subscription_status)</li>
+                    <li><code>quizzes</code> (id, user_id, title, questions JSONB, is_public)</li>
+                    <li><code>quiz_attempts</code> (id, quiz_id, user_id, score, results JSONB)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="code-card">
+            <div class="code-card-header">Quiz JSON Format</div>
+            <pre><code>// Multiple choice
+{ "type": "multiple-choice",
+  "question": "...", "options": ["A","B","C","D"],
+  "correctAnswer": 0, "explanation": "..." }
+
+// Open-ended
+{ "type": "open-ended", "question": "...",
+  "acceptedAnswers": ["answer"], "explanation": "..." }</code></pre>
+        </div>
+    </div>
+
+    <!-- SECTION 06 -->
+    <div class="section-title"><span class="badge">06</span>Testing (~20 min) — TDD with AI</div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">TDD Workflow with Cursor</div>
+            <div class="card-content">
+                <ol style="margin-left:13pt;">
+                    <li style="margin-bottom:3pt;">Write the <strong>failing test FIRST</strong> (you define behavior)</li>
+                    <li style="margin-bottom:3pt;">Let Cursor implement the code to pass the test</li>
+                    <li style="margin-bottom:3pt;">Refactor with confidence</li>
+                </ol>
+                <br>
+                <ul>
+                    <li>AI generates edge cases you'd likely miss</li>
+                    <li>Playwright MCP closes the loop: AI runs E2E &amp; sees results</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Testing Pyramid</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>Unit (Vitest):</strong> Pure functions, utilities, validators</li>
+                    <li><strong>Component (RTL):</strong> React components in isolation</li>
+                    <li><strong>Integration:</strong> API routes, database queries</li>
+                    <li><strong>E2E (Playwright):</strong> Full user flows in real browser</li>
+                </ul>
+                <br>
+                <div class="highlight-strip" style="font-size:8pt;">Many unit tests → fewer E2E tests. Write test → AI implements.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 07 -->
+    <div class="section-title"><span class="badge">07</span>Diagrams &amp; Design (~30 min) — Sketch → Code</div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">Mermaid Diagram Types</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>Architecture diagrams:</strong> System overview</li>
+                    <li><strong>User flow diagrams:</strong> Sequence / flow charts</li>
+                    <li><strong>Database ERDs:</strong> Entity relationships</li>
+                    <li>Text-based → perfect for version control &amp; AI generation</li>
+                    <li>Use mermaid.live for preview without extension</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Sketch → Code Workflow</div>
+            <div class="card-content">
+                <ol style="margin-left:13pt;">
+                    <li style="margin-bottom:3pt;">Take photo / screenshot of design (hand-drawn or Figma)</li>
+                    <li style="margin-bottom:3pt;">Paste in Cursor chat</li>
+                    <li style="margin-bottom:3pt;">Get implementation code</li>
+                    <li style="margin-bottom:3pt;">Iterate: "make this more spacious", "match this color scheme"</li>
+                </ol>
+                <ul>
+                    <li>AI iterates on designs from natural language descriptions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 08 -->
+    <div class="section-title"><span class="badge">08</span>Backend, Auth &amp; Payments (~45 min)</div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">Supabase + Drizzle ORM</div>
+            <div class="card-content">
+                <ul>
+                    <li>Drizzle = type-safe queries (errors at compile time)</li>
+                    <li>Row Level Security (RLS) isolates data per user</li>
+                    <li>Use connection pooling in production (not direct connection)</li>
+                    <li>Enable RLS on <strong>all</strong> tables before going live</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Clerk Auth</div>
+            <div class="card-content">
+                <ul>
+                    <li>Middleware protects routes automatically (one config file)</li>
+                    <li><code>ClerkProvider</code> wraps root layout</li>
+                    <li><code>&lt;UserButton /&gt;</code> renders user avatar + menu</li>
+                    <li>Webhook syncs Clerk users → Supabase <code>users</code> table</li>
+                    <li>Free tier: 10,000 monthly active users</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">Stripe Payments</div>
+            <div class="card-content">
+                <ul>
+                    <li>Test mode is identical to production (safe to demo live)</li>
+                    <li>Flow: Checkout → <code>checkout.session.completed</code> webhook → update <code>subscription_status</code></li>
+                    <li>Gate AI generation: free = 3/month, pro = unlimited</li>
+                    <li>Monthly reset of <code>ai_generations_used</code> counter</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Next.js Server Actions</div>
+            <div class="card-content">
+                <ul>
+                    <li>No separate API layer needed for mutations</li>
+                    <li>Type-safe from client to server</li>
+                    <li>Use <code>"use server"</code> directive at top of file or function</li>
+                    <li>McKay's template has most of this pre-wired — connect the dots</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-card mb-small">
+        <div class="table-card-header">Required Environment Variables</div>
+        <table>
+            <thead>
+                <tr><th>Service</th><th>Variable(s)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Clerk</strong></td><td><code>NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY</code> · <code>CLERK_SECRET_KEY</code> · <code>CLERK_WEBHOOK_SECRET</code></td></tr>
+                <tr><td><strong>Supabase</strong></td><td><code>NEXT_PUBLIC_SUPABASE_URL</code> · <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> · <code>SUPABASE_SERVICE_ROLE_KEY</code></td></tr>
+                <tr><td><strong>Stripe</strong></td><td><code>STRIPE_SECRET_KEY</code> · <code>NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code> · <code>STRIPE_WEBHOOK_SECRET</code></td></tr>
+                <tr><td><strong>AI + App</strong></td><td><code>ANTHROPIC_API_KEY</code> · <code>NEXT_PUBLIC_APP_URL</code></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SECTION 09 -->
+    <div class="section-title"><span class="badge">09</span>Deployment (~30 min) — Vercel + Production Readiness</div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">Vercel Deployment Steps</div>
+            <div class="card-content">
+                <ol style="margin-left:13pt;">
+                    <li style="margin-bottom:3pt;">Connect GitHub repo to Vercel (zero-config for Next.js)</li>
+                    <li style="margin-bottom:3pt;">Set all environment variables in Vercel dashboard</li>
+                    <li style="margin-bottom:3pt;">Configure webhook URLs: Clerk + Stripe → production domain</li>
+                    <li style="margin-bottom:3pt;">Deploy — automatic on push to <code>main</code></li>
+                </ol>
+                <ul>
+                    <li><strong>Env vars = #1 deployment issue</strong> — double-check all</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Free Tier Cost Breakdown</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>Vercel:</strong> Free hobby — 100 GB bandwidth</li>
+                    <li><strong>Supabase:</strong> Free — 500 MB DB, 2 GB storage</li>
+                    <li><strong>Clerk:</strong> Free — 10,000 MAU</li>
+                    <li><strong>Stripe:</strong> No monthly fee (transaction % only)</li>
+                    <li><strong>Anthropic API:</strong> Pay per use (~$0.003/quiz generated)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-box mb-small">
+        <div class="info-box-title">Production Checklist</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4pt;font-size:8.5pt;">
+            <div>☐ Enable RLS on all Supabase tables</div>
+            <div>☐ All env vars set in production dashboard</div>
+            <div>☐ Use connection pooling (not direct connection)</div>
+            <div>☐ Stripe webhooks configured with production URL</div>
+            <div>☐ Error boundaries on all pages</div>
+            <div>☐ Set up monitoring / logging</div>
+        </div>
+    </div>
+
+    <!-- SECTION 10 -->
+    <div class="section-title"><span class="badge">10</span>Key Takeaways &amp; Resources</div>
+
+    <div class="key-points">
+        <div class="key-points-title">10 Takeaways</div>
+        <ul>
+            <li><strong>1.</strong> Cursor is a <strong>development multiplier</strong>, not a replacement for thinking — you make the architectural decisions</li>
+            <li><strong>2.</strong> <strong>Explore → Plan → Build</strong> — never skip the first two steps</li>
+            <li><strong>3.</strong> <strong>Context quality &gt; prompt cleverness</strong> — curate what the AI sees</li>
+            <li><strong>4.</strong> <strong>Project rules</strong> encode team standards — add incrementally, not all at once</li>
+            <li><strong>5.</strong> <strong>MCP extends Cursor's reach</strong> — Playwright, GitHub, databases, docs</li>
+            <li><strong>6.</strong> <strong>Two-stage workflow works</strong> — plan with Claude/ChatGPT, build with Cursor</li>
+            <li><strong>7.</strong> <strong>TDD with AI</strong> — write the test (define behavior), let AI implement</li>
+            <li><strong>8.</strong> <strong>Full-stack is achievable</strong> — Supabase + Clerk + Stripe + Vercel = production app</li>
+            <li><strong>9.</strong> <strong>Git discipline is non-negotiable</strong> — commit early, commit often</li>
+            <li><strong>10.</strong> <strong>Try 5 times before giving up</strong> — AI prompting is a learnable skill</li>
+        </ul>
+    </div>
+
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title">Core Resources</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>Cursor:</strong> cursor.com · docs.cursor.com</li>
+                    <li><strong>MCP Registry:</strong> github.com/modelcontextprotocol/servers</li>
+                    <li><strong>GitMCP:</strong> gitmcp.io</li>
+                    <li><strong>McKay's Template:</strong> github.com/mckaywrigley/mckays-app-template</li>
+                    <li><strong>Claude Code CLI:</strong> docs.anthropic.com/en/docs/claude-code</li>
+                    <li><strong>Playwright:</strong> playwright.dev</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Stack Documentation</div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>Next.js:</strong> nextjs.org/docs</li>
+                    <li><strong>Tailwind:</strong> tailwindcss.com/docs</li>
+                    <li><strong>shadcn/ui:</strong> ui.shadcn.com</li>
+                    <li><strong>Supabase:</strong> supabase.com/docs</li>
+                    <li><strong>Clerk:</strong> clerk.com/docs</li>
+                    <li><strong>Stripe:</strong> stripe.com/docs</li>
+                    <li><strong>Drizzle ORM:</strong> orm.drizzle.team</li>
+                    <li><strong>Vercel:</strong> vercel.com/docs</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Automata Learning Lab — Cursor AI IDE: Building Production Applications | O'Reilly Live Training | Instructor: Lucas Soares</p>
+    </footer>
+
+</body>
+</html>
