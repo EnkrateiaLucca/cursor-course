@@ -30,6 +30,8 @@
 | ---------------------------------- | ------------------------------------- |
 | [demo-toy-app.md](demo-toy-app.md) | Step-by-step: build a simple HTML app |
 | [prompts.md](prompts.md)           | Copy-paste prompts for live demos     |
+| [image-pdf-layout.html](image-pdf-layout.html) | Single-file HTML prototype: image-to-PDF layout tool |
+| [image-pdf-app/](image-pdf-app/)   | Next.js version (deployable on Vercel) |
 
 
 ## Key Talking Points

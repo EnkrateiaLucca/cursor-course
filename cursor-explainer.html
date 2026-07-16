@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Understand what Cursor is, how it helps web developers, and how to get started building production apps with AI-assisted development."
+    />
+    <title>Cursor for Web App Development — A Quick Guide</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --frame: #1b2838;
+        --bg: #f4ede4;
+        --bg-alt: #ebe3d8;
+        --card: #ffffff;
+        --text: #1b2838;
+        --muted: #6b7a8a;
+        --coral: #d95240;
+        --coral-light: #f0877c;
+        --pink: #e4b8ca;
+        --gold: #d4a843;
+        --dark: #232323;
+        --teal: #2b7a78;
+        --orange: #e8854a;
+        --shadow: 0 12px 40px rgba(27, 40, 56, 0.08);
+        --radius: 16px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background: var(--frame);
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        padding: 12px;
+      }
+
+      h1,
+      h2,
+      h3,
+      .logo,
+      .mode-title,
+      .card-title,
+      .step-num {
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .page-frame {
+        background: var(--bg);
+        border-radius: 18px;
+        overflow: hidden;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+
+      /* Nav */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.85rem 1.5rem;
+        background: rgba(244, 237, 228, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(27, 40, 56, 0.08);
+      }
+
+      .logo {
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: -0.02em;
+        color: var(--dark);
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: var(--coral);
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem 1rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 500;
+        transition: color 0.15s;
+      }
+
+      .nav-links a:hover {
+        color: var(--coral);
+      }
+
+      /* Hero */
+      .hero {
+        position: relative;
+        padding: 4.5rem 1.5rem 3.5rem;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 340px;
+        height: 340px;
+        border-radius: 50%;
+        background: var(--pink);
+        top: -80px;
+        right: -60px;
+        opacity: 0.55;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: var(--gold);
+        bottom: 10%;
+        left: -40px;
+        opacity: 0.35;
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 720px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.35rem 0.95rem;
+        border-radius: 999px;
+        background: var(--card);
+        border: 2px solid var(--dark);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+      }
+
+      .badge .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--coral);
+      }
+
+      h1 {
+        font-size: clamp(2.4rem, 5vw, 3.6rem);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: var(--dark);
+        margin-bottom: 1rem;
+      }
+
+      h1 em {
+        font-style: normal;
+        color: var(--coral);
+      }
+
+      .hero-lead {
+        font-size: 1.12rem;
+        color: var(--muted);
+        max-width: 580px;
+        margin-bottom: 2rem;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.75rem 1.4rem;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: transform 0.15s, box-shadow 0.15s;
+      }
+
+      .btn-primary {
+        background: var(--coral);
+        color: #fff;
+        box-shadow: 0 8px 24px rgba(217, 82, 64, 0.28);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary {
+        background: var(--card);
+        color: var(--dark);
+        border: 2px solid var(--dark);
+      }
+
+      .btn-secondary:hover {
+        background: var(--bg-alt);
+      }
+
+      /* Sections */
+      section {
+        padding: 3.5rem 1.5rem;
+      }
+
+      section:nth-child(even) {
+        background: var(--bg-alt);
+      }
+
+      .section-header {
+        max-width: 640px;
+        margin-bottom: 2.2rem;
+      }
+
+      .section-label {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--coral);
+        margin-bottom: 0.5rem;
+      }
+
+      h2 {
+        font-size: clamp(1.6rem, 3vw, 2.2rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--dark);
+        margin-bottom: 0.6rem;
+      }
+
+      .section-desc {
+        color: var(--muted);
+        font-size: 1rem;
+      }
+
+      /* What is Cursor */
+      .compare-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1rem;
+      }
+
+      .compare-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(27, 40, 56, 0.06);
+      }
+
+      .compare-card.highlight {
+        border: 2px solid var(--coral);
+      }
+
+      .compare-card h3 {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+        color: var(--dark);
+      }
+
+      .compare-card ul {
+        list-style: none;
+        display: grid;
+        gap: 0.45rem;
+      }
+
+      .compare-card li {
+        font-size: 0.92rem;
+        color: var(--muted);
+        padding-left: 1.1rem;
+        position: relative;
+      }
+
+      .compare-card li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--coral);
+        font-weight: 700;
+      }
+
+      .compare-card.highlight li::before {
+        content: "✓";
+      }
+
+      .pull-quote {
+        margin-top: 2rem;
+        padding: 1.25rem 1.5rem;
+        background: var(--dark);
+        color: #fff;
+        border-radius: var(--radius);
+        font-size: 1.05rem;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .pull-quote strong {
+        color: var(--gold);
+      }
+
+      /* Four modes */
+      .modes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 1rem;
+      }
+
+      .mode-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 1.4rem;
+        box-shadow: var(--shadow);
+        border-top: 4px solid var(--coral);
+        transition: transform 0.15s;
+      }
+
+      .mode-card:nth-child(2) {
+        border-top-color: var(--teal);
+      }
+
+      .mode-card:nth-child(3) {
+        border-top-color: var(--gold);
+      }
+
+      .mode-card:nth-child(4) {
+        border-top-color: var(--orange);
+      }
+
+      .mode-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .mode-shortcut {
+        display: inline-block;
+        font-family: "Space Grotesk", monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: var(--bg-alt);
+        padding: 0.2rem 0.55rem;
+        border-radius: 6px;
+        margin-bottom: 0.6rem;
+        color: var(--dark);
+      }
+
+      .mode-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 0.35rem;
+        color: var(--dark);
+      }
+
+      .mode-use {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--coral);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+      }
+
+      .mode-card:nth-child(2) .mode-use {
+        color: var(--teal);
+      }
+
+      .mode-card:nth-child(3) .mode-use {
+        color: var(--gold);
+      }
+
+      .mode-card:nth-child(4) .mode-use {
+        color: var(--orange);
+      }
+
+      .mode-card p {
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      /* Capabilities */
+      .cap-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+      }
+
+      .cap-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 1.4rem 1.5rem;
+        box-shadow: var(--shadow);
+      }
+
+      .cap-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        margin-bottom: 0.85rem;
+        background: var(--bg-alt);
+      }
+
+      .card-title {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+        color: var(--dark);
+      }
+
+      .cap-card p {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      /* Workflow */
+      .workflow-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 0;
+        position: relative;
+      }
+
+      .workflow-step {
+        text-align: center;
+        padding: 1.5rem 1rem;
+        position: relative;
+      }
+
+      .step-num {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--coral);
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.85rem;
+      }
+
+      .workflow-step:nth-child(2) .step-num {
+        background: var(--teal);
+      }
+
+      .workflow-step:nth-child(3) .step-num {
+        background: var(--gold);
+        color: var(--dark);
+      }
+
+      .workflow-step h3 {
+        font-size: 1rem;
+        margin-bottom: 0.35rem;
+        color: var(--dark);
+      }
+
+      .workflow-step p {
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+
+      /* Leverage pyramid */
+      .leverage-stack {
+        max-width: 520px;
+        margin: 0 auto;
+        display: grid;
+        gap: 0.5rem;
+      }
+
+      .leverage-tier {
+        padding: 0.85rem 1.2rem;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.92rem;
+        color: #fff;
+        transition: transform 0.15s;
+      }
+
+      .leverage-tier:hover {
+        transform: scale(1.02);
+      }
+
+      .leverage-tier:nth-child(1) {
+        background: var(--coral);
+        margin: 0 0;
+      }
+
+      .leverage-tier:nth-child(2) {
+        background: var(--orange);
+        margin: 0 8%;
+      }
+
+      .leverage-tier:nth-child(3) {
+        background: var(--teal);
+        margin: 0 16%;
+      }
+
+      .leverage-tier:nth-child(4) {
+        background: var(--muted);
+        margin: 0 24%;
+      }
+
+      .leverage-note {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      /* Context symbols */
+      .context-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .context-chip {
+        background: var(--card);
+        border: 2px solid var(--dark);
+        border-radius: 12px;
+        padding: 0.85rem;
+        text-align: center;
+        box-shadow: var(--shadow);
+      }
+
+      .context-chip code {
+        display: block;
+        font-family: "Space Grotesk", monospace;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--coral);
+        margin-bottom: 0.25rem;
+      }
+
+      .context-chip span {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+
+      /* Tips */
+      .tips-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1rem;
+      }
+
+      .tip-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 1.25rem 1.4rem;
+        border-left: 4px solid var(--gold);
+        box-shadow: var(--shadow);
+      }
+
+      .tip-card h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.35rem;
+        color: var(--dark);
+      }
+
+      .tip-card p {
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+
+      /* Stack diagram */
+      .stack-flow {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .stack-node {
+        background: var(--card);
+        border: 2px solid var(--dark);
+        border-radius: 999px;
+        padding: 0.5rem 1rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .stack-arrow {
+        color: var(--coral);
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      /* CTA */
+      .cta-section {
+        text-align: center;
+        padding: 4rem 1.5rem;
+        background: var(--dark);
+        color: #fff;
+      }
+
+      .cta-section h2 {
+        color: #fff;
+        margin-bottom: 0.75rem;
+      }
+
+      .cta-section p {
+        color: rgba(255, 255, 255, 0.72);
+        max-width: 520px;
+        margin: 0 auto 1.75rem;
+      }
+
+      .cta-section .btn-primary {
+        background: var(--gold);
+        color: var(--dark);
+        box-shadow: none;
+      }
+
+      footer {
+        text-align: center;
+        padding: 1.5rem;
+        font-size: 0.82rem;
+        color: var(--muted);
+        background: var(--bg);
+      }
+
+      footer a {
+        color: var(--coral);
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 640px) {
+        nav {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .nav-links {
+          gap: 0.5rem 0.85rem;
+        }
+
+        .hero {
+          padding-top: 3rem;
+        }
+
+        .leverage-tier {
+          margin: 0 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-frame">
+      <nav>
+        <a class="logo" href="#">Cursor<span>.</span></a>
+        <ul class="nav-links">
+          <li><a href="#what">What is it</a></li>
+          <li><a href="#modes">Four modes</a></li>
+          <li><a href="#capabilities">For web devs</a></li>
+          <li><a href="#workflow">Workflow</a></li>
+          <li><a href="#tips">Best practices</a></li>
+          <li><a href="#start">Get started</a></li>
+        </ul>
+      </nav>
+
+      <header class="hero">
+        <div class="hero-inner">
+          <div class="badge"><span class="dot"></span> AI-first code editor</div>
+          <h1>Build web apps faster with <em>Cursor</em></h1>
+          <p class="hero-lead">
+            Cursor is a code editor built from the ground up for AI-assisted development.
+            It understands your entire project, edits multiple files at once, and acts as a
+            development partner — not just an autocomplete tool.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#what">Learn how it works</a>
+            <a class="btn btn-secondary" href="https://cursor.com" target="_blank" rel="noopener">Download Cursor ↗</a>
+          </div>
+        </div>
+      </header>
+
+      <section id="what">
+        <div class="section-header">
+          <span class="section-label">The basics</span>
+          <h2>What is Cursor?</h2>
+          <p class="section-desc">
+            Cursor is a fork of VS Code redesigned around AI. It looks familiar if you've used
+            VS Code, but the AI isn't a plugin bolted on the side — it's woven into every part
+            of the editing experience.
+          </p>
+        </div>
+
+        <div class="compare-grid">
+          <div class="compare-card">
+            <h3>Traditional IDE + Copilot</h3>
+            <ul>
+              <li>AI suggests the next line as you type</li>
+              <li>Mostly single-file context</li>
+              <li>You drive every file change manually</li>
+              <li>Chat is a separate sidebar add-on</li>
+            </ul>
+          </div>
+          <div class="compare-card highlight">
+            <h3>Cursor (AI-first)</h3>
+            <ul>
+              <li>Agent mode edits across your whole codebase</li>
+              <li>Understands project structure, rules, and docs</li>
+              <li>Runs terminal commands, tests, and multi-step tasks</li>
+              <li>MCP connects to GitHub, browsers, databases, and more</li>
+            </ul>
+          </div>
+        </div>
+
+        <blockquote class="pull-quote">
+          Your value as a developer is in <strong>decision-making</strong>, not typing speed.
+          Cursor amplifies your decisions — it doesn't replace them.
+        </blockquote>
+      </section>
+
+      <section id="modes">
+        <div class="section-header">
+          <span class="section-label">Core tools</span>
+          <h2>Four ways to work with AI</h2>
+          <p class="section-desc">
+            Each mode serves a different job. Learning when to reach for each one is the
+            single biggest skill for getting great results.
+          </p>
+        </div>
+
+        <div class="modes-grid">
+          <article class="mode-card">
+            <span class="mode-shortcut">Cmd+L</span>
+            <div class="mode-title">Chat</div>
+            <div class="mode-use">Explore &amp; ask</div>
+            <p>
+              Ask questions about your codebase, get explanations, and make focused edits
+              to a single file. Great for understanding unfamiliar code before you change it.
+            </p>
+          </article>
+          <article class="mode-card">
+            <span class="mode-shortcut">Cmd+I</span>
+            <div class="mode-title">Agent</div>
+            <div class="mode-use">Build features</div>
+            <p>
+              The powerhouse mode. Agent reads your project, creates and edits multiple
+              files, runs commands, and implements entire features — like adding auth,
+              a new API route, or a dashboard page.
+            </p>
+          </article>
+          <article class="mode-card">
+            <span class="mode-shortcut">Cmd+K</span>
+            <div class="mode-title">Inline Edit</div>
+            <div class="mode-use">Quick changes</div>
+            <p>
+              Select code, describe what you want, and get a targeted rewrite in place.
+              Perfect for refactoring a function, fixing a bug, or tweaking a component.
+            </p>
+          </article>
+          <article class="mode-card">
+            <span class="mode-shortcut">Tab</span>
+            <div class="mode-title">Autocomplete</div>
+            <div class="mode-use">Stay in flow</div>
+            <p>
+              Cursor predicts your next edit — sometimes whole blocks — as you type.
+              Accept with Tab to move fast through routine code without breaking focus.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="capabilities">
+        <div class="section-header">
+          <span class="section-label">Real-world use</span>
+          <h2>What Cursor can do for web app developers</h2>
+          <p class="section-desc">
+            From a blank HTML file to a deployed Next.js app with auth, payments, and AI
+            features — here's what developers actually use Cursor for.
+          </p>
+        </div>
+
+        <div class="cap-grid">
+          <div class="cap-card">
+            <div class="cap-icon">🔍</div>
+            <div class="card-title">Explore unfamiliar codebases</div>
+            <p>
+              Onboard to a new repo fast. Ask "how does authentication work?" or
+              "where are API routes defined?" and get answers grounded in your actual files.
+            </p>
+          </div>
+          <div class="cap-card">
+            <div class="cap-icon">⚡</div>
+            <div class="card-title">Build features end-to-end</div>
+            <p>
+              Describe a feature — a quiz page, a settings screen, a Stripe checkout flow —
+              and Agent creates the components, hooks, API routes, and types together.
+            </p>
+          </div>
+          <div class="cap-card">
+            <div class="cap-icon">🎨</div>
+            <div class="card-title">Design → code</div>
+            <p>
+              Paste a screenshot or sketch of a UI and ask Cursor to implement it with your
+              existing component library (Tailwind, shadcn/ui, etc.).
+            </p>
+          </div>
+          <div class="cap-card">
+            <div class="cap-icon">🧪</div>
+            <div class="card-title">Test-driven development</div>
+            <p>
+              Write a failing test first, then let Agent implement the code to make it pass.
+              Cursor can run your test suite and iterate until green.
+            </p>
+          </div>
+          <div class="cap-card">
+            <div class="cap-icon">📐</div>
+            <div class="card-title">Architecture diagrams</div>
+            <p>
+              Generate Mermaid diagrams for data flows, component trees, and system
+              architecture — useful for planning and documentation.
+            </p>
+          </div>
+          <div class="cap-card">
+            <div class="cap-icon">🔌</div>
+            <div class="card-title">MCP integrations</div>
+            <p>
+              Connect external tools via Model Context Protocol: browse pages with Playwright,
+              manage GitHub PRs, query docs, and interact with databases — all from the editor.
+            </p>
+          </div>
+          <div class="cap-card">
+            <div class="cap-icon">🐛</div>
+            <div class="card-title">Debug and fix issues</div>
+            <p>
+              Paste an error message or failing CI log. Cursor traces the stack, reads
+              relevant files, and proposes a fix — often across several files at once.
+            </p>
+          </div>
+          <div class="cap-card">
+            <div class="cap-icon">🚀</div>
+            <div class="card-title">Ship to production</div>
+            <p>
+              Configure deployment, environment variables, database migrations, and CI/CD.
+              Cursor understands the full stack from local dev to Vercel production.
+            </p>
+          </div>
+        </div>
+
+        <div class="stack-flow">
+          <span class="stack-node">Cursor</span>
+          <span class="stack-arrow">→</span>
+          <span class="stack-node">GitHub</span>
+          <span class="stack-arrow">→</span>
+          <span class="stack-node">Vercel</span>
+          <span class="stack-arrow">→</span>
+          <span class="stack-node">Supabase</span>
+          <span class="stack-arrow">+</span>
+          <span class="stack-node">Clerk</span>
+          <span class="stack-arrow">+</span>
+          <span class="stack-node">Stripe</span>
+        </div>
+      </section>
+
+      <section id="workflow">
+        <div class="section-header">
+          <span class="section-label">How to work</span>
+          <h2>A workflow that actually works</h2>
+          <p class="section-desc">
+            The developers who get the most from Cursor don't just prompt harder — they
+            structure their work differently.
+          </p>
+        </div>
+
+        <h3 style="text-align: center; margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--dark)">
+          Explore → Plan → Build
+        </h3>
+        <div class="workflow-steps">
+          <div class="workflow-step">
+            <div class="step-num">1</div>
+            <h3>Explore</h3>
+            <p>
+              Use Chat and @ symbols to understand the codebase before writing a single line.
+              Don't jump straight to "build me X."
+            </p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-num">2</div>
+            <h3>Plan</h3>
+            <p>
+              Ask Cursor to plan (not build). Or use ChatGPT/Claude for brainstorming,
+              then bring the plan to Cursor for implementation.
+            </p>
+          </div>
+          <div class="workflow-step">
+            <div class="step-num">3</div>
+            <h3>Build</h3>
+            <p>
+              Switch to Agent with a clear, scoped task. Review diffs, run tests, commit.
+              Repeat in small increments.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: 3rem">
+          <h3 style="text-align: center; margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--dark)">
+            Hierarchy of Leverage
+          </h3>
+          <div class="leverage-stack">
+            <div class="leverage-tier">Rules — encode team standards once, apply everywhere</div>
+            <div class="leverage-tier">Context — curate what the AI sees (@files, AGENTS.md)</div>
+            <div class="leverage-tier">Prompts — clear, scoped instructions per task</div>
+            <div class="leverage-tier">Model — pick the right model, but it's the smallest lever</div>
+          </div>
+          <p class="leverage-note">
+            Invest in rules and context before chasing better prompts or bigger models.
+          </p>
+        </div>
+
+        <div style="margin-top: 2.5rem">
+          <h3 style="text-align: center; margin-bottom: 1rem; font-size: 1.1rem; color: var(--dark)">
+            Context navigation with @
+          </h3>
+          <div class="context-list">
+            <div class="context-chip"><code>@file</code><span>One specific file</span></div>
+            <div class="context-chip"><code>@folder</code><span>A directory</span></div>
+            <div class="context-chip"><code>@codebase</code><span>Search whole project</span></div>
+            <div class="context-chip"><code>@docs</code><span>Library documentation</span></div>
+            <div class="context-chip"><code>@web</code><span>Live web search</span></div>
+            <div class="context-chip"><code>@git</code><span>Recent changes</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tips">
+        <div class="section-header">
+          <span class="section-label">Best practices</span>
+          <h2>Tips for getting great results</h2>
+          <p class="section-desc">
+            Cursor is powerful, but it's not magic. These habits separate smooth sessions
+            from frustrating ones.
+          </p>
+        </div>
+
+        <div class="tips-grid">
+          <div class="tip-card">
+            <h3>Commit often with Git</h3>
+            <p>
+              Cursor's checkpoint system is not a replacement for version control. Commit
+              after every working milestone so you can always roll back.
+            </p>
+          </div>
+          <div class="tip-card">
+            <h3>Try five times, then rephrase</h3>
+            <p>
+              If a prompt doesn't work, don't give up — rephrase it, add context with @,
+              or break the task into smaller steps.
+            </p>
+          </div>
+          <div class="tip-card">
+            <h3>Curate context, don't dump everything</h3>
+            <p>
+              More context isn't always better. Use @ to attach only the files that matter.
+              Start a new chat when context gets long.
+            </p>
+          </div>
+          <div class="tip-card">
+            <h3>Start without rules, add when needed</h3>
+            <p>
+              Create <code>.cursor/rules/*.mdc</code> files when you notice repeated mistakes —
+              not before you've written any code.
+            </p>
+          </div>
+          <div class="tip-card">
+            <h3>Plan in one tool, build in another</h3>
+            <p>
+              Use ChatGPT or Claude for brainstorming and architecture. Bring a clear plan
+              to Cursor Agent for implementation.
+            </p>
+          </div>
+          <div class="tip-card">
+            <h3>Work in small increments</h3>
+            <p>
+              One feature at a time. Write a test, implement, verify, commit. Large vague
+              prompts lead to large vague bugs.
+            </p>
+          </div>
+          <div class="tip-card">
+            <h3>Review every diff</h3>
+            <p>
+              You're still the engineer. Read what Agent changed before accepting. Catch
+              hallucinated imports, wrong patterns, and security issues early.
+            </p>
+          </div>
+          <div class="tip-card">
+            <h3>Use project rules for conventions</h3>
+            <p>
+              Encode Next.js patterns, API standards, and testing conventions in rules so
+              the AI follows your team's style automatically.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section" id="start">
+        <span class="section-label" style="color: var(--gold)">Ready to go</span>
+        <h2>Start building today</h2>
+        <p>
+          Install Cursor, open a project (or start from scratch), and try the four modes
+          on something small. A landing page, a quiz component, a API route — anything
+          that lets you feel the workflow before tackling something bigger.
+        </p>
+        <a class="btn btn-primary" href="https://cursor.com" target="_blank" rel="noopener">Get Cursor →</a>
+      </section>
+
+      <footer>
+        Built for the O'Reilly live training
+        <em>Building Production Applications with Cursor AI IDE</em>.
+        <a href="https://cursor.com/docs" target="_blank" rel="noopener">Official docs</a>
+        ·
+        <a href="https://cursor.directory" target="_blank" rel="noopener">Rule examples</a>
+      </footer>
+    </div>
+  </body>
+</html>

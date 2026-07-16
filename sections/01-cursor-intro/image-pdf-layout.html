@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image PDF Layout</title>
+<script>
+  if (localStorage.getItem('image-pdf-layout-theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+</script>
+<style>
+  * { box-sizing: border-box; }
+
+  :root {
+    --page-w: 210mm;
+    --page-h: 297mm;
+    --margin: 8mm;
+
+    --bg: #e5e7eb;
+    --text: #111827;
+    --muted: #64748b;
+    --panel: #ffffff;
+    --panel-border: #94a3b8;
+    --panel-hover-bg: #eff6ff;
+    --panel-hover-border: #2563eb;
+    --panel-title: #1e293b;
+    --panel-text: #475569;
+    --page-label: #64748b;
+    --status: #2563eb;
+    --theme-btn-bg: #334155;
+    --theme-btn-hover: #475569;
+    --select: #2563eb;
+  }
+
+  html.dark {
+    --bg: #0f172a;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --panel: #1e293b;
+    --panel-border: #475569;
+    --panel-hover-bg: #1e3a5f;
+    --panel-hover-border: #3b82f6;
+    --panel-title: #f1f5f9;
+    --panel-text: #cbd5e1;
+    --page-label: #94a3b8;
+    --status: #60a5fa;
+    --theme-btn-bg: #475569;
+    --theme-btn-hover: #64748b;
+    --select: #3b82f6;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 12px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  }
+  .toolbar h1 { font-size: 15px; margin: 0 8px 0 0; font-weight: 600; }
+  .toolbar label { font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
+  .toolbar select {
+    font-size: 14px; padding: 4px 6px; border-radius: 5px; border: 1px solid #475569;
+    background: #0f172a; color: #e2e8f0;
+  }
+  .toolbar button {
+    background: #2563eb; color: #fff; border: none; padding: 8px 14px;
+    border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600;
+  }
+  .toolbar button:hover { background: #1d4ed8; }
+  .toolbar button.secondary { background: #475569; }
+  .toolbar button.secondary:hover { background: #334155; }
+  .toolbar button:disabled { background: #64748b; cursor: not-allowed; }
+  .toolbar button.theme-toggle {
+    background: var(--theme-btn-bg);
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .toolbar button.theme-toggle:hover { background: var(--theme-btn-hover); }
+  .toolbar .sep { width: 1px; height: 24px; background: #475569; }
+
+  .drop-zone {
+    max-width: 640px;
+    margin: 32px auto 16px;
+    border: 2px dashed var(--panel-border);
+    border-radius: 10px;
+    padding: 36px 24px;
+    text-align: center;
+    cursor: pointer;
+    background: var(--panel);
+    transition: background-color 0.25s ease, border-color 0.15s ease;
+  }
+  .drop-zone.compact { margin: 0; padding: 0; border: none; background: transparent; }
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--panel-hover-border);
+    background: var(--panel-hover-bg);
+  }
+  .drop-zone input[type="file"] { display: none; }
+  .drop-zone p { margin: 4px 0; color: var(--panel-text); font-size: 13px; }
+  .drop-zone .big { font-size: 16px; color: var(--panel-title); font-weight: 600; }
+
+  .hint {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    margin: 0 auto 16px;
+    max-width: 720px;
+    padding: 0 16px;
+  }
+
+  .status {
+    text-align: center;
+    color: var(--status);
+    font-size: 13px;
+    margin: 0 auto 12px;
+    min-height: 20px;
+  }
+
+  #workspace { padding: 8px 0 64px; }
+
+  .page-wrap {
+    width: var(--page-w);
+    margin: 0 auto 32px;
+    position: relative;
+  }
+  .page-label {
+    font-size: 12px;
+    color: var(--page-label);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .page-label button {
+    font-size: 11px;
+    padding: 2px 8px;
+    background: transparent;
+    border: 1px solid var(--panel-border);
+    color: var(--muted);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .page-label button:hover { border-color: var(--select); color: var(--select); }
+
+  .page {
+    background: #fff;
+    width: var(--page-w);
+    height: var(--page-h);
+    box-shadow: 0 2px 14px rgba(0,0,0,.25);
+    position: relative;
+  }
+  .page-content {
+    position: absolute;
+    left: var(--margin);
+    top: var(--margin);
+    right: var(--margin);
+    bottom: var(--margin);
+    overflow: hidden;
+  }
+  .page-content.guides {
+    outline: 1px dashed rgba(148, 163, 184, 0.8);
+    outline-offset: -1px;
+  }
+  .page-content.drag-target {
+    outline: 2px dashed var(--select);
+    outline-offset: -2px;
+    background: rgba(37, 99, 235, 0.04);
+  }
+
+  .placed-item {
+    position: absolute;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+  .placed-item:active { cursor: grabbing; }
+  .placed-item.selected {
+    outline: 2px solid var(--select);
+    outline-offset: 0;
+    z-index: 10;
+  }
+  .placed-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    pointer-events: none;
+  }
+
+  .handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--select);
+    border: 1.5px solid #fff;
+    border-radius: 2px;
+    display: none;
+    z-index: 2;
+  }
+  .placed-item.selected .handle { display: block; }
+  .handle.nw { top: -5px; left: -5px; cursor: nwse-resize; }
+  .handle.ne { top: -5px; right: -5px; cursor: nesw-resize; }
+  .handle.sw { bottom: -5px; left: -5px; cursor: nesw-resize; }
+  .handle.se { bottom: -5px; right: -5px; cursor: nwse-resize; }
+
+  .item-delete {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    background: #dc2626;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    display: none;
+    z-index: 3;
+    padding: 0;
+  }
+  .placed-item.selected .item-delete { display: block; }
+
+  @media print {
+    @page { size: var(--page-size, A4); margin: 0; }
+    body { background: #fff; }
+    .toolbar, .drop-zone, .hint, .status, .page-label, .handle, .item-delete { display: none !important; }
+    #workspace { padding: 0; }
+    .page-wrap { margin: 0; width: var(--page-w); }
+    .page {
+      box-shadow: none;
+      page-break-after: always;
+    }
+    .page-wrap:last-child .page { page-break-after: auto; }
+    .page-content { outline: none !important; }
+    .placed-item { outline: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <h1>Image PDF Layout</h1>
+  <label>Page
+    <select id="pageSize">
+      <option value="A4" selected>A4</option>
+      <option value="Letter">Letter</option>
+    </select>
+  </label>
+  <label><input type="checkbox" id="guides" checked> Margin guides</label>
+  <span class="sep"></span>
+  <button id="addBtn" class="secondary">Add images</button>
+  <button id="addPageBtn" class="secondary">+ Page</button>
+  <button id="autoArrangeBtn" class="secondary" disabled>Auto-arrange</button>
+  <button id="deleteBtn" class="secondary" disabled>Delete selected</button>
+  <span class="sep"></span>
+  <button id="printBtn" disabled>Save PDF</button>
+  <button id="clearBtn" class="secondary">Clear all</button>
+  <button id="themeToggle" class="theme-toggle" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+  <input type="file" id="fileInput" accept="image/*,.heic,.heif" multiple hidden>
+</div>
+
+<div class="drop-zone" id="dropZone">
+  <p class="big">Drop images here or click to choose</p>
+  <p>Drag images directly on the page. Resize from corners. JPG, PNG, WebP, HEIC supported.</p>
+</div>
+<p class="hint" id="hint">Click an image to select it. Drag to move, corner handles to resize. Press Delete to remove.</p>
+<p class="status" id="status"></p>
+
+<div id="workspace"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+<script>
+  const state = {
+    pages: [{ id: uid(), items: [] }],
+    images: {},
+    selection: null,
+  };
+
+  let interaction = null;
+
+  const root = document.documentElement;
+  const workspace = document.getElementById('workspace');
+  const statusEl = document.getElementById('status');
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const printBtn = document.getElementById('printBtn');
+  const autoArrangeBtn = document.getElementById('autoArrangeBtn');
+  const deleteBtn = document.getElementById('deleteBtn');
+  const themeToggle = document.getElementById('themeToggle');
+  const THEME_KEY = 'image-pdf-layout-theme';
+
+  const els = {
+    pageSize: document.getElementById('pageSize'),
+    guides: document.getElementById('guides'),
+  };
+
+  const PAGE_DIMS = { A4: { w: 210, h: 297 }, Letter: { w: 216, h: 279 } };
+  const MARGIN = 8;
+  const IMAGE_EXT = /\.(jpe?g|png|gif|webp|heic|heif|bmp|svg|tiff?|avif)$/i;
+
+  function uid() {
+    return Math.random().toString(36).slice(2, 10);
+  }
+
+  function getContentDims() {
+    const dims = PAGE_DIMS[els.pageSize.value];
+    return { w: dims.w - MARGIN * 2, h: dims.h - MARGIN * 2 };
+  }
+
+  function findPage(pageId) {
+    return state.pages.find(p => p.id === pageId);
+  }
+
+  function findItem(pageId, itemId) {
+    const page = findPage(pageId);
+    if (!page) return null;
+    const item = page.items.find(i => i.id === itemId);
+    return item ? { page, item } : null;
+  }
+
+  function hasContent() {
+    return state.pages.some(p => p.items.length > 0);
+  }
+
+  function updateToolbar() {
+    const hasItems = hasContent();
+    printBtn.disabled = !hasItems;
+    autoArrangeBtn.disabled = !hasItems;
+    deleteBtn.disabled = !state.selection;
+    dropZone.style.display = hasItems ? 'none' : 'block';
+  }
+
+  function setStatus(msg) {
+    statusEl.textContent = msg || '';
+  }
+
+  function isDark() {
+    return document.documentElement.classList.contains('dark');
+  }
+
+  function updateThemeToggle() {
+    themeToggle.textContent = isDark() ? '☀️' : '🌙';
+    themeToggle.title = isDark() ? 'Switch to light mode' : 'Switch to dark mode';
+    themeToggle.setAttribute('aria-label', themeToggle.title);
+  }
+
+  function setTheme(dark) {
+    document.documentElement.classList.toggle('dark', dark);
+    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+    updateThemeToggle();
+  }
+
+  themeToggle.onclick = () => setTheme(!isDark());
+  updateThemeToggle();
+
+  function applyPageVars() {
+    const dims = PAGE_DIMS[els.pageSize.value];
+    root.style.setProperty('--page-w', dims.w + 'mm');
+    root.style.setProperty('--page-h', dims.h + 'mm');
+    root.style.setProperty('--page-size', els.pageSize.value);
+    root.style.setProperty('--margin', MARGIN + 'mm');
+  }
+
+  function isImageFile(file) {
+    return (file.type && file.type.startsWith('image/')) || IMAGE_EXT.test(file.name);
+  }
+
+  function isHeic(file) {
+    return /\.heic$/i.test(file.name) || /\.heif$/i.test(file.name)
+      || file.type === 'image/heic' || file.type === 'image/heif';
+  }
+
+  async function normalizeFile(file) {
+    if (!isHeic(file)) return file;
+    if (typeof heic2any === 'undefined') {
+      throw new Error('HEIC converter failed to load. Refresh and try again.');
+    }
+    setStatus('Converting ' + file.name + '…');
+    const blob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.92 });
+    const jpegBlob = Array.isArray(blob) ? blob[0] : blob;
+    return new File([jpegBlob], file.name.replace(/\.heic?f?$/i, '.jpg'), { type: 'image/jpeg' });
+  }
+
+  function readImage(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          resolve({
+            id: uid(),
+            name: file.name,
+            src: reader.result,
+            w: img.naturalWidth,
+            h: img.naturalHeight,
+          });
+        };
+        img.onerror = () => reject(new Error('Could not decode ' + file.name));
+        img.src = reader.result;
+      };
+      reader.onerror = () => reject(new Error('Could not read ' + file.name));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function fitBox(img, maxW, maxH) {
+    let w = maxW;
+    let h = w * (img.h / img.w);
+    if (h > maxH) {
+      h = maxH;
+      w = h * (img.w / img.h);
+    }
+    return { w, h };
+  }
+
+  function defaultPlacement(img, index, content) {
+    const slotW = content.w * 0.42;
+    const slotH = content.h * 0.42;
+    const { w, h } = fitBox(img, slotW, slotH);
+    const cols = 2;
+    const gap = 6;
+    const col = index % cols;
+    const row = Math.floor(index / cols);
+    return {
+      x: 4 + col * (slotW + gap),
+      y: 4 + row * (slotH + gap),
+      w,
+      h,
+    };
+  }
+
+  function addImageToPage(img, pageIndex) {
+    const page = state.pages[pageIndex] ?? state.pages[state.pages.length - 1];
+    state.images[img.id] = img;
+    const layout = defaultPlacement(img, page.items.length, getContentDims());
+    page.items.push({ id: uid(), imageId: img.id, ...layout });
+  }
+
+  async function addFiles(files, targetPageIndex) {
+    const list = [...files].filter(isImageFile);
+    if (!list.length) return;
+
+    const pageIdx = targetPageIndex ?? state.pages.length - 1;
+    printBtn.disabled = true;
+    try {
+      for (const raw of list) {
+        try {
+          const file = await normalizeFile(raw);
+          const img = await readImage(file);
+          addImageToPage(img, pageIdx);
+        } catch (err) {
+          console.error(err);
+          setStatus('Skipped ' + raw.name + ': ' + err.message);
+        }
+      }
+      setStatus('');
+      render();
+    } finally {
+      fileInput.value = '';
+      updateToolbar();
+    }
+  }
+
+  function select(pageId, itemId) {
+    state.selection = itemId ? { pageId, itemId } : null;
+    updateToolbar();
+    renderItemsOnly();
+  }
+
+  function deleteSelected() {
+    if (!state.selection) return;
+    const { pageId, itemId } = state.selection;
+    const page = findPage(pageId);
+    if (!page) return;
+    page.items = page.items.filter(i => i.id !== itemId);
+    state.selection = null;
+    render();
+  }
+
+  function bringToFront(page, itemId) {
+    const idx = page.items.findIndex(i => i.id === itemId);
+    if (idx < 0) return;
+    const [item] = page.items.splice(idx, 1);
+    page.items.push(item);
+  }
+
+  function autoArrangePage(page) {
+    const content = getContentDims();
+    const items = page.items.map(it => ({ ...it, img: state.images[it.imageId] })).filter(it => it.img);
+    if (!items.length) return;
+
+    const cols = Math.ceil(Math.sqrt(items.length));
+    const rows = Math.ceil(items.length / cols);
+    const gap = 4;
+    const cellW = (content.w - gap * (cols - 1)) / cols;
+    const cellH = (content.h - gap * (rows - 1)) / rows;
+
+    items.forEach((it, i) => {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      const { w, h } = fitBox(it.img, cellW, cellH);
+      const item = page.items.find(x => x.id === it.id);
+      item.x = col * (cellW + gap) + (cellW - w) / 2;
+      item.y = row * (cellH + gap) + (cellH - h) / 2;
+      item.w = w;
+      item.h = h;
+    });
+  }
+
+  function autoArrangeAll() {
+    state.pages.forEach(autoArrangePage);
+    render();
+  }
+
+  function mmFromEvent(pageContentEl, clientX, clientY) {
+    const rect = pageContentEl.getBoundingClientRect();
+    const content = getContentDims();
+    const x = ((clientX - rect.left) / rect.width) * content.w;
+    const y = ((clientY - rect.top) / rect.height) * content.h;
+    return { x, y, pxPerMm: rect.width / content.w };
+  }
+
+  function clampItem(item) {
+    const content = getContentDims();
+    const minSize = 8;
+    item.w = Math.max(minSize, Math.min(item.w, content.w));
+    item.h = Math.max(minSize, Math.min(item.h, content.h));
+    item.x = Math.max(0, Math.min(item.x, content.w - item.w));
+    item.y = Math.max(0, Math.min(item.y, content.h - item.h));
+  }
+
+  function styleItem(el, item) {
+    el.style.left = item.x + 'mm';
+    el.style.top = item.y + 'mm';
+    el.style.width = item.w + 'mm';
+    el.style.height = item.h + 'mm';
+  }
+
+  function renderItemsOnly() {
+    document.querySelectorAll('.placed-item').forEach(el => {
+      const pageId = el.dataset.pageId;
+      const itemId = el.dataset.itemId;
+      const found = findItem(pageId, itemId);
+      if (!found) return;
+      styleItem(el, found.item);
+      el.classList.toggle('selected', state.selection?.pageId === pageId && state.selection?.itemId === itemId);
+    });
+  }
+
+  function buildItemEl(page, item) {
+    const img = state.images[item.imageId];
+    if (!img) return null;
+
+    const el = document.createElement('div');
+    el.className = 'placed-item';
+    el.dataset.pageId = page.id;
+    el.dataset.itemId = item.id;
+    if (state.selection?.pageId === page.id && state.selection?.itemId === item.id) {
+      el.classList.add('selected');
+    }
+    styleItem(el, item);
+
+    const image = document.createElement('img');
+    image.src = img.src;
+    image.alt = img.name;
+    el.appendChild(image);
+
+    ['nw', 'ne', 'sw', 'se'].forEach(corner => {
+      const h = document.createElement('div');
+      h.className = 'handle ' + corner;
+      h.dataset.corner = corner;
+      el.appendChild(h);
+    });
+
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'item-delete';
+    del.textContent = '×';
+    del.title = 'Remove';
+    del.onclick = (e) => {
+      e.stopPropagation();
+      page.items = page.items.filter(i => i.id !== item.id);
+      if (state.selection?.itemId === item.id) state.selection = null;
+      render();
+    };
+    el.appendChild(del);
+
+    el.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      const corner = e.target.dataset.corner;
+      e.stopPropagation();
+      select(page.id, item.id);
+      bringToFront(page, item.id);
+
+      const pageContentEl = el.parentElement;
+      const pt = mmFromEvent(pageContentEl, e.clientX, e.clientY);
+
+      if (corner) {
+        interaction = {
+          type: 'resize',
+          pageId: page.id,
+          itemId: item.id,
+          corner,
+          startX: pt.x,
+          startY: pt.y,
+          orig: { ...item },
+        };
+      } else {
+        interaction = {
+          type: 'move',
+          pageId: page.id,
+          itemId: item.id,
+          startX: pt.x,
+          startY: pt.y,
+          origX: item.x,
+          origY: item.y,
+        };
+      }
+      el.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+
+    return el;
+  }
+
+  function render() {
+    applyPageVars();
+    workspace.innerHTML = '';
+
+    state.pages.forEach((page, pageIndex) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'page-wrap';
+      wrap.dataset.pageId = page.id;
+
+      const label = document.createElement('div');
+      label.className = 'page-label';
+      label.innerHTML = '<span>Page ' + (pageIndex + 1) + '</span>';
+      if (state.pages.length > 1) {
+        const rmPage = document.createElement('button');
+        rmPage.type = 'button';
+        rmPage.textContent = 'Remove page';
+        rmPage.onclick = () => {
+          if (state.pages.length <= 1) return;
+          if (state.selection?.pageId === page.id) state.selection = null;
+          state.pages = state.pages.filter(p => p.id !== page.id);
+          render();
+        };
+        label.appendChild(rmPage);
+      }
+      wrap.appendChild(label);
+
+      const pageEl = document.createElement('div');
+      pageEl.className = 'page';
+
+      const content = document.createElement('div');
+      content.className = 'page-content' + (els.guides.checked ? ' guides' : '');
+      content.dataset.pageId = page.id;
+
+      page.items.forEach(item => {
+        const el = buildItemEl(page, item);
+        if (el) content.appendChild(el);
+      });
+
+      content.addEventListener('pointerdown', (e) => {
+        if (e.target === content) select(null, null);
+      });
+
+      content.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        content.classList.add('drag-target');
+      });
+      content.addEventListener('dragleave', () => content.classList.remove('drag-target'));
+      content.addEventListener('drop', (e) => {
+        e.preventDefault();
+        content.classList.remove('drag-target');
+        if (e.dataTransfer?.files?.length) {
+          addFiles(e.dataTransfer.files, pageIndex);
+        }
+      });
+
+      pageEl.appendChild(content);
+      wrap.appendChild(pageEl);
+      workspace.appendChild(wrap);
+    });
+
+    updateToolbar();
+  }
+
+  function onPointerMove(e) {
+    if (!interaction) return;
+    const found = findItem(interaction.pageId, interaction.itemId);
+    if (!found) return;
+
+    const pageContentEl = document.querySelector(
+      '.page-content[data-page-id="' + interaction.pageId + '"]'
+    );
+    if (!pageContentEl) return;
+
+    const pt = mmFromEvent(pageContentEl, e.clientX, e.clientY);
+    const { item } = found;
+    const img = state.images[item.imageId];
+    const aspect = img ? img.w / img.h : 1;
+
+    if (interaction.type === 'move') {
+      item.x = interaction.origX + (pt.x - interaction.startX);
+      item.y = interaction.origY + (pt.y - interaction.startY);
+      clampItem(item);
+      renderItemsOnly();
+      return;
+    }
+
+    const o = interaction.orig;
+    const dx = pt.x - interaction.startX;
+    const dy = pt.y - interaction.startY;
+    const c = interaction.corner;
+
+    if (c === 'se') {
+      item.w = o.w + dx;
+      item.h = item.w / aspect;
+    } else if (c === 'sw') {
+      item.w = o.w - dx;
+      item.h = item.w / aspect;
+      item.x = o.x + (o.w - item.w);
+    } else if (c === 'ne') {
+      item.w = o.w + dx;
+      item.h = item.w / aspect;
+      item.y = o.y + (o.h - item.h);
+    } else if (c === 'nw') {
+      item.w = o.w - dx;
+      item.h = item.w / aspect;
+      item.x = o.x + (o.w - item.w);
+      item.y = o.y + (o.h - item.h);
+    }
+
+    clampItem(item);
+    renderItemsOnly();
+  }
+
+  function onPointerUp() {
+    interaction = null;
+  }
+
+  document.addEventListener('pointermove', onPointerMove);
+  document.addEventListener('pointerup', onPointerUp);
+  document.addEventListener('pointercancel', onPointerUp);
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.key === 'Delete' || e.key === 'Backspace') && state.selection
+        && !/input|textarea|select/i.test(document.activeElement?.tagName)) {
+      e.preventDefault();
+      deleteSelected();
+    }
+  });
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  document.getElementById('addBtn').onclick = () => fileInput.click();
+  fileInput.addEventListener('change', e => addFiles(e.target.files));
+
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    addFiles(e.dataTransfer.files);
+  });
+
+  document.getElementById('addPageBtn').onclick = () => {
+    state.pages.push({ id: uid(), items: [] });
+    render();
+  };
+
+  autoArrangeBtn.onclick = autoArrangeAll;
+  deleteBtn.onclick = deleteSelected;
+  printBtn.onclick = () => window.print();
+
+  document.getElementById('clearBtn').onclick = () => {
+    state.pages = [{ id: uid(), items: [] }];
+    state.images = {};
+    state.selection = null;
+    render();
+  };
+
+  els.pageSize.addEventListener('change', render);
+  els.guides.addEventListener('change', render);
+
+  applyPageVars();
+  updateToolbar();
+</script>
+</body>
+</html>

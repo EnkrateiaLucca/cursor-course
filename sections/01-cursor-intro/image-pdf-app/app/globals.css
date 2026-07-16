@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+:root {
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --margin: 8mm;
+  --page-size: A4;
+
+  --background: #e5e7eb;
+  --foreground: #111827;
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #475569;
+  --secondary-foreground: #f8fafc;
+  --muted: #64748b;
+  --muted-foreground: #64748b;
+  --accent: #eff6ff;
+  --accent-foreground: #1e293b;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #94a3b8;
+  --input: #94a3b8;
+  --ring: #2563eb;
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #e2e8f0;
+  --card: #1e293b;
+  --card-foreground: #f1f5f9;
+  --popover: #1e293b;
+  --popover-foreground: #f1f5f9;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #475569;
+  --secondary-foreground: #e2e8f0;
+  --muted: #94a3b8;
+  --muted-foreground: #94a3b8;
+  --accent: #1e3a5f;
+  --accent-foreground: #f1f5f9;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #475569;
+  --input: #475569;
+  --ring: #3b82f6;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+.page {
+  position: relative;
+}
+
+.page-content {
+  position: absolute;
+}
+
+.page-content.guides {
+  outline: 1px dashed rgba(148, 163, 184, 0.8);
+  outline-offset: -1px;
+}
+
+.page-content.drag-target {
+  outline: 2px dashed var(--ring);
+  outline-offset: -2px;
+  background: rgba(37, 99, 235, 0.04);
+}
+
+@media print {
+  @page {
+    size: var(--page-size, A4);
+    margin: 0;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .toolbar,
+  .drop-zone,
+  .hint,
+  .image-tray,
+  .page-label,
+  .handle,
+  .item-delete {
+    display: none !important;
+  }
+
+  .workspace {
+    transform: none !important;
+    padding: 0 !important;
+  }
+
+  .page-wrap {
+    margin: 0 !important;
+    width: var(--page-w) !important;
+  }
+
+  .page {
+    box-shadow: none !important;
+    page-break-after: always;
+  }
+
+  .page-wrap:last-child .page {
+    page-break-after: auto;
+  }
+
+  .page-content {
+    outline: none !important;
+  }
+
+  .placed-item {
+    outline: none !important;
+  }
+}
