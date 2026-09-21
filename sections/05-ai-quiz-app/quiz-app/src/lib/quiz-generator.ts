@@ -53,7 +53,7 @@ export async function generateQuizQuestions(
   );
 
   const response = await anthropic.messages.create({
-    model: "claude-sonnet-4-6",
+    model: "claude-sonnet-5",
     max_tokens: 4096,
     messages: [{ role: "user", content: prompt }],
   });

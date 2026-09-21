@@ -13,7 +13,7 @@ Add to your project's `.cursor/mcp.json`:
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": ["-y", "@anthropic-ai/mcp-playwright"]
+      "args": ["-y", "@playwright/mcp@latest"]
     }
   }
 }

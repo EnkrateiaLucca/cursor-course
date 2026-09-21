@@ -12,7 +12,7 @@
 - [MCP Specification](https://modelcontextprotocol.io) — Official protocol docs
 - [MCP Servers Registry](https://github.com/modelcontextprotocol/servers) — Available MCP servers
 - [GitMCP](https://gitmcp.io) — Turn any GitHub repo into MCP context
-- [Playwright MCP](https://github.com/anthropic-ai/mcp-playwright) — Browser automation for AI
+- [Playwright MCP](https://github.com/microsoft/playwright-mcp) — Browser automation for AI
 
 ## CLI Tools
 

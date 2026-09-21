@@ -32,6 +32,19 @@
       /* Code blocks */
       .remark-code { font-size: 0.9em; }
 
+      /* Footnote citations - pinned to the bottom of the slide box, not
+         immediately after the content, so they sit on a consistent baseline. */
+      .remark-slide-content { position: relative; }
+      .footnote {
+        position: absolute;
+        bottom: 1.2em;
+        left: 2em;
+        right: 7em;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
       /* Lists */
       .remark-slide-content ul li { margin: 10px 0; }
       .remark-slide-content ol li { margin: 10px 0; }
@@ -47,7 +60,7 @@ class: center, middle
 
 **Lucas Soares**
 
-16/07/2026
+September 2026
 
 ---
 
@@ -99,7 +112,7 @@ class: center, middle
   </div>
 </div>
 
-<p style="font-size: 14px; margin-top: 12px;">
+<p class="footnote">
   <sup>[1]</sup><a href="https://cursor.com/changelog/3-0">Cursor 3 Changelog</a>
 </p>
 
@@ -173,7 +186,7 @@ class: center, middle
 <strong>💡 This framework prevents context overload and ensures quality output</strong>
 </div>
 
-<p style="font-size: 14px; margin-top: 15px;">
+<p class="footnote">
   <sup>[1]</sup><a href="https://www.youtube.com/watch?v=sb0y5B3LLUA">Cursor for Staff Engineers</a>
 </p>
 
@@ -215,42 +228,42 @@ class: center, middle
 
 # The @ Symbol: Your Context Navigator
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 30px;">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
 
-<div style="background: #f0f8ff; padding: 20px; border-radius: 12px;">
-  <h3>📄 @file</h3>
-  <code style="background: #fff; padding: 8px; display: block; border-radius: 6px;">@src/components/Header.tsx</code>
-  <p style="margin-top: 10px; font-size: 0.9em;">Reference specific files</p>
+<div style="background: #f0f8ff; padding: 12px; border-radius: 12px;">
+  <h3 style="margin: 0 0 6px 0;">📄 @file</h3>
+  <code style="background: #fff; padding: 6px; display: block; border-radius: 6px; font-size: 0.85em;">@src/components/Header.tsx</code>
+  <p style="margin: 6px 0 0 0; font-size: 0.8em;">Reference specific files</p>
 </div>
 
-<div style="background: #f0f8ff; padding: 20px; border-radius: 12px;">
-  <h3>📁 @folder</h3>
-  <code style="background: #fff; padding: 8px; display: block; border-radius: 6px;">@src/utils/</code>
-  <p style="margin-top: 10px; font-size: 0.9em;">Include entire directories</p>
+<div style="background: #f0f8ff; padding: 12px; border-radius: 12px;">
+  <h3 style="margin: 0 0 6px 0;">📁 @folder</h3>
+  <code style="background: #fff; padding: 6px; display: block; border-radius: 6px; font-size: 0.85em;">@src/utils/</code>
+  <p style="margin: 6px 0 0 0; font-size: 0.8em;">Include entire directories</p>
 </div>
 
-<div style="background: #fff3cd; padding: 20px; border-radius: 12px;">
-  <h3>🔍 @codebase</h3>
-  <code style="background: #fff; padding: 8px; display: block; border-radius: 6px;">@codebase "authentication"</code>
-  <p style="margin-top: 10px; font-size: 0.9em;">Semantic search</p>
+<div style="background: #fff3cd; padding: 12px; border-radius: 12px;">
+  <h3 style="margin: 0 0 6px 0;">🔍 @codebase</h3>
+  <code style="background: #fff; padding: 6px; display: block; border-radius: 6px; font-size: 0.85em;">@codebase "authentication"</code>
+  <p style="margin: 6px 0 0 0; font-size: 0.8em;">Semantic search</p>
 </div>
 
-<div style="background: #fff3cd; padding: 20px; border-radius: 12px;">
-  <h3>📚 @docs</h3>
-  <code style="background: #fff; padding: 8px; display: block; border-radius: 6px;">@docs "React hooks"</code>
-  <p style="margin-top: 10px; font-size: 0.9em;">Query documentation</p>
+<div style="background: #fff3cd; padding: 12px; border-radius: 12px;">
+  <h3 style="margin: 0 0 6px 0;">📚 @docs</h3>
+  <code style="background: #fff; padding: 6px; display: block; border-radius: 6px; font-size: 0.85em;">@docs "React hooks"</code>
+  <p style="margin: 6px 0 0 0; font-size: 0.8em;">Query documentation</p>
 </div>
 
-<div style="background: #f6fff6; padding: 20px; border-radius: 12px;">
-  <h3>📜 @git</h3>
-  <code style="background: #fff; padding: 8px; display: block; border-radius: 6px;">@git "last commit"</code>
-  <p style="margin-top: 10px; font-size: 0.9em;">Reference git history</p>
+<div style="background: #f6fff6; padding: 12px; border-radius: 12px;">
+  <h3 style="margin: 0 0 6px 0;">📜 @git</h3>
+  <code style="background: #fff; padding: 6px; display: block; border-radius: 6px; font-size: 0.85em;">@git "last commit"</code>
+  <p style="margin: 6px 0 0 0; font-size: 0.8em;">Reference git history</p>
 </div>
 
-<div style="background: #f6fff6; padding: 20px; border-radius: 12px;">
-  <h3>🌿 @branch</h3>
-  <code style="background: #fff; padding: 8px; display: block; border-radius: 6px;">@branch feature/new-auth</code>
-  <p style="margin-top: 10px; font-size: 0.9em;">Access other branches</p>
+<div style="background: #f6fff6; padding: 12px; border-radius: 12px;">
+  <h3 style="margin: 0 0 6px 0;">🌿 @branch</h3>
+  <code style="background: #fff; padding: 6px; display: block; border-radius: 6px; font-size: 0.85em;">@branch feature/new-auth</code>
+  <p style="margin: 6px 0 0 0; font-size: 0.8em;">Access other branches</p>
 </div>
 
 </div>
@@ -259,7 +272,7 @@ class: center, middle
 
 # Effective Prompting
 
-<div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px; align-items: center; margin-top: 40px;">
+<div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 30px; align-items: stretch; margin-top: 40px;">
 
 <div style="border: 2px solid #e74c3c; padding: 25px; border-radius: 15px; background-color: #fee;">
   <h3 style="color: #e74c3c;">❌ Vague</h3>
@@ -269,19 +282,20 @@ class: center, middle
   <p style="margin-top: 15px; font-size: 0.85em;">• No success criteria<br>• No direction<br>• Ambiguous goal</p>
 </div>
 
-<div style="font-size: 48px; color: #666;">→</div>
+<div style="font-size: 48px; color: #666; display: flex; align-items: center;">→</div>
 
 <div style="border: 2px solid #27ae60; padding: 25px; border-radius: 15px; background-color: #e8f5e8;">
   <h3 style="color: #27ae60;">✅ Specific</h3>
-  <code style="background: #fff; padding: 15px; display: block; border-radius: 8px; margin-top: 15px; font-size: 0.75em; line-height: 1.4;">
-@src/components/Button.tsx
-
-Refactor to:
-1. Add TypeScript props
-2. Include disabled state
-3. Add loading spinner
-4. Keyboard accessible
-  </code>
+  <div style="background: #fff; padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 0.75em; line-height: 1.5; font-family: 'Ubuntu Mono', monospace;">
+    <div style="color: #27ae60;">@src/components/Button.tsx</div>
+    <div style="margin-top: 10px;">Refactor to:</div>
+    <ol style="margin: 6px 0 0; padding-left: 1.6em; line-height: 1.7;">
+      <li style="margin: 3px 0;">Add TypeScript props</li>
+      <li style="margin: 3px 0;">Include disabled state</li>
+      <li style="margin: 3px 0;">Add loading spinner</li>
+      <li style="margin: 3px 0;">Keyboard accessible</li>
+    </ol>
+  </div>
 </div>
 
 </div>
@@ -297,8 +311,8 @@ Refactor to:
 <div style="margin-top: 0px;">
 
 <div style="background: #f0f8ff; padding: 5px; border-radius: 15px; margin-bottom: 5px;">
-  <h3>Four Application Modes</h3>
-  <ol>
+  <h3 style="margin: 0;">Four Application Modes</h3>
+  <ol style="margin: 6px 0 0 0; font-size: 0.9em;">
     <li><strong>Always Apply</strong> - Every session automatically</li>
     <li><strong>Apply Intelligently</strong> - AI determines relevance (recommended)</li>
     <li><strong>Apply to Specific Files</strong> - Pattern matching (*.test.ts)</li>
@@ -308,18 +322,18 @@ Refactor to:
 
 --
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
-  <div style="background: #d4edda; padding: 20px; border-radius: 12px;">
-    <h3>✅ When to Use</h3>
-    <ul style="font-size: 0.9em;">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+  <div style="background: #d4edda; padding: 12px; border-radius: 12px;">
+    <h3 style="margin: 0;">✅ When to Use</h3>
+    <ul style="font-size: 0.85em; margin: 6px 0 0 0;">
       <li>Recurring mistakes</li>
       <li>Critical security patterns</li>
       <li>Team consistency</li>
     </ul>
   </div>
-  <div style="background: #fee; padding: 20px; border-radius: 12px; border: 2px solid #e74c3c;">
-    <h3 style="color: #e74c3c;">⚠️ Watch Out</h3>
-    <ul style="font-size: 0.9em;">
+  <div style="background: #fee; padding: 12px; border-radius: 12px; border: 2px solid #e74c3c;">
+    <h3 style="color: #e74c3c; margin: 0;">⚠️ Watch Out</h3>
+    <ul style="font-size: 0.85em; margin: 6px 0 0 0;">
       <li>Can slow you down</li>
       <li>Keep under 500 lines</li>
       <li>Better context > more rules</li>
@@ -329,7 +343,7 @@ Refactor to:
 
 </div>
 
-<p style="font-size: 14px; margin-top: 20px;">
+<p class="footnote">
   <sup>[1]</sup><a href="https://www.youtube.com/watch?v=sb0y5B3LLUA">Cursor for Staff Engineers - Rules Discussion</a>
 </p>
 
@@ -339,8 +353,8 @@ Refactor to:
 
 <!-- Diagram as SVG: -->
 
-<div style="display: flex; justify-content: center; margin: 30px 0;">
-<svg width="670" height="440" viewBox="0 0 670 440" xmlns="http://www.w3.org/2000/svg">
+<div style="display: flex; justify-content: center; margin: 8px 0;">
+<svg viewBox="0 0 670 440" style="height: 360px; width: auto;" xmlns="http://www.w3.org/2000/svg">
   <!-- Nodes -->
   <!-- User Prompt -->
   <rect x="260" y="40" width="150" height="40" rx="10" fill="#e8f4fd"/>
@@ -398,16 +412,43 @@ Refactor to:
 </svg>
 </div>
 
+<p style="text-align: center; margin: 8px 0 0 0; font-size: 1em;">
+<strong>Each agent operates in isolated git worktree → No conflicts</strong><br>
+<span style="font-size: 0.8em;">Cursor now ships this as <strong>Projects</strong> (Sept 2026, beta): a coordinator agent plans and delegates to parallel subagents, each on its own cloud VM — closing your laptop doesn't stop it</span>
+</p>
+
+<p class="footnote">
+  <sup>[1]</sup><a href="https://cursor.com/changelog/projects">Cursor Projects</a>
+</p>
+
+---
+
+# What Is a Git Worktree?
+
+<div style="background: #f6faff; padding: 18px 22px; border-radius: 12px; margin-top: 18px; text-align: center;">
+<strong>One clone, several working folders</strong> — each checked out to a different branch, all sharing the same <code>.git</code> history
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 22px;">
+
+<div style="border: 2px solid #e74c3c; padding: 20px; border-radius: 15px; background-color: #fee;">
+  <h3 style="color: #e74c3c; margin-top: 0;">Branch switching</h3>
+  <code style="background: #fff; padding: 10px; display: block; border-radius: 8px; font-size: 0.75em;">git checkout feature/auth</code>
+  <p style="margin-top: 12px; font-size: 0.8em; line-height: 1.6;">• One folder, one branch at a time<br>• Stash or commit your WIP first<br>• Reinstall / rebuild after each switch</p>
+</div>
+
+<div style="border: 2px solid #27ae60; padding: 20px; border-radius: 15px; background-color: #e8f5e8;">
+  <h3 style="color: #27ae60; margin-top: 0;">Worktrees</h3>
+  <code style="background: #fff; padding: 10px; display: block; border-radius: 8px; font-size: 0.75em;">git worktree add ../auth feature/auth</code>
+  <p style="margin-top: 12px; font-size: 0.8em; line-height: 1.6;">• Many folders, many branches, at once<br>• Nothing to stash — your files never move<br>• Each folder keeps its own build state</p>
+</div>
 
 </div>
 
-<p style="text-align: center; margin-top: 30px; font-size: 1.1em;">
-<strong>Each agent operates in isolated git worktree → No conflicts</strong>
-</p>
-
-<p style="font-size: 14px; margin-top: 20px;">
-  <sup>[1]</sup><a href="https://cursor.com/changelog/3-0">Cursor 3 Agents Window</a>
-</p>
+<div style="background-color: #d4edda; padding: 16px; border-radius: 12px; margin-top: 22px; text-align: center;">
+<strong>💡 Three agents → three folders → zero file collisions</strong><br>
+<span style="font-size: 0.8em;">Review each diff on its own, merge the ones you want, then <code>git worktree remove ../auth</code></span>
+</div>
 
 ---
 
@@ -492,7 +533,7 @@ Refactor to:
 
 </div>
 
-<p style="font-size: 14px; margin-top: 20px;">
+<p class="footnote">
   <sup>[1]</sup><a href="https://gitmcp.io">GitMCP</a> |
   <sup>[2]</sup><a href="https://github.com/grab/cursor-talk-to-figma-mcp">Figma MCP</a>
 </p>
@@ -535,28 +576,28 @@ class: center, middle
 
 # AI-Driven Project Initialization
 
-<div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 20px; align-items: center; margin-top: 40px;">
+<div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 20px; align-items: center; margin-top: 15px;">
 
-<div style="background: #e8f4fd; padding: 25px; border-radius: 15px; text-align: center;">
-  <div style="font-size: 2.5em;">📝</div>
-  <h3>1. Describe</h3>
-  <p style="font-size: 0.85em;">Problem, users, features in plain English</p>
+<div style="background: #e8f4fd; padding: 15px; border-radius: 15px; text-align: center;">
+  <div style="font-size: 1.8em;">📝</div>
+  <h3 style="margin: 4px 0;">1. Describe</h3>
+  <p style="font-size: 0.8em; margin: 0;">Problem, users, features in plain English</p>
 </div>
 
 <div style="font-size: 36px; color: #666;">→</div>
 
-<div style="background: #fff3cd; padding: 25px; border-radius: 15px; text-align: center;">
-  <div style="font-size: 2.5em;">🛠️</div>
-  <h3>2. Define</h3>
-  <p style="font-size: 0.85em;">Tech stack, database, auth, deployment</p>
+<div style="background: #fff3cd; padding: 15px; border-radius: 15px; text-align: center;">
+  <div style="font-size: 1.8em;">🛠️</div>
+  <h3 style="margin: 4px 0;">2. Define</h3>
+  <p style="font-size: 0.8em; margin: 0;">Tech stack, database, auth, deployment</p>
 </div>
 
 <div style="font-size: 36px; color: #666;">→</div>
 
-<div style="background: #d4edda; padding: 25px; border-radius: 15px; text-align: center;">
-  <div style="font-size: 2.5em;">🚀</div>
-  <h3>3. Generate</h3>
-  <p style="font-size: 0.85em;">Let Cursor scaffold everything</p>
+<div style="background: #d4edda; padding: 15px; border-radius: 15px; text-align: center;">
+  <div style="font-size: 1.8em;">🚀</div>
+  <h3 style="margin: 4px 0;">3. Generate</h3>
+  <p style="font-size: 0.8em; margin: 0;">Let Cursor scaffold everything</p>
 </div>
 
 </div>
@@ -569,7 +610,7 @@ class: center, middle
 
 - Reference it inside prompts: <code>'Generate the project structure for @docs/context.md '</code>
 
-<p style="font-size: 14px; margin-top: 0px;">
+<p class="footnote">
   <sup>[1]</sup><a href="https://www.youtube.com/watch?v=WZ8g6deOyAk">Building Apps with AI - Complete Workflow</a>
 </p>
 
@@ -693,11 +734,11 @@ deadline, completed status, user_id.
 
 # Creating UI Components
 
-<div style="margin-top: 30px;">
+<div style="margin-top: 10px;">
 
-<div style="background: #f0f8ff; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
-  <h3>Prompt for Component Generation:</h3>
-  <code style="background: #fff; padding: 15px; display: block; border-radius: 8px; margin-top: 15px; line-height: 1.6; font-size: 0.85em;">
+<div style="background: #f0f8ff; padding: 15px; border-radius: 15px; margin-bottom: 12px;">
+  <h3 style="margin: 0;">Prompt for Component Generation:</h3>
+  <code style="background: #fff; padding: 12px; display: block; border-radius: 8px; margin-top: 10px; line-height: 1.35; font-size: 0.7em;">
     Create the following components following our project rules:<br><br>
     1. TaskCard - Display single task with priority badge<br>
     2. TaskList - Grid of TaskCards with filtering<br>
@@ -709,18 +750,18 @@ deadline, completed status, user_id.
 </div>
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-  <div style="background: #d4edda; padding: 20px; border-radius: 12px;">
-    <h4>✅ Agent Mode Delivers:</h4>
-    <ul style="font-size: 0.85em;">
+  <div style="background: #d4edda; padding: 12px; border-radius: 12px;">
+    <h4 style="margin: 0;">✅ Agent Mode Delivers:</h4>
+    <ul style="font-size: 0.8em; margin: 6px 0 0 0;">
       <li>TypeScript types</li>
       <li>Responsive design</li>
       <li>Accessibility</li>
       <li>Smooth animations</li>
     </ul>
   </div>
-  <div style="background: #fff3cd; padding: 20px; border-radius: 12px;">
-    <h4>💡 Pro Tip:</h4>
-    <p style="font-size: 0.85em;">Work file by file, review each component before moving to the next</p>
+  <div style="background: #fff3cd; padding: 12px; border-radius: 12px;">
+    <h4 style="margin: 0;">💡 Pro Tip:</h4>
+    <p style="font-size: 0.8em; margin: 6px 0 0 0;">Work file by file, review each component before moving to the next</p>
   </div>
 </div>
 
@@ -733,41 +774,41 @@ class: center, middle
 
 ---
 
-<div style="text-align: center; margin-top: 30px;">
+<div style="text-align: center; margin-top: 10px;">
 
 <div style="display: inline-block; text-align: left;">
-  <div style="background: #e8f4fd; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+  <div style="background: #e8f4fd; padding: 12px; border-radius: 12px; margin-bottom: 8px;">
     <strong>1. Generate code</strong> with Agent or Composer
   </div>
 
-  <div style="text-align: center; font-size: 36px; margin: 10px 0;">↓</div>
+  <div style="text-align: center; font-size: 24px; margin: 2px 0;">↓</div>
 
-  <div style="background: #fff3cd; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+  <div style="background: #fff3cd; padding: 12px; border-radius: 12px; margin-bottom: 8px;">
     <strong>2. Run the app</strong> - Check for errors: <code>npm run dev</code>
   </div>
 
-  <div style="text-align: center; font-size: 36px; margin: 10px 0;">↓</div>
+  <div style="text-align: center; font-size: 24px; margin: 2px 0;">↓</div>
 
-  <div style="background: #ffe8f0; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+  <div style="background: #ffe8f0; padding: 12px; border-radius: 12px; margin-bottom: 8px;">
     <strong>3. Copy error messages</strong> - Paste into Cursor chat
   </div>
 
-  <div style="text-align: center; font-size: 36px; margin: 10px 0;">↓</div>
+  <div style="text-align: center; font-size: 24px; margin: 2px 0;">↓</div>
 
-  <div style="background: #f9f6ff; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+  <div style="background: #f9f6ff; padding: 12px; border-radius: 12px; margin-bottom: 8px;">
     <strong>4. Let Cursor fix</strong> - Review the changes
   </div>
 
-  <div style="text-align: center; font-size: 36px; margin: 10px 0;">↓</div>
+  <div style="text-align: center; font-size: 24px; margin: 2px 0;">↓</div>
 
-  <div style="background: #d4edda; padding: 20px; border-radius: 12px;">
+  <div style="background: #d4edda; padding: 12px; border-radius: 12px;">
     <strong>5. Commit</strong> - Save working state with git
   </div>
 </div>
 
 </div>
 
-<p style="font-size: 14px; margin-top: 20px;">
+<p class="footnote">
   <sup>[1]</sup><a href="https://www.youtube.com/watch?v=WZ8g6deOyAk">Complete App Building Workflow</a>
 </p>
 
@@ -905,7 +946,7 @@ class: center, middle
   <div style="background: #f6fff6; padding: 25px; border-radius: 15px;">
     <div style="font-size: 3em;">🤖</div>
     <h3>AI</h3>
-    <p style="font-size: 0.9em;">Anthropic API<br>claude-sonnet-4-6<br>Structured Output</p>
+    <p style="font-size: 0.9em;">Anthropic API<br>claude-sonnet-5<br>Structured Output</p>
   </div>
 
   <div style="background: #fff6fa; padding: 25px; border-radius: 15px;">
@@ -949,7 +990,7 @@ class: center, middle
   </div>
 </div>
 
-<p style="font-size: 14px; margin-top: 20px;">
+<p class="footnote">
   <sup>[1]</sup><a href="https://cursor.com/docs/cookbook/mermaid-diagrams">Cursor Cookbook - Mermaid Diagrams</a>
 </p>
 
@@ -999,7 +1040,7 @@ create a matching React component with Tailwind.
 
 </div>
 
-<p style="font-size: 14px; margin-top: 20px;">
+<p class="footnote">
   <sup>[1]</sup><a href="https://github.com/grab/cursor-talk-to-figma-mcp">Cursor Talk to Figma MCP</a>
 </p>
 
@@ -1022,11 +1063,11 @@ class: center, middle
 
 # Backend API Development
 
-<div style="margin-top: 30px;">
+<div style="margin-top: 10px;">
 
-<div style="background: #f0f8ff; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
-  <h3>Prompt for Complete REST API:</h3>
-  <code style="background: #fff; padding: 15px; display: block; border-radius: 8px; margin-top: 15px; line-height: 1.6; font-size: 0.8em;">
+<div style="background: #f0f8ff; padding: 15px; border-radius: 15px; margin-bottom: 15px;">
+  <h3 style="margin: 0;">Prompt for Complete REST API:</h3>
+  <code style="background: #fff; padding: 12px; display: block; border-radius: 8px; margin-top: 10px; line-height: 1.35; font-size: 0.7em;">
 Create a complete REST API for our quiz app:<br><br>
 <strong>Endpoints:</strong><br>
 - POST /api/quiz/generate - Create new quiz<br>
@@ -1039,21 +1080,18 @@ rate limiting, API documentation comments
   </code>
 </div>
 
----
-# Backend API Development
-
 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-  <div style="background: #d4edda; padding: 20px; border-radius: 12px; text-align: center;">
-    <div style="font-size: 2em;">🔐</div>
-    <h4>Auth</h4>
+  <div style="background: #d4edda; padding: 12px; border-radius: 12px; text-align: center;">
+    <div style="font-size: 1.4em;">🔐</div>
+    <h4 style="margin: 4px 0 0 0;">Auth</h4>
   </div>
-  <div style="background: #fff3cd; padding: 20px; border-radius: 12px; text-align: center;">
-    <div style="font-size: 2em;">✅</div>
-    <h4>Validation</h4>
+  <div style="background: #fff3cd; padding: 12px; border-radius: 12px; text-align: center;">
+    <div style="font-size: 1.4em;">✅</div>
+    <h4 style="margin: 4px 0 0 0;">Validation</h4>
   </div>
-  <div style="background: #f9f6ff; padding: 20px; border-radius: 12px; text-align: center;">
-    <div style="font-size: 2em;">⚡</div>
-    <h4>Rate Limiting</h4>
+  <div style="background: #f9f6ff; padding: 12px; border-radius: 12px; text-align: center;">
+    <div style="font-size: 1.4em;">⚡</div>
+    <h4 style="margin: 4px 0 0 0;">Rate Limiting</h4>
   </div>
 </div>
 
@@ -1188,11 +1226,11 @@ class: center, middle
 
 # CI/CD Pipeline
 
-<div style="margin-top: 30px;">
+<div style="margin-top: 10px;">
 
-<div style="background: #f0f8ff; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
-  <h3>Generate GitHub Actions Workflow:</h3>
-  <code style="background: #fff; padding: 15px; display: block; border-radius: 8px; margin-top: 15px; line-height: 1.6; font-size: 0.75em;">
+<div style="background: #f0f8ff; padding: 15px; border-radius: 15px; margin-bottom: 15px;">
+  <h3 style="margin: 0;">Generate GitHub Actions Workflow:</h3>
+  <code style="background: #fff; padding: 12px; display: block; border-radius: 8px; margin-top: 10px; line-height: 1.35; font-size: 0.7em;">
 Create a GitHub Actions workflow for our Next.js app:<br><br>
 <strong>On every PR:</strong><br>
 1. TypeScript type checking<br>
@@ -1205,18 +1243,15 @@ All above + E2E tests + Production deploy + Slack notification
   </code>
 </div>
 
----
-# CI/CD Pipeline
-
 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-  <div style="background: #d4edda; padding: 20px; border-radius: 12px; text-align: center;">
-    <h4>✅ Type Check</h4>
+  <div style="background: #d4edda; padding: 12px; border-radius: 12px; text-align: center;">
+    <h4 style="margin: 0;">✅ Type Check</h4>
   </div>
-  <div style="background: #fff3cd; padding: 20px; border-radius: 12px; text-align: center;">
-    <h4>🧪 Test</h4>
+  <div style="background: #fff3cd; padding: 12px; border-radius: 12px; text-align: center;">
+    <h4 style="margin: 0;">🧪 Test</h4>
   </div>
-  <div style="background: #f9f6ff; padding: 20px; border-radius: 12px; text-align: center;">
-    <h4>🚀 Deploy</h4>
+  <div style="background: #f9f6ff; padding: 12px; border-radius: 12px; text-align: center;">
+    <h4 style="margin: 0;">🚀 Deploy</h4>
   </div>
 </div>
 
@@ -1277,45 +1312,45 @@ class: center, middle
 
 # Automated PR Workflow
 
-<div style="margin-top: 30px;">
+<div style="margin-top: 10px;">
 
-<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 20px; margin-bottom: 30px; text-align: center;">
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px; border-radius: 20px; margin-bottom: 15px; text-align: center;">
   <h2 style="color: white; margin: 0;">Staff Engineer Tip: Handle PR Feedback Fast</h2>
 </div>
 
 <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 20px; align-items: center;">
 
-<div style="background: #e8f4fd; padding: 25px; border-radius: 15px; text-align: center;">
-  <div style="font-size: 2.5em;">📸</div>
-  <h4>1. Screenshot</h4>
-  <p style="font-size: 0.85em;">Capture PR comments</p>
+<div style="background: #e8f4fd; padding: 15px; border-radius: 15px; text-align: center;">
+  <div style="font-size: 1.8em;">📸</div>
+  <h4 style="margin: 4px 0;">1. Screenshot</h4>
+  <p style="font-size: 0.8em; margin: 0;">Capture PR comments</p>
 </div>
 
 <div style="font-size: 36px; color: #666;">→</div>
 
-<div style="background: #fff3cd; padding: 25px; border-radius: 15px; text-align: center;">
-  <div style="font-size: 2.5em;">🤖</div>
-  <h4>2. Cursor Plan</h4>
-  <p style="font-size: 0.85em;">Drag into Cursor, generate plan</p>
+<div style="background: #fff3cd; padding: 15px; border-radius: 15px; text-align: center;">
+  <div style="font-size: 1.8em;">🤖</div>
+  <h4 style="margin: 4px 0;">2. Cursor Plan</h4>
+  <p style="font-size: 0.8em; margin: 0;">Drag into Cursor, generate plan</p>
 </div>
 
 <div style="font-size: 36px; color: #666;">→</div>
 
-<div style="background: #d4edda; padding: 25px; border-radius: 15px; text-align: center;">
-  <div style="font-size: 2.5em;">⚒️</div>
-  <h4>3. Execute</h4>
-  <p style="font-size: 0.85em;">Fix items one by one</p>
+<div style="background: #d4edda; padding: 15px; border-radius: 15px; text-align: center;">
+  <div style="font-size: 1.8em;">⚒️</div>
+  <h4 style="margin: 4px 0;">3. Execute</h4>
+  <p style="font-size: 0.8em; margin: 0;">Fix items one by one</p>
 </div>
 
 </div>
 
-<p style="text-align: center; margin-top: 25px; font-size: 1.05em; background: #eef7ff; padding: 12px 18px; border-radius: 10px;">
+<p style="text-align: center; margin-top: 12px; font-size: 0.95em; background: #eef7ff; padding: 12px 18px; border-radius: 10px;">
 <strong>Even faster:</strong> run <code>/review</code> (<code>/review-bugbot</code>, <code>/review-security</code>) before you push—Bugbot integrates with GitHub &amp; GitLab PRs
 </p>
 
 </div>
 
-<p style="font-size: 14px; margin-top: 20px;">
+<p class="footnote">
   <sup>[1]</sup><a href="https://www.youtube.com/watch?v=sb0y5B3LLUA">Automating PR Feedback Workflow</a> |
   <sup>[2]</sup><a href="https://cursor.com/changelog">Cursor Changelog—/review</a>
 </p>
@@ -1350,7 +1385,7 @@ class: center, middle
 <div style="background: #d4edda; padding: 25px; border-radius: 15px;">
   <h3 style="color: #2e7d32;">💰 Optimizations</h3>
   <ul style="font-size: 0.9em;">
-    <li>✅ Switch to DeepSeek (~1.4x cheaper, not 10x like before)</li>
+    <li>✅ Cheaper model tier where quality allows (gpt-5.6-luna ~$0.20/1M)</li>
     <li>✅ Aggressive caching</li>
     <li>✅ Free tier for previews</li>
     <li>✅ Optimize DB queries</li>
@@ -1421,6 +1456,7 @@ class: center, middle
     <li><a href="https://cursor.com/docs">Cursor Docs</a></li>
     <li><a href="https://cursor.com/changelog">Changelog</a></li>
     <li><a href="https://cursor.com/changelog/composer-2-5">Composer 2.5</a></li>
+    <li><a href="https://cursor.com/changelog/projects">Cursor Projects</a></li>
   </ul>
 </div>
 

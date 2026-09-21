@@ -29,7 +29,7 @@ Common issues and solutions encountered during the course.
 **Fix:**
 - Restart Cursor completely (not just reload)
 - Check `.cursor/mcp.json` syntax (valid JSON?)
-- Verify the MCP command works manually: `npx -y @anthropic-ai/mcp-playwright`
+- Verify the MCP command works manually: `npx -y @playwright/mcp@latest`
 - Check Cursor Settings → MCP for server status
 
 ---

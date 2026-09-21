@@ -1,6 +1,6 @@
 # Cursor AI IDE: Building Production Applications
 
-> **O'Reilly Live Training** — 6 hours, 10 sections, 62 slides
+> **O'Reilly Live Training** — 6 hours, 10 sections, 57 slides (65 deck pages with incremental builds)
 > Master AI-assisted development by building a full-stack AI quiz app from scratch using Cursor, MCP, and modern tooling.
 
 **Instructor:** Lucas Soares ([@EnkrateiaLucca](https://github.com/EnkrateiaLucca))
@@ -54,11 +54,15 @@ See **[SETUP.md](SETUP.md)** for the complete pre-course checklist.
 cursor-course/
 ├── README.md                    ← You are here
 ├── SETUP.md                     ← Pre-course checklist
-├── CLAUDE.md                    ← AI assistant context
+├── cursor-explainer.html        ← Handout: "What is Cursor?" quick guide
 ├── presentation/                ← Slides and speaker notes
 │   ├── scripts.md               ← 10-section speaker notes
 │   ├── presentation.html
 │   └── cursor-for-modern-dev.pdf
+├── assets/                      ← Student-facing handouts
+│   ├── cursor-course-cheatsheet.html ← Course cheatsheet (source)
+│   ├── cursor-course-cheatsheet.pdf  ← Printable course cheatsheet
+│   └── cursor-explainer.pdf     ← Printable "What is Cursor?" handout
 ├── sections/                    ← Section-by-section content
 │   ├── 01-cursor-intro/
 │   ├── 02-explore-plan-build/
@@ -107,6 +111,14 @@ Browser Tab: presentation.html (slides)
 ---
 
 ## Resources
+
+### Handouts in this repo (share with students)
+
+- **[Course Cheatsheet (PDF)](assets/cursor-course-cheatsheet.pdf)** — 4‑page printable quick reference for the whole course: Cursor modes and shortcuts, @ symbols, project rules, MCP, the build workflow, env vars, the production checklist and free‑tier limits. Source: [HTML](assets/cursor-course-cheatsheet.html).
+- **[Cursor Quick Guide](cursor-explainer.html)** — standalone "What is Cursor?" explainer: the four ways to work with AI, the explore‑plan‑build workflow, and tips. Open in a browser; good pre‑reading or a break‑time link.
+- **[Cursor Quick Guide (PDF)](assets/cursor-explainer.pdf)** — the same guide as a 6‑page printable handout. This is the version sent to O'Reilly for attendees.
+
+### External docs
 
 - [Cursor Docs](https://docs.cursor.com/)
 - [McKay's App Template](https://github.com/mckaywrigley/mckays-app-template)
