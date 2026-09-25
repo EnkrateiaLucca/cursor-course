@@ -1,4 +1,4 @@
-# Section 08: Prompts
+# Section 06: Prompts
 
 ## Supabase + Drizzle Setup
 

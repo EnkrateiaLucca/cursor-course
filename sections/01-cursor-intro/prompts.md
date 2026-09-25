@@ -1,6 +1,6 @@
 # Section 01: Prompts
 
-## Chat: Create a Simple HTML App
+## Agent / Ask: Create a Simple HTML App
 
 ```
 Create a single-file HTML page with embedded CSS and JS that has:
@@ -43,7 +43,7 @@ Add a simple to-do list below the counter:
 - Clean styling matching the existing design
 ```
 
-## Chat: Explain the Code
+## Ask mode: Explain the Code
 
 ```
 Explain how this HTML page works. Break it down section by section:

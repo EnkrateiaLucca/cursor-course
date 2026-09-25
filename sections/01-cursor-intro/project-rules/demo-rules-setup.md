@@ -1,6 +1,6 @@
 # Demo: Creating Project Rules
 
-**Goal:** Create practical `.cursor/rules/*.mdc` files for the quiz project, demonstrating all four application modes.
+**Goal:** Create practical `.cursor/rules/*.mdc` files for the quiz project, demonstrating all four application types (current Cursor docs naming).
 
 ---
 
@@ -10,13 +10,11 @@
 mkdir -p .cursor/rules
 ```
 
+You can also type `/create-rule` in Agent, or use **Customize → Rules → Add Rule**.
+
 ## Step 2: Always Apply — Core Standards
 
 Create `.cursor/rules/core-standards.mdc`:
-
-```
-This rule always applies. Show how to set the frontmatter:
-```
 
 ```markdown
 ---
@@ -31,16 +29,17 @@ alwaysApply: true
 - Never commit .env files or secrets
 ```
 
-**What to explain:** This rule is processed on every prompt — keep it short and essential.
+**What to explain:** Always Apply is processed on every Agent/Ask/Plan/Debug prompt — keep it short and essential. Rules do **not** apply to Tab or Inline Edit.
 
-## Step 3: Auto Attached — File-Specific Rules
+## Step 3: Apply to Specific Files — File-Scoped Rules
 
 Create `.cursor/rules/api-routes.mdc`:
 
 ```markdown
 ---
 description: Standards for API route handlers
-glob: ["**/api/**/*.ts", "**/actions/**/*.ts"]
+globs: "**/api/**/*.ts,**/actions/**/*.ts"
+alwaysApply: false
 ---
 
 - Validate all inputs with Zod schemas
@@ -50,16 +49,16 @@ glob: ["**/api/**/*.ts", "**/actions/**/*.ts"]
 - Use Server Actions for mutations when possible
 ```
 
-**What to explain:** This rule only activates when working on files matching the glob pattern. Zero overhead on other files.
+**What to explain:** Auto-attaches when matching files are in context. Zero overhead elsewhere.
 
-## Step 4: Agent Requested — Domain Knowledge
+## Step 4: Apply Intelligently — Domain Knowledge
 
 Create `.cursor/rules/supabase-patterns.mdc`:
 
 ```markdown
 ---
 description: Supabase database patterns and conventions for this project
-agentRequestable: true
+alwaysApply: false
 ---
 
 - Use Drizzle ORM for all database queries (not raw SQL)
@@ -69,16 +68,15 @@ agentRequestable: true
 - Use the Supabase client from lib/supabase.ts
 ```
 
-**What to explain:** The AI decides when this rule is relevant (e.g., when you mention "database" or "Supabase"). It asks for permission to include it.
+**What to explain:** With a description and no globs, Agent decides when the rule is relevant.
 
-## Step 5: Manual — Specialized Tasks
+## Step 5: Apply Manually — Specialized Tasks
 
 Create `.cursor/rules/performance-audit.mdc`:
 
 ```markdown
 ---
-description: Performance audit checklist
-manuallyApply: true
+alwaysApply: false
 ---
 
 When auditing performance:
@@ -90,12 +88,12 @@ When auditing performance:
 - Check database queries for N+1 problems
 ```
 
-**What to explain:** This only activates when explicitly referenced with `@performance-audit`. Useful for specialized workflows you don't need on every prompt.
+**What to explain:** No description + no globs → included only when `@`-mentioned (e.g. `@performance-audit`).
 
 ## Step 6: Test the Rules
 
-1. Open Chat and work on an API route — observe the auto-attached rule activating
-2. Ask about database patterns — observe the agent-requested rule
+1. Open Agent and work on an API route — observe the file-scoped rule activating
+2. Ask about database patterns — observe intelligent apply
 3. Manually reference `@performance-audit` — show manual activation
 
 ## Timing

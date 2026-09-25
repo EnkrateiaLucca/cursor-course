@@ -1,4 +1,4 @@
-# Section 09: Deployment
+# Section 07: Deployment
 
 **Slides:** 54–62 | **Duration:** ~30 min | **Break after:** No
 

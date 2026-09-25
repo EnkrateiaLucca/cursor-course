@@ -1,4 +1,4 @@
-# Section 10: Finishing
+# Section 08: Finishing
 
 **Duration:** ~15 min
 
@@ -8,7 +8,7 @@ Recap the entire course, provide a comprehensive resource list, and address comm
 
 ## Agenda
 
-1. Quick recap of all 10 sections (2 min)
+1. Quick recap of all 8 sections (2 min)
 2. The key takeaways (3 min)
 3. Resources for continued learning (5 min)
 4. Q&A (5 min)

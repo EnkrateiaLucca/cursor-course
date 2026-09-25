@@ -6,7 +6,9 @@
 
 ## Step 1: Install Playwright MCP
 
-Add to your project's `.cursor/mcp.json`:
+**Option A — Customize UI:** Open **Customize** in the sidebar → MCP → add Playwright (or install from the Cursor Marketplace / [cursor.directory](https://cursor.directory)).
+
+**Option B — Config file:** Add to the project's `.cursor/mcp.json` (or `~/.cursor/mcp.json` for global):
 
 ```json
 {
@@ -19,7 +21,7 @@ Add to your project's `.cursor/mcp.json`:
 }
 ```
 
-Restart Cursor to activate the MCP server.
+Restart Cursor (or reload MCP) to activate. Toggle servers on/off from Customize without deleting them. Docs: [MCP](https://cursor.com/docs/context/mcp).
 
 ## Step 2: Start the dev server
 

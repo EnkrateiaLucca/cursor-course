@@ -1,4 +1,4 @@
-# Section 06: Prompts
+# Section 04: Prompts
 
 ## Generate Unit Tests
 

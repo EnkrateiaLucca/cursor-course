@@ -1,4 +1,4 @@
-# Section 09: Prompts
+# Section 07: Prompts
 
 ## Pre-Deploy Check
 
