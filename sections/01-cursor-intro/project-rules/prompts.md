@@ -1,4 +1,4 @@
-# Section 03: Prompts
+# Section 01 — Project Rules: Prompts
 
 ## Create a Project Rule
 
@@ -36,7 +36,8 @@ with four answer choices. Follow our project rules.
 ## Ask About Rule Modes
 
 ```
-What are the four rule application modes in Cursor?
+What are the four project rule types in Cursor today
+(Always Apply, Apply Intelligently, Apply to Specific Files, Apply Manually)?
 Give me a practical example of when to use each one
 for a Next.js quiz application.
 ```

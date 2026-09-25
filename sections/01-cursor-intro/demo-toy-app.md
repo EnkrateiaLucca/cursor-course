@@ -10,14 +10,16 @@
 2. Create a new file: `toy-app.html`
 3. Open Chat (Cmd+L)
 
-## Step 2: Generate the initial app via Chat
+## Step 2: Generate the initial app via Agent (Ask or Agent mode)
 
 Use the prompt from [prompts.md](prompts.md) — "Create a simple HTML app" prompt.
 
+Open the Agent panel (`Cmd+I` / `Ctrl+I`). Start in **Ask** to discuss the approach, or go straight to **Agent** to generate the file.
+
 **What to show the audience:**
-- How Chat generates a complete file
-- The Apply button to accept changes
-- The diff view showing what was added
+- How Agent generates a complete file
+- The Apply / diff view showing what was added
+- Mode picker (`Shift+Tab`): Ask (read-only) vs Agent (edits)
 
 ## Step 3: Demonstrate Inline Edit (Cmd+K)
 
@@ -41,16 +43,17 @@ Use the prompt from [prompts.md](prompts.md) — "Create a simple HTML app" prom
 - Tab goes beyond single-line — it predicts multi-line blocks
 - It understands your current file's patterns
 
-## Step 5: Demonstrate Agent Mode
+## Step 5: Demonstrate Agent Mode (and Plan)
 
-1. Open Agent mode (Cmd+I or switch in Chat)
-2. Ask it to "Add a dark mode toggle with localStorage persistence"
-3. Watch it plan and execute multiple changes
+1. Open the Agent panel (`Cmd+I` / `Ctrl+I`)
+2. Optionally switch to **Plan** (`Shift+Tab`), ask for an approach for dark mode, approve it
+3. Switch to **Agent** and ask it to "Add a dark mode toggle with localStorage persistence"
+4. Watch it execute multi-step edits
 
 **What to show:**
-- Agent creates a plan before executing
-- It can modify multiple parts of the file
-- It understands the full context of the file
+- Plan mode reviews the approach before edits; Agent implements
+- Agent can modify multiple parts of the file and run commands
+- Checkpoints let you roll back (still commit with git)
 
 ## Step 6: Open in Browser
 

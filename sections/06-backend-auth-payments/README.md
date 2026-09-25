@@ -1,4 +1,4 @@
-# Section 08: Backend, Auth & Payments
+# Section 06: Backend, Auth & Payments
 
 **Slides:** 46–53 | **Duration:** ~45 min | **Break after:** Yes
 
@@ -12,7 +12,7 @@
 
 ## Prerequisites
 
-- AI Quiz App from Section 05
+- AI Quiz App from Section 03
 - Supabase project created (with connection string)
 - Clerk application created (with API keys)
 - Stripe account in test mode (with API keys)

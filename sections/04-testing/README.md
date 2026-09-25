@@ -1,4 +1,4 @@
-# Section 06: Testing
+# Section 04: Testing
 
 **Slides:** 33–36 | **Duration:** ~20 min | **Break after:** No
 
@@ -11,7 +11,7 @@
 
 ## Prerequisites
 
-- AI Quiz App from Section 05 running
+- AI Quiz App from Section 03 running
 - Vitest and Playwright installed in the project
 
 ## Demo Checklist

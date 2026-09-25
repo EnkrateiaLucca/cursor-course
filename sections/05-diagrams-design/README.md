@@ -1,4 +1,4 @@
-# Section 07: Diagrams & Design
+# Section 05: Diagrams & Design
 
 **Slides:** 37–45 | **Duration:** ~30 min | **Break after:** Yes
 
@@ -11,7 +11,7 @@
 
 ## Prerequisites
 
-- AI Quiz App from Section 05 as the reference project
+- AI Quiz App from Section 03 as the reference project
 - Mermaid preview extension (optional) or use mermaid.live
 
 ## Demo Checklist

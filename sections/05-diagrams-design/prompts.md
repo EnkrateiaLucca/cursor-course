@@ -1,4 +1,4 @@
-# Section 07: Prompts
+# Section 05: Prompts
 
 ## Generate Architecture Diagram
 

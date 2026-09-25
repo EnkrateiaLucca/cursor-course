@@ -68,7 +68,7 @@ Add a link to the quiz page in the main navigation/homepage so users can find it
 - The Explore phase prevented us from creating something that doesn't match the template's patterns
 - The Plan phase gave us a clear roadmap before writing any code
 - The Build phase was fast because the AI had good context
-- This is a simple quiz — in Section 05, we'll add AI-powered question generation
+- This is a simple quiz — in Section 03, we'll add AI-powered question generation
 
 ## Timing
 

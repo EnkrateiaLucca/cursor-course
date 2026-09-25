@@ -1,4 +1,4 @@
-# Section 04: Prompts
+# Section 01 — MCP & Tooling: Prompts
 
 ## Playwright MCP: Screenshot
 

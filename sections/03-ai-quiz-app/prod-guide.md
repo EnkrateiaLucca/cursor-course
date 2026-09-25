@@ -208,7 +208,7 @@ Confirm `.env.local` is **not** in the commit (it's gitignored).
 1. Go to [vercel.com/new](https://vercel.com/new)
 2. Import your GitHub repository
 3. Framework: **Next.js** (auto-detected)
-4. Root directory: set if the app lives in a subfolder (e.g. `sections/05-ai-quiz-app/quiz-app`)
+4. Root directory: set if the app lives in a subfolder (e.g. `sections/03-ai-quiz-app/quiz-app`)
 5. Add environment variables (see table below)
 6. Click **Deploy**
 

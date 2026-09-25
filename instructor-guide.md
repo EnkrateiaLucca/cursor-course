@@ -6,37 +6,37 @@ Run-of-show checklist for the 6-hour Cursor course. Tick boxes as you go. Every 
 
 | # | Section | Slides | Time | Break after |
 |---|---------|--------|------|-------------|
-| 01 | Cursor Intro | 1–6 | 45 min | Yes |
-| 02 | Explore-Plan-Build | 7–11 | 45 min | |
-| 03 | Project Rules | 12–14 | 20 min | |
-| 04 | MCP & Tooling | 15–21 | 30 min | Yes |
-| 05 | AI Quiz App | 22–32 | 60 min | Yes |
-| 06 | Testing | 33–36 | 20 min | |
-| 07 | Diagrams & Design | 37–45 | 30 min | Yes |
-| 08 | Backend, Auth & Payments | 46–53 | 45 min | Yes |
-| 09 | Deployment | 54–62 | 30 min | |
-| 10 | Finishing | — | 15 min | |
+| 01 | Cursor Intro (modes + rules + MCP) | 1–21 | 95 min | Yes |
+| 02 | Explore-Plan-Build | 22–26 | 45 min | |
+| 03 | AI Quiz App | 27–37 | 60 min | Yes |
+| 04 | Testing | 38–41 | 20 min | |
+| 05 | Diagrams & Design | 42–50 | 30 min | Yes |
+| 06 | Backend, Auth & Payments | 51–58 | 45 min | Yes |
+| 07 | Deployment | 59–67 | 30 min | |
+| 08 | Finishing | — | 15 min | |
 
 ## Before the Session
 
 - [ ] Cursor installed and signed in
 - [ ] McKay's template cloned, `pnpm install` done, `pnpm dev` runs
-- [ ] GitHub PAT ready (Section 04)
-- [ ] Supabase project, Clerk app, and Stripe test-mode account created, keys at hand (Section 08)
-- [ ] Anthropic API key ready (Section 05)
-- [ ] Vercel account connected to GitHub (Section 09)
+- [ ] GitHub PAT ready (Section 01 — MCP)
+- [ ] Supabase project, Clerk app, and Stripe test-mode account created, keys at hand (Section 06)
+- [ ] Anthropic API key ready (Section 03)
+- [ ] Vercel account connected to GitHub (Section 07)
 - [ ] Stripe CLI installed: `brew install stripe/stripe-cli/stripe`
-- [ ] Vitest and Playwright installed in the demo project (Section 06)
-- [ ] Mermaid preview extension installed, or [mermaid.live](https://mermaid.live) open (Section 07)
+- [ ] Vitest and Playwright installed in the demo project (Section 04)
+- [ ] Mermaid preview extension installed, or [mermaid.live](https://mermaid.live) open (Section 05)
 - [ ] Presentation open in the browser
 
 ---
 
-## Section 01: Cursor Intro (Slides 1–6, ~45 min)
+## Section 01: Cursor Intro (Slides 1–21, ~95 min)
+
+### Part A — Interface & modes (Slides 1–6, ~45 min)
 
 Folder: [sections/01-cursor-intro/](sections/01-cursor-intro/) · Demo: [demo-toy-app.md](sections/01-cursor-intro/demo-toy-app.md) · Prompts: [prompts.md](sections/01-cursor-intro/prompts.md)
 
-**Goal:** Show all four modes (Chat, Inline Edit, Tab, Agent) on a single HTML file.
+**Goal:** Show Agent modes (Agent / Ask / Plan / Debug), Inline Edit, and Tab on a single HTML file.
 
 - [ ] Tour the Cursor interface: panels, Chat (`Cmd+L`), Agent mode
 - [ ] Open an empty folder and create `toy-app.html`
@@ -225,17 +225,19 @@ were answered correctly vs incorrectly, with the correct answers revealed.
 - [ ] A context file saves you from repeating yourself in every prompt
 - [ ] Two-stage workflow: ChatGPT/Claude for planning, Cursor for implementation
 - [ ] More context is not always better. Curate what the AI sees.
-- [ ] Tease the next step: Section 05 adds AI question generation
+- [ ] Tease the next step: Section 03 adds AI question generation
 
 ---
 
-## Section 03: Project Rules (Slides 12–14, ~20 min)
+### Part B — Project Rules (Slides 12–14, ~20 min)
 
-Folder: [sections/03-project-rules/](sections/03-project-rules/) · Demo: [demo-rules-setup.md](sections/03-project-rules/demo-rules-setup.md) · Prompts: [prompts.md](sections/03-project-rules/prompts.md)
+> Formerly standalone Section 03 — now part of the Cursor Intro.
+
+Folder: [sections/01-cursor-intro/project-rules/](sections/01-cursor-intro/project-rules/) · Demo: [demo-rules-setup.md](sections/01-cursor-intro/project-rules/demo-rules-setup.md) · Prompts: [prompts.md](sections/01-cursor-intro/project-rules/prompts.md)
 
 **Goal:** Create one rule for each of the four modes, then test that they activate.
 
-- [ ] Explain the four modes: Always, Auto Attached, Agent Requested, Manual
+- [ ] Explain the four rule types: Always Apply, Apply Intelligently, Apply to Specific Files, Apply Manually
 - [ ] Create the rules folder
 
 ```bash
@@ -324,8 +326,8 @@ with four answer choices. Follow our project rules.
 ```
 
 - [ ] Open an API route to show the auto-attached rule, ask a database question to show the agent-requested rule, then type `@performance-audit` to show the manual rule
-- [ ] Show the example rules: [nextjs-patterns.mdc](sections/03-project-rules/example-rules/nextjs-patterns.mdc), [api-standards.mdc](sections/03-project-rules/example-rules/api-standards.mdc), [testing.mdc](sections/03-project-rules/example-rules/testing.mdc)
-- [ ] Walk through [example-agents-md.md](sections/03-project-rules/example-agents-md.md) and [example-claude-md.md](sections/03-project-rules/example-claude-md.md)
+- [ ] Show the example rules: [nextjs-patterns.mdc](sections/01-cursor-intro/project-rules/example-rules/nextjs-patterns.mdc), [api-standards.mdc](sections/01-cursor-intro/project-rules/example-rules/api-standards.mdc), [testing.mdc](sections/01-cursor-intro/project-rules/example-rules/testing.mdc)
+- [ ] Walk through [example-agents-md.md](sections/01-cursor-intro/project-rules/example-agents-md.md) and [example-claude-md.md](sections/01-cursor-intro/project-rules/example-claude-md.md)
 - [ ] Generate an AGENTS.md live
 
 ```text
@@ -354,14 +356,16 @@ without maintaining rules for each project?
 
 ---
 
-## Section 04: MCP & Tooling (Slides 15–21, ~30 min)
+### Part C — MCP & Tooling (Slides 15–21, ~30 min)
 
-Folder: [sections/04-mcp-and-tooling/](sections/04-mcp-and-tooling/) · Demo: [demo-playwright-mcp.md](sections/04-mcp-and-tooling/demo-playwright-mcp.md) · Prompts: [prompts.md](sections/04-mcp-and-tooling/prompts.md)
+> Formerly standalone Section 04 — now part of the Cursor Intro.
+
+Folder: [sections/01-cursor-intro/mcp-and-tooling/](sections/01-cursor-intro/mcp-and-tooling/) · Demo: [demo-playwright-mcp.md](sections/01-cursor-intro/mcp-and-tooling/demo-playwright-mcp.md) · Prompts: [prompts.md](sections/01-cursor-intro/mcp-and-tooling/prompts.md)
 
 **Goal:** Let Cursor see and click through the running app via Playwright MCP.
 
 - [ ] Explain MCP with the "USB for AI" analogy
-- [ ] Add Playwright to `.cursor/mcp.json` (see [playwright.json](sections/04-mcp-and-tooling/mcp-config-examples/playwright.json)), then restart Cursor
+- [ ] Add Playwright to `.cursor/mcp.json` (see [playwright.json](sections/01-cursor-intro/mcp-and-tooling/mcp-config-examples/playwright.json)), then restart Cursor
 
 ```json
 {
@@ -403,7 +407,7 @@ Fix the issues you found on the quiz page.
 After fixing, navigate back and verify the fix works.
 ```
 
-- [ ] Show the other configs: [github.json](sections/04-mcp-and-tooling/mcp-config-examples/github.json) and [gitmcp.json](sections/04-mcp-and-tooling/mcp-config-examples/gitmcp.json)
+- [ ] Show the other configs: [github.json](sections/01-cursor-intro/mcp-and-tooling/mcp-config-examples/github.json) and [gitmcp.json](sections/01-cursor-intro/mcp-and-tooling/mcp-config-examples/gitmcp.json)
 - [ ] *(Optional)* GitHub MCP demo
 
 ```text
@@ -428,7 +432,7 @@ Help me set up MCP for this project. I want to configure:
 Create the .cursor/mcp.json file with all three servers.
 ```
 
-- [ ] Discuss CLI vs MCP using [cli-vs-mcp-comparison.md](sections/04-mcp-and-tooling/cli-vs-mcp-comparison.md)
+- [ ] Discuss CLI vs MCP using [cli-vs-mcp-comparison.md](sections/01-cursor-intro/mcp-and-tooling/cli-vs-mcp-comparison.md)
 
 **Talking points**
 - [ ] MCP is an open protocol from Anthropic: one standard interface, many tools
@@ -442,13 +446,13 @@ Create the .cursor/mcp.json file with all three servers.
 
 ---
 
-## Section 05: AI Quiz App (Slides 22–32, ~60 min)
+## Section 03: AI Quiz App (Slides 27–37, ~60 min)
 
-Folder: [sections/05-ai-quiz-app/](sections/05-ai-quiz-app/) · Plan: [PLAN.md](sections/05-ai-quiz-app/PLAN.md) · Ship guide: [prod-guide.md](sections/05-ai-quiz-app/prod-guide.md)
+Folder: [sections/03-ai-quiz-app/](sections/03-ai-quiz-app/) · Plan: [PLAN.md](sections/03-ai-quiz-app/PLAN.md) · Ship guide: [prod-guide.md](sections/03-ai-quiz-app/prod-guide.md)
 
 **Goal:** Take the simple quiz from Section 02 and add AI question generation, with the plan file driving the build.
 
-- [ ] Walk through [PLAN.md](sections/05-ai-quiz-app/PLAN.md): features F1–F12, the data schema, and phases 0–8
+- [ ] Walk through [PLAN.md](sections/03-ai-quiz-app/PLAN.md): features F1–F12, the data schema, and phases 0–8
 - [ ] Explain the Hierarchy of Leverage: **Rules > Context > Prompts > Model**. Before blaming the AI, check whether you have rules, gave good context, and wrote a specific prompt.
 - [ ] Add `ANTHROPIC_API_KEY` to `.env.local`
 
@@ -457,7 +461,7 @@ Folder: [sections/05-ai-quiz-app/](sections/05-ai-quiz-app/) · Plan: [PLAN.md](
 - [ ] **Step 1 — AI generation (~10 min)**
 
 ```text
-@sections/05-ai-quiz-app/PLAN.md Implement feature F7 (AI Quiz Generation) as a server-side route at /api/generate:
+@sections/03-ai-quiz-app/PLAN.md Implement feature F7 (AI Quiz Generation) as a server-side route at /api/generate:
 - Accept raw text content and a question count
 - Use @anthropic-ai/sdk with a two-stage pipeline: generate questions, then convert them to structured JSON
 - Validate the output with a Zod schema matching the Question JSON Schema in the plan
@@ -468,7 +472,7 @@ Folder: [sections/05-ai-quiz-app/](sections/05-ai-quiz-app/) · Plan: [PLAN.md](
 - [ ] **Step 2 — Create page (~10 min)**
 
 ```text
-@sections/05-ai-quiz-app/PLAN.md Build the /quiz/create page from Phase 3:
+@sections/03-ai-quiz-app/PLAN.md Build the /quiz/create page from Phase 3:
 - Two tabs: "Upload JSON" and "Generate with AI"
 - Drag-and-drop JSON upload with validation and a collapsible format guide
 - A textarea for content plus a question count selector and a Generate button that calls /api/generate
@@ -479,7 +483,7 @@ Folder: [sections/05-ai-quiz-app/](sections/05-ai-quiz-app/) · Plan: [PLAN.md](
 - [ ] **Step 3 — Quiz player (~10 min)**
 
 ```text
-@sections/05-ai-quiz-app/PLAN.md Upgrade the quiz UI to match Phase 4:
+@sections/03-ai-quiz-app/PLAN.md Upgrade the quiz UI to match Phase 4:
 - One question at a time with "Question X of Y" progress
 - Multiple-choice option cards and an open-ended text input
 - Submit, Skip, Previous, and Next buttons
@@ -491,7 +495,7 @@ Folder: [sections/05-ai-quiz-app/](sections/05-ai-quiz-app/) · Plan: [PLAN.md](
 - [ ] **Step 4 — Results page (~10 min)**
 
 ```text
-@sections/05-ai-quiz-app/PLAN.md Build the results page from Phase 5:
+@sections/03-ai-quiz-app/PLAN.md Build the results page from Phase 5:
 - Score display with percentage, skipped count, and incorrect count
 - Per-question cards with Correct/Incorrect/Skipped badges and checkboxes
 - Select all / deselect all
@@ -499,10 +503,10 @@ Folder: [sections/05-ai-quiz-app/](sections/05-ai-quiz-app/) · Plan: [PLAN.md](
 - Retake Quiz and New Quiz buttons
 ```
 
-- [ ] **Step 5 — Database (~15 min).** This previews Section 08. Keep it light if time is short.
+- [ ] **Step 5 — Database (~15 min).** This previews Section 06. Keep it light if time is short.
 
 ```text
-@sections/05-ai-quiz-app/PLAN.md Persist quizzes and attempts using the schema in the plan:
+@sections/03-ai-quiz-app/PLAN.md Persist quizzes and attempts using the schema in the plan:
 - Save created quizzes to the quizzes table
 - Save each completed attempt to quiz_attempts
 - Add a /dashboard page listing the user's quizzes and recent attempts
@@ -525,9 +529,9 @@ Navigate to http://localhost:3000/quiz/create, generate a quiz from a short para
 
 ---
 
-## Section 06: Testing (Slides 33–36, ~20 min)
+## Section 04: Testing (Slides 38–41, ~20 min)
 
-Folder: [sections/06-testing/](sections/06-testing/) · Demo: [demo-tdd-workflow.md](sections/06-testing/demo-tdd-workflow.md) · Prompts: [prompts.md](sections/06-testing/prompts.md)
+Folder: [sections/04-testing/](sections/04-testing/) · Demo: [demo-tdd-workflow.md](sections/04-testing/demo-tdd-workflow.md) · Prompts: [prompts.md](sections/04-testing/prompts.md)
 
 **Goal:** Run the TDD loop: you write the test, the AI writes the code.
 
@@ -611,7 +615,7 @@ Add tests for edge cases:
 Then update the implementation to pass them.
 ```
 
-- [ ] Show the examples: [unit-test.example.ts](sections/06-testing/test-examples/unit-test.example.ts), [component-test.example.tsx](sections/06-testing/test-examples/component-test.example.tsx), [e2e-test.example.ts](sections/06-testing/test-examples/e2e-test.example.ts)
+- [ ] Show the examples: [unit-test.example.ts](sections/04-testing/test-examples/unit-test.example.ts), [component-test.example.tsx](sections/04-testing/test-examples/component-test.example.tsx), [e2e-test.example.ts](sections/04-testing/test-examples/e2e-test.example.ts)
 - [ ] *(Optional)* Generate an E2E test
 
 ```text
@@ -642,9 +646,9 @@ Suggest the most important tests to add, prioritized by risk.
 
 ---
 
-## Section 07: Diagrams & Design (Slides 37–45, ~30 min)
+## Section 05: Diagrams & Design (Slides 42–50, ~30 min)
 
-Folder: [sections/07-diagrams-design/](sections/07-diagrams-design/) · Demos: [demo-mermaid-diagrams.md](sections/07-diagrams-design/demo-mermaid-diagrams.md), [demo-design-iteration.md](sections/07-diagrams-design/demo-design-iteration.md) · Prompts: [prompts.md](sections/07-diagrams-design/prompts.md)
+Folder: [sections/05-diagrams-design/](sections/05-diagrams-design/) · Demos: [demo-mermaid-diagrams.md](sections/05-diagrams-design/demo-mermaid-diagrams.md), [demo-design-iteration.md](sections/05-diagrams-design/demo-design-iteration.md) · Prompts: [prompts.md](sections/05-diagrams-design/prompts.md)
 
 **Goal:** Generate diagrams from real code, then turn a screenshot into a component.
 
@@ -694,7 +698,7 @@ Update the architecture diagram to also show:
 - MCP connections (Playwright, GitHub)
 ```
 
-- [ ] Show the reference examples: [architecture.md](sections/07-diagrams-design/mermaid-examples/architecture.md), [user-flow.md](sections/07-diagrams-design/mermaid-examples/user-flow.md), [database-erd.md](sections/07-diagrams-design/mermaid-examples/database-erd.md)
+- [ ] Show the reference examples: [architecture.md](sections/05-diagrams-design/mermaid-examples/architecture.md), [user-flow.md](sections/05-diagrams-design/mermaid-examples/user-flow.md), [database-erd.md](sections/05-diagrams-design/mermaid-examples/database-erd.md)
 
 ### Sketch → code (~15 min)
 
@@ -740,13 +744,13 @@ Use our existing design system (Tailwind + shadcn/ui).
 
 ---
 
-## Section 08: Backend, Auth & Payments (Slides 46–53, ~45 min)
+## Section 06: Backend, Auth & Payments (Slides 51–58, ~45 min)
 
-Folder: [sections/08-backend-auth-payments/](sections/08-backend-auth-payments/) · Prompts: [prompts.md](sections/08-backend-auth-payments/prompts.md) · Env vars: [env-vars-reference.md](sections/08-backend-auth-payments/env-vars-reference.md)
+Folder: [sections/06-backend-auth-payments/](sections/06-backend-auth-payments/) · Prompts: [prompts.md](sections/06-backend-auth-payments/prompts.md) · Env vars: [env-vars-reference.md](sections/06-backend-auth-payments/env-vars-reference.md)
 
 **Goal:** Connect the dots McKay's template already has: Supabase + Drizzle, Clerk, Stripe, and Server Actions.
 
-### Supabase + Drizzle (~10 min) · [demo-supabase-drizzle.md](sections/08-backend-auth-payments/demo-supabase-drizzle.md)
+### Supabase + Drizzle (~10 min) · [demo-supabase-drizzle.md](sections/06-backend-auth-payments/demo-supabase-drizzle.md)
 
 - [ ] Copy the connection string from Supabase (Project Settings → Database → URI) into `.env.local`
 
@@ -790,7 +794,7 @@ Create a simple Server Action that inserts a test user
 and then reads them back. Run it to verify the connection works.
 ```
 
-### Clerk auth (~10 min) · [demo-clerk-auth.md](sections/08-backend-auth-payments/demo-clerk-auth.md)
+### Clerk auth (~10 min) · [demo-clerk-auth.md](sections/06-backend-auth-payments/demo-clerk-auth.md)
 
 - [ ] Add the keys to `.env.local`
 
@@ -844,7 +848,7 @@ Use this in the dashboard page to ensure the user exists in our DB.
 
 - [ ] Sign in live to prove it works
 
-### Stripe payments (~15 min) · [demo-stripe-payments.md](sections/08-backend-auth-payments/demo-stripe-payments.md)
+### Stripe payments (~15 min) · [demo-stripe-payments.md](sections/06-backend-auth-payments/demo-stripe-payments.md)
 
 - [ ] Add the keys to `.env.local`
 
@@ -901,7 +905,7 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 
 - [ ] Pay with the test card `4242 4242 4242 4242` (any future expiry and CVC) and show the user flip to premium
 
-### Server Actions (~10 min) · [demo-server-actions.md](sections/08-backend-auth-payments/demo-server-actions.md)
+### Server Actions (~10 min) · [demo-server-actions.md](sections/06-backend-auth-payments/demo-server-actions.md)
 
 - [ ] Build the CRUD actions
 
@@ -973,13 +977,13 @@ List any issues found.
 
 ---
 
-## Section 09: Deployment (Slides 54–62, ~30 min)
+## Section 07: Deployment (Slides 59–67, ~30 min)
 
-Folder: [sections/09-deployment/](sections/09-deployment/) · Demo: [demo-vercel-deploy.md](sections/09-deployment/demo-vercel-deploy.md) · Prompts: [prompts.md](sections/09-deployment/prompts.md) · Checklist: [production-checklist.md](sections/09-deployment/production-checklist.md) · Costs: [cost-breakdown.md](sections/09-deployment/cost-breakdown.md)
+Folder: [sections/07-deployment/](sections/07-deployment/) · Demo: [demo-vercel-deploy.md](sections/07-deployment/demo-vercel-deploy.md) · Prompts: [prompts.md](sections/07-deployment/prompts.md) · Checklist: [production-checklist.md](sections/07-deployment/production-checklist.md) · Costs: [cost-breakdown.md](sections/07-deployment/cost-breakdown.md)
 
 **Goal:** Ship the quiz app to Vercel and show it live.
 
-- [ ] Walk through [production-checklist.md](sections/09-deployment/production-checklist.md)
+- [ ] Walk through [production-checklist.md](sections/07-deployment/production-checklist.md)
 - [ ] Run a pre-deploy check with Cursor
 
 ```text
@@ -1008,7 +1012,7 @@ git push origin main
 ```
 
 - [ ] Go to [vercel.com/new](https://vercel.com/new) and import the repo. Next.js is auto-detected. **Don't deploy yet.**
-- [ ] Add env vars from [env-vars-reference.md](sections/08-backend-auth-payments/env-vars-reference.md). Call out the differences in production:
+- [ ] Add env vars from [env-vars-reference.md](sections/06-backend-auth-payments/env-vars-reference.md). Call out the differences in production:
   - `DATABASE_URL` uses the **pooled** Supabase string (port 6543, not 5432)
   - `NEXT_PUBLIC_APP_URL` is the Vercel URL
   - Clerk uses production keys. Stripe stays on test keys for now.
@@ -1049,8 +1053,8 @@ After deploying to Vercel, create a quick smoke test checklist:
 Format as a numbered checklist I can run through in 5 minutes.
 ```
 
-- [ ] Review [cost-breakdown.md](sections/09-deployment/cost-breakdown.md) (free-tier limits)
-- [ ] For the full test-mode → live-payments path, point students to [prod-guide.md](sections/05-ai-quiz-app/prod-guide.md)
+- [ ] Review [cost-breakdown.md](sections/07-deployment/cost-breakdown.md) (free-tier limits)
+- [ ] For the full test-mode → live-payments path, point students to [prod-guide.md](sections/03-ai-quiz-app/prod-guide.md)
 
 **Talking points**
 - [ ] Vercel is zero-config for Next.js
@@ -1062,11 +1066,11 @@ Format as a numbered checklist I can run through in 5 minutes.
 
 ---
 
-## Section 10: Finishing (~15 min)
+## Section 08: Finishing (~15 min)
 
-Folder: [sections/10-finishing/](sections/10-finishing/) · [resources.md](sections/10-finishing/resources.md) · [troubleshooting.md](sections/10-finishing/troubleshooting.md)
+Folder: [sections/08-finishing/](sections/08-finishing/) · [resources.md](sections/08-finishing/resources.md) · [troubleshooting.md](sections/08-finishing/troubleshooting.md)
 
-- [ ] Quick recap of all 10 sections (2 min)
+- [ ] Quick recap of all 8 sections (2 min)
 - [ ] Key takeaways (3 min):
   - [ ] Cursor multiplies your work. It doesn't replace thinking.
   - [ ] Explore → Plan → Build. Don't skip the first two steps.
@@ -1078,5 +1082,5 @@ Folder: [sections/10-finishing/](sections/10-finishing/) · [resources.md](secti
   - [ ] Full stack is achievable: Supabase + Clerk + Stripe + Vercel
   - [ ] Git discipline is non-negotiable
   - [ ] Try 5 times before giving up
-- [ ] Share [resources.md](sections/10-finishing/resources.md) (5 min)
-- [ ] Q&A (5 min). Keep [troubleshooting.md](sections/10-finishing/troubleshooting.md) open.
+- [ ] Share [resources.md](sections/08-finishing/resources.md) (5 min)
+- [ ] Q&A (5 min). Keep [troubleshooting.md](sections/08-finishing/troubleshooting.md) open.
