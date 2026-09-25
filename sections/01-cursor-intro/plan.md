@@ -14,10 +14,7 @@ Pure html file (javascript + css should be bundled inside).
 # Concerns/Constraints
 File types it accepts: .jpg, .png, .jpeg, .heic, .webp, pretty much anything that's an image.
 
-# NOtes during iteration
+# Notes during iteration
 
 - Extra features we wanted like: dark mode...
 - UX: more dynamic interface for moving images around and placing them in the pdf layout
-
-
-
