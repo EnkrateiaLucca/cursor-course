@@ -36,11 +36,11 @@ Run-of-show checklist for the 6-hour Cursor course. Tick boxes as you go. Every 
 
 Folder: [sections/01-cursor-intro/](sections/01-cursor-intro/) · Demo: [demo-toy-app.md](sections/01-cursor-intro/demo-toy-app.md) · Prompts: [prompts.md](sections/01-cursor-intro/prompts.md)
 
-**Goal:** Show Agent modes (Agent / Ask / Plan / Debug), Inline Edit, and Tab on a single HTML file.
+**Goal:** Show Agent modes (Agent / Ask / Plan / Debug via Shift+Tab), Inline Edit (`Cmd+K`), and Tab on a single HTML file.
 
-- [ ] Tour the Cursor interface: panels, Chat (`Cmd+L`), Agent mode
+- [ ] Tour the Cursor interface: Agent panel (`Cmd+I` / `Ctrl+I`), mode picker (`Shift+Tab`)
 - [ ] Open an empty folder and create `toy-app.html`
-- [ ] **Chat:** generate the app. Point out the Apply button and the diff view.
+- [ ] **Agent** (or Ask → Agent): generate the app. Point out the Apply button and the diff view.
 
 ```text
 Create a single-file HTML page with embedded CSS and JS that has:
@@ -64,7 +64,7 @@ Add hover effects with scale transform and smooth transitions
 ```
 
 - [ ] **Tab:** start typing a new `<div>` below the content, pause, and accept multi-line suggestions with Tab
-- [ ] **Agent** (`Cmd+I`): show it plan and then edit multiple parts of the file
+- [ ] **Plan** then **Agent** (`Cmd+I`): approve an approach, then let Agent edit multiple parts of the file
 
 ```text
 Add a dark mode toggle button to this page:
@@ -85,7 +85,7 @@ Add a simple to-do list below the counter:
 ```
 
 - [ ] Open the file in the browser and toggle dark mode to prove it works
-- [ ] **Chat:** ask it to explain the code
+- [ ] **Ask** mode: ask it to explain the code (read-only — no edits)
 
 ```text
 Explain how this HTML page works. Break it down section by section:
@@ -95,137 +95,16 @@ Explain how this HTML page works. Break it down section by section:
 ```
 
 - [ ] *(Optional)* Show the larger example: [plan.md](sections/01-cursor-intro/plan.md) → [image-pdf-layout.html](sections/01-cursor-intro/image-pdf-layout.html) → Next.js version in [image-pdf-app/](sections/01-cursor-intro/image-pdf-app/)
-- [ ] Discuss when to use each mode
+- [ ] Discuss when to use each mode: Agent / Ask / Plan / Debug, plus Inline Edit and Tab
 
 **Talking points**
 - [ ] Cursor is AI-first, not AI-bolted-on
-- [ ] Each mode fits a different job: quick edits, multi-file changes, exploration
+- [ ] Cycle Agent panel modes with Shift+Tab; Inline Edit is Cmd/Ctrl+K; Tab is predictive
+- [ ] Each surface fits a different job: explore (Ask), approve (Plan), build (Agent), evidence (Debug)
 - [ ] The "try 5 times" rule: if a prompt fails, rephrase and retry
 - [ ] Commit to git often. Cursor checkpoints are not a replacement for git.
 
-**Fallback:** If the demo breaks, simplify to a counter or to-do app. The point is to show all four modes.
-
-**⏱ BREAK (~10 min)**
-
----
-
-## Section 02: Explore-Plan-Build (Slides 7–11, ~45 min)
-
-Folder: [sections/02-explore-plan-build/](sections/02-explore-plan-build/) · Demo: [demo-simple-quiz.md](sections/02-explore-plan-build/demo-simple-quiz.md) · Prompts: [prompts.md](sections/02-explore-plan-build/prompts.md) · Template: [context-file-template.md](sections/02-explore-plan-build/context-file-template.md)
-
-**Goal:** Build a hardcoded quiz page (no AI) on McKay's template using Explore → Plan → Build.
-
-### Explore (~5 min)
-
-- [ ] Switch to Window 2 (McKay's template)
-- [ ] Ask about the overall architecture
-
-```text
-@codebase What is the overall architecture of this project?
-What framework does it use, and how are files organized?
-```
-
-- [ ] Ask about routing
-
-```text
-@codebase Where is the main layout defined? How does routing work?
-```
-
-- [ ] Demo `@file`
-
-```text
-@app/page.tsx Explain what this page does and how it's structured.
-```
-
-- [ ] Demo `@folder`
-
-```text
-@components/ What components exist in this folder? Give me a summary of each.
-```
-
-- [ ] Demo `@codebase` semantic search
-
-```text
-@codebase Where is authentication handled in this project?
-```
-
-- [ ] Demo `@docs`
-
-```text
-@docs How do I create a new page in Next.js App Router?
-```
-
-- [ ] Demo `@web`
-
-```text
-@web What are the latest best practices for Next.js Server Actions?
-```
-
-### Plan (~5 min)
-
-- [ ] Walk through [context-file-template.md](sections/02-explore-plan-build/context-file-template.md) and explain it as the project's "north star"
-- [ ] *(Two-stage workflow)* Show how a planning tool produces a full plan. Result: [PLAN.md](sections/02-explore-plan-build/PLAN.md)
-
-```text
-I want to create a quiz app where students can upload a structured file like a .json or a markdown file and do an interactive quiz on the browser. I want to use the template from this repo I like: https://github.com/mckaywrigley/mckays-app-template right now your output should be a PLAN.md file with the planning structure for the full app following the structure inside @sections/02-explore-plan-build/context-file-template.md
-```
-
-- [ ] Ask Cursor to plan the quiz page without writing code, then review the plan
-
-```text
-@codebase I want to add a simple quiz page to this app.
-
-The quiz should:
-- Show one question at a time with 4 multiple-choice answers
-- Track score as the user progresses
-- Show results at the end
-- Use hardcoded questions (no AI, no API)
-
-Create a step-by-step plan. Don't write code yet — just outline the files to create/modify.
-```
-
-### Build (~20 min)
-
-- [ ] **Agent:** implement the plan
-
-```text
-Now implement the quiz page following the plan above.
-Use the existing UI components and styling patterns from this project.
-Hardcode 5 sample questions about web development.
-```
-
-- [ ] Run `pnpm dev`, open the quiz page, and click through the whole flow
-- [ ] Fix anything visual with `Cmd+K`
-- [ ] Add navigation
-
-```text
-Add a link to the quiz page in the main navigation/homepage so users can find it.
-```
-
-- [ ] *(Optional polish)* Add a progress bar
-
-```text
-@app/quiz/page.tsx Add a progress bar showing which question
-the user is on (e.g., "Question 3 of 5").
-Use the existing design system.
-```
-
-- [ ] *(Optional polish)* Improve the results screen
-
-```text
-@app/quiz/page.tsx The results screen should show which questions
-were answered correctly vs incorrectly, with the correct answers revealed.
-```
-
-- [ ] Commit to git
-
-**Talking points**
-- [ ] Don't jump straight to code: explore, plan, then build
-- [ ] `@file` is for precision, `@codebase` is for discovery
-- [ ] A context file saves you from repeating yourself in every prompt
-- [ ] Two-stage workflow: ChatGPT/Claude for planning, Cursor for implementation
-- [ ] More context is not always better. Curate what the AI sees.
-- [ ] Tease the next step: Section 03 adds AI question generation
+**Fallback:** If the demo breaks, simplify to a counter or to-do app. The point is to show Agent / Ask / Plan / Debug plus Inline Edit and Tab.
 
 ---
 
@@ -378,7 +257,7 @@ Folder: [sections/01-cursor-intro/mcp-and-tooling/](sections/01-cursor-intro/mcp
 }
 ```
 
-- [ ] Run `pnpm dev` and confirm `http://localhost:3000` loads
+- [ ] Run `pnpm dev` (McKay's template) or open the Section 01 toy HTML in a browser and confirm it loads
 - [ ] **Agent:** take a screenshot. Point out that the AI is seeing the actual running app.
 
 ```text
@@ -386,27 +265,21 @@ Navigate to http://localhost:3000 and take a screenshot.
 Describe the current state of the page — layout, content, and any obvious issues.
 ```
 
-- [ ] **Agent:** click through the quiz like a user would
+- [ ] **Agent:** interact with the page like a user would (homepage / nav is enough before the quiz exists)
 
 ```text
-Navigate to http://localhost:3000/quiz and complete the entire quiz flow:
-1. Answer each question (pick any answer)
-2. Submit and move to the next question
-3. At the end, screenshot the results page
-
-Report:
-- Did all navigation work correctly?
-- Were there any visual glitches or layout issues?
-- Did the score calculate correctly?
+Navigate to http://localhost:3000 and click through the main navigation:
+1. Visit each primary link from the homepage
+2. Screenshot any broken layouts or empty states
+3. Report visual glitches and whether links resolve correctly
 ```
 
 - [ ] **Agent:** fix and verify. This closes the loop: see the app, find the bug, fix the code, check it visually.
 
 ```text
-Fix the issues you found on the quiz page.
+Fix the issues you found.
 After fixing, navigate back and verify the fix works.
 ```
-
 - [ ] Show the other configs: [github.json](sections/01-cursor-intro/mcp-and-tooling/mcp-config-examples/github.json) and [gitmcp.json](sections/01-cursor-intro/mcp-and-tooling/mcp-config-examples/gitmcp.json)
 - [ ] *(Optional)* GitHub MCP demo
 
@@ -443,6 +316,127 @@ Create the .cursor/mcp.json file with all three servers.
 **Fallback:** If MCP setup fails live, show the config and explain the concept. Have a pre-recorded clip ready.
 
 **⏱ BREAK (~10 min)**
+
+---
+
+## Section 02: Explore-Plan-Build (Slides 22–26, ~45 min)
+
+Folder: [sections/02-explore-plan-build/](sections/02-explore-plan-build/) · Demo: [demo-simple-quiz.md](sections/02-explore-plan-build/demo-simple-quiz.md) · Prompts: [prompts.md](sections/02-explore-plan-build/prompts.md) · Template: [context-file-template.md](sections/02-explore-plan-build/context-file-template.md)
+
+**Goal:** Build a hardcoded quiz page (no AI) on McKay's template using Explore → Plan → Build.
+
+### Explore (~5 min)
+
+- [ ] Switch to Window 2 (McKay's template)
+- [ ] Ask about the overall architecture
+
+```text
+@codebase What is the overall architecture of this project?
+What framework does it use, and how are files organized?
+```
+
+- [ ] Ask about routing
+
+```text
+@codebase Where is the main layout defined? How does routing work?
+```
+
+- [ ] Demo `@file`
+
+```text
+@app/page.tsx Explain what this page does and how it's structured.
+```
+
+- [ ] Demo `@folder`
+
+```text
+@components/ What components exist in this folder? Give me a summary of each.
+```
+
+- [ ] Demo `@codebase` semantic search
+
+```text
+@codebase Where is authentication handled in this project?
+```
+
+- [ ] Demo `@docs`
+
+```text
+@docs How do I create a new page in Next.js App Router?
+```
+
+- [ ] Demo `@web`
+
+```text
+@web What are the latest best practices for Next.js Server Actions?
+```
+
+### Plan (~5 min)
+
+- [ ] Walk through [context-file-template.md](sections/02-explore-plan-build/context-file-template.md) and explain it as the project's "north star"
+- [ ] *(Two-stage workflow)* Show how a planning tool produces a full plan. Result: [PLAN.md](sections/02-explore-plan-build/PLAN.md)
+
+```text
+I want to create a quiz app where students can upload a structured file like a .json or a markdown file and do an interactive quiz on the browser. I want to use the template from this repo I like: https://github.com/mckaywrigley/mckays-app-template right now your output should be a PLAN.md file with the planning structure for the full app following the structure inside @sections/02-explore-plan-build/context-file-template.md
+```
+
+- [ ] Ask Cursor to plan the quiz page without writing code, then review the plan
+
+```text
+@codebase I want to add a simple quiz page to this app.
+
+The quiz should:
+- Show one question at a time with 4 multiple-choice answers
+- Track score as the user progresses
+- Show results at the end
+- Use hardcoded questions (no AI, no API)
+
+Create a step-by-step plan. Don't write code yet — just outline the files to create/modify.
+```
+
+### Build (~20 min)
+
+- [ ] **Agent:** implement the plan
+
+```text
+Now implement the quiz page following the plan above.
+Use the existing UI components and styling patterns from this project.
+Hardcode 5 sample questions about web development.
+```
+
+- [ ] Run `pnpm dev`, open the quiz page, and click through the whole flow
+- [ ] Fix anything visual with `Cmd+K`
+- [ ] Add navigation
+
+```text
+Add a link to the quiz page in the main navigation/homepage so users can find it.
+```
+
+- [ ] *(Optional polish)* Add a progress bar
+
+```text
+@app/quiz/page.tsx Add a progress bar showing which question
+the user is on (e.g., "Question 3 of 5").
+Use the existing design system.
+```
+
+- [ ] *(Optional polish)* Improve the results screen
+
+```text
+@app/quiz/page.tsx The results screen should show which questions
+were answered correctly vs incorrectly, with the correct answers revealed.
+```
+
+- [ ] Commit to git
+
+**Talking points**
+- [ ] Don't jump straight to code: explore, plan, then build
+- [ ] `@file` is for precision, `@codebase` is for discovery
+- [ ] A context file saves you from repeating yourself in every prompt
+- [ ] Two-stage workflow: ChatGPT/Claude for planning, Cursor for implementation
+- [ ] More context is not always better. Curate what the AI sees.
+- [ ] Ask / Plan modes from Section 01 reinforce the middle of this loop
+- [ ] Tease the next step: Section 03 adds AI question generation
 
 ---
 

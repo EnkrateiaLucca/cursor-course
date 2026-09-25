@@ -1,15 +1,34 @@
 # Presentation Scripts & Speaker Notes
 
-> 8 sections | 62 slides | ~6 hours total (Section 01 now includes Rules + MCP)
+> 8 sections | ~57 slides in the current deck | ~6 hours total (Section 01 now includes Rules + MCP)
 > Each section links to its folder in `sections/` for demo files and prompts.
+>
+> **Slide ranges below are approximate run-of-show anchors** — the deck (`presentation.html`) has not been fully renumbered to the 8-section arc; use section folders as the source of truth for demos.
+
+---
+
+## Timing table
+
+| # | Section | Folder | Slides (approx.) | Time | Break after |
+|---|---------|--------|------------------|------|-------------|
+| 01 | Cursor Intro (modes + rules + MCP) | [`sections/01-cursor-intro/`](../sections/01-cursor-intro/) | 1–21 | ~95 min | Yes |
+| 02 | Explore-Plan-Build | [`sections/02-explore-plan-build/`](../sections/02-explore-plan-build/) | 22–26 | ~45 min | |
+| 03 | AI Quiz App | [`sections/03-ai-quiz-app/`](../sections/03-ai-quiz-app/) | 27–37 | ~60 min | Yes |
+| 04 | Testing | [`sections/04-testing/`](../sections/04-testing/) | 38–41 | ~20 min | |
+| 05 | Diagrams & Design | [`sections/05-diagrams-design/`](../sections/05-diagrams-design/) | 42–50 | ~30 min | Yes |
+| 06 | Backend, Auth & Payments | [`sections/06-backend-auth-payments/`](../sections/06-backend-auth-payments/) | 51–58 | ~45 min | Yes |
+| 07 | Deployment | [`sections/07-deployment/`](../sections/07-deployment/) | 59– | ~30 min | |
+| 08 | Finishing | [`sections/08-finishing/`](../sections/08-finishing/) | — | ~15 min | |
 
 ---
 
 ## Section 01: Cursor Intro (Slides 1–21, ~95 min)
 
-### Part A — Interface & modes (Slides 1–6)
+**Arc:** What Cursor is → how you interact with it → how you customize it → how you extend it.
 
 **[Section folder →](../sections/01-cursor-intro/)**
+
+### Part A — Interface & modes (Slides 1–6, ~45 min)
 
 ### Slide 1: Title / Welcome
 
@@ -57,65 +76,6 @@ Docs: [Agent](https://cursor.com/help/ai-features/agent) · [Inline Edit](https:
 - **Try 5 times rule:** If a prompt fails, rephrase and retry — don't give up after one attempt
 - **Git is non-negotiable:** Commit after each working milestone. Cursor checkpoints are not a replacement.
 - **One task = one chat:** Start fresh chats to maintain narrative integrity
-
-**⏱ BREAK / RECAP** (~5 min)
-
----
-
-## Section 02: Explore-Plan-Build (Slides 7–11, ~45 min)
-
-**[Section folder →](../sections/02-explore-plan-build/)**
-
-### Slide 7: The Framework
-
-```
-EXPLORE → PLAN → BUILD
-```
-
-- **Explore:** Share context, discuss options, identify relevant files
-- **Plan:** Create step-by-step plans, break down complex tasks
-- **Build:** Execute iteratively, review each step, commit regularly
-
-"Don't jump straight to code. The best AI-assisted developers spend more time exploring and planning than building."
-
-### Slide 8: The @ Symbol — Context Navigator
-
-**Live demo:** Open McKay's template in Cursor and demonstrate each:
-
-| Symbol | Example | Purpose |
-|--------|---------|---------|
-| @file | `@app/page.tsx` | Reference specific file |
-| @folder | `@components/` | Reference directory |
-| @codebase | `@codebase "auth logic"` | Semantic search |
-| @docs | `@docs "React hooks"` | Query documentation |
-| @web | `@web "Next.js 15 changes"` | Web search |
-
-**→ Use prompts from [prompts.md](../sections/02-explore-plan-build/prompts.md)**
-
-### Slide 9: Context Files
-
-Walk through the [context-file-template.md](../sections/02-explore-plan-build/context-file-template.md):
-- Problem statement, users, features, tech stack, schema
-- This becomes your project's "north star"
-- Reference it in every prompt: `@context.md`
-
-### Slide 10: Two-Stage Workflow
-
-1. **Stage 1 (Planning):** Use ChatGPT or Claude to brainstorm and structure
-2. **Stage 2 (Building):** Bring the plan to Cursor for implementation
-
-"Use the right tool for the right phase. ChatGPT for thinking, Cursor for building."
-
-### Slide 11: Demo — Build Simple Quiz
-
-**→ Follow [demo-simple-quiz.md](../sections/02-explore-plan-build/demo-simple-quiz.md)**
-
-1. Explore McKay's template structure with @codebase
-2. Plan the quiz page (ask Cursor to plan, not build)
-3. Build the quiz with Agent mode (hardcoded questions)
-4. Show the working quiz in the browser
-
-**Timing:** ~25 min for demo
 
 ---
 
@@ -188,9 +148,9 @@ Show the configuration format — `.cursor/mcp.json`:
 **→ Follow [demo-playwright-mcp.md](../sections/01-cursor-intro/mcp-and-tooling/demo-playwright-mcp.md)**
 
 1. Configure Playwright MCP
-2. AI navigates to the running app
+2. AI navigates to the running app (toy HTML or McKay's template)
 3. AI screenshots and describes the page
-4. AI tests the quiz flow interactively
+4. AI tests a simple flow interactively
 5. AI finds and fixes visual bugs
 
 ### Slide 20: GitMCP & GitHub MCP
@@ -207,7 +167,68 @@ Show the configuration format — `.cursor/mcp.json`:
 - Claude Code: Infrastructure, scripts, CI/CD, terminal work
 - They complement each other — use both
 
-**⏱ BREAK** (~10 min)
+**⏱ BREAK / RECAP** (~10 min)
+
+---
+
+## Section 02: Explore-Plan-Build (Slides 22–26, ~45 min)
+
+**[Section folder →](../sections/02-explore-plan-build/)**
+
+### Slide 22: The Framework
+
+```
+EXPLORE → PLAN → BUILD
+```
+
+- **Explore:** Share context, discuss options, identify relevant files
+- **Plan:** Create step-by-step plans, break down complex tasks
+- **Build:** Execute iteratively, review each step, commit regularly
+
+"Don't jump straight to code. The best AI-assisted developers spend more time exploring and planning than building."
+
+Ask / Plan modes from Section 01 reinforce the middle of this loop.
+
+### Slide 23: The @ Symbol — Context Navigator
+
+**Live demo:** Open McKay's template in Cursor and demonstrate each:
+
+| Symbol | Example | Purpose |
+|--------|---------|---------|
+| @file | `@app/page.tsx` | Reference specific file |
+| @folder | `@components/` | Reference directory |
+| @codebase | `@codebase "auth logic"` | Semantic search |
+| @docs | `@docs "React hooks"` | Query documentation |
+| @web | `@web "Next.js 15 changes"` | Web search |
+
+**→ Use prompts from [prompts.md](../sections/02-explore-plan-build/prompts.md)**
+
+### Slide 24: Context Files
+
+Walk through the [context-file-template.md](../sections/02-explore-plan-build/context-file-template.md):
+- Problem statement, users, features, tech stack, schema
+- This becomes your project's "north star"
+- Reference it in every prompt: `@context.md`
+
+### Slide 25: Two-Stage Workflow
+
+1. **Stage 1 (Planning):** Use ChatGPT or Claude to brainstorm and structure
+2. **Stage 2 (Building):** Bring the plan to Cursor for implementation
+
+"Use the right tool for the right phase. ChatGPT for thinking, Cursor for building."
+
+### Slide 26: Demo — Build Simple Quiz
+
+**→ Follow [demo-simple-quiz.md](../sections/02-explore-plan-build/demo-simple-quiz.md)**
+
+1. Explore McKay's template structure with @codebase
+2. Plan the quiz page (ask Cursor to plan, not build)
+3. Build the quiz with Agent mode (hardcoded questions)
+4. Show the working quiz in the browser
+
+**Timing:** ~25 min for demo
+
+**Tease:** In Section 03 we'll add AI-powered question generation.
 
 ---
 
@@ -215,17 +236,17 @@ Show the configuration format — `.cursor/mcp.json`:
 
 **[Section folder →](../sections/03-ai-quiz-app/)**
 
-### Slide 22: Section Overview
+### Slide 27: Section Overview
 
 "This is the main build section. We're taking the simple quiz from Section 02 and adding AI-powered question generation."
 
-### Slide 23: The Context File
+### Slide 28: The Context File
 
 **→ Show [context-file.md](../sections/03-ai-quiz-app/context-file.md)**
 
 Walk through the filled-in context file. This drives the entire build.
 
-### Slide 24: Hierarchy of Leverage
+### Slide 29: Hierarchy of Leverage
 
 **→ Reference [hierarchy-of-leverage.md](../sections/03-ai-quiz-app/hierarchy-of-leverage.md)**
 
@@ -235,7 +256,7 @@ Rules > Context > Prompts > Model
 
 "Before blaming the AI, check: Do I have rules? Did I give good context? Was my prompt specific?"
 
-### Slides 25-32: Live Build
+### Slides 30–37: Live Build
 
 **→ Follow [demo-build-steps.md](../sections/03-ai-quiz-app/demo-build-steps.md)**
 
@@ -258,7 +279,7 @@ Rules > Context > Prompts > Model
 
 **[Section folder →](../sections/04-testing/)**
 
-### Slide 33: Testing Pyramid
+### Slide 38: Testing Pyramid
 
 ```
          ╱  E2E  ╲        ← Few, slow, high confidence
@@ -266,7 +287,7 @@ Rules > Context > Prompts > Model
        ╱    Unit    ╲     ← Many, fast, focused
 ```
 
-### Slide 34-35: Demo — TDD with Cursor
+### Slide 39–40: Demo — TDD with Cursor
 
 **→ Follow [demo-tdd-workflow.md](../sections/04-testing/demo-tdd-workflow.md)**
 
@@ -277,7 +298,7 @@ Rules > Context > Prompts > Model
 
 "You control the WHAT (tests), AI handles the HOW (implementation)."
 
-### Slide 36: Test Examples
+### Slide 41: Test Examples
 
 Show examples from [test-examples/](../sections/04-testing/test-examples/):
 - Unit test for quiz utilities
@@ -290,7 +311,7 @@ Show examples from [test-examples/](../sections/04-testing/test-examples/):
 
 **[Section folder →](../sections/05-diagrams-design/)**
 
-### Slide 37-39: Mermaid Diagrams
+### Slide 42–44: Mermaid Diagrams
 
 **→ Follow [demo-mermaid-diagrams.md](../sections/05-diagrams-design/demo-mermaid-diagrams.md)**
 
@@ -299,7 +320,7 @@ Show examples from [test-examples/](../sections/04-testing/test-examples/):
 3. Generate database ERD
 4. Show examples from [mermaid-examples/](../sections/05-diagrams-design/mermaid-examples/)
 
-### Slide 40-43: Design → Code Workflow
+### Slide 45–48: Design → Code Workflow
 
 **→ Follow [demo-design-iteration.md](../sections/05-diagrams-design/demo-design-iteration.md)**
 
@@ -307,7 +328,7 @@ Show examples from [test-examples/](../sections/04-testing/test-examples/):
 2. Iterate: "make spacing larger", "add animation"
 3. Discuss Figma MCP (advanced)
 
-### Slide 44-45: Design Iteration
+### Slide 49–50: Design Iteration
 
 Show the feedback loop:
 ```
@@ -324,7 +345,7 @@ Design reference → AI generates code → Preview → Feedback → Iterate
 
 **[Section folder →](../sections/06-backend-auth-payments/)**
 
-### Slide 46: Backend Architecture
+### Slide 51: Backend Architecture
 
 Overview of the full stack:
 - Supabase (PostgreSQL) + Drizzle ORM
@@ -332,25 +353,25 @@ Overview of the full stack:
 - Stripe payments
 - Next.js Server Actions
 
-### Slide 47-48: Supabase + Drizzle
+### Slide 52–53: Supabase + Drizzle
 
 **→ Follow [demo-supabase-drizzle.md](../sections/06-backend-auth-payments/demo-supabase-drizzle.md)**
 
 ~10 min: Schema definition, Drizzle config, push to database
 
-### Slide 49-50: Clerk Auth
+### Slide 54–55: Clerk Auth
 
 **→ Follow [demo-clerk-auth.md](../sections/06-backend-auth-payments/demo-clerk-auth.md)**
 
 ~10 min: Middleware, sign-in UI, route protection
 
-### Slide 51-52: Stripe Payments
+### Slide 56–57: Stripe Payments
 
 **→ Follow [demo-stripe-payments.md](../sections/06-backend-auth-payments/demo-stripe-payments.md)**
 
 ~15 min: Checkout, webhooks, premium tiers
 
-### Slide 53: Server Actions Pattern
+### Slide 58: Server Actions Pattern
 
 **→ Follow [demo-server-actions.md](../sections/06-backend-auth-payments/demo-server-actions.md)**
 
@@ -362,17 +383,17 @@ Overview of the full stack:
 
 ---
 
-## Section 07: Deployment (Slides 59–67, ~30 min)
+## Section 07: Deployment (Slides 59–, ~30 min)
 
 **[Section folder →](../sections/07-deployment/)**
 
-### Slide 54-56: Production Readiness
+### Slide 59–61: Production Readiness
 
 **→ Walk through [production-checklist.md](../sections/07-deployment/production-checklist.md)**
 
 Key checks: build passes, env vars set, RLS enabled, auth configured
 
-### Slide 57-60: Deploy to Vercel
+### Slide 62–64: Deploy to Vercel
 
 **→ Follow [demo-vercel-deploy.md](../sections/07-deployment/demo-vercel-deploy.md)**
 
@@ -381,13 +402,13 @@ Key checks: build passes, env vars set, RLS enabled, auth configured
 3. Configure env vars
 4. Deploy and verify
 
-### Slide 61: Cost Breakdown
+### Slide 65: Cost Breakdown
 
 **→ Reference [cost-breakdown.md](../sections/07-deployment/cost-breakdown.md)**
 
 "Free tier gets you surprisingly far. Most side projects never need to upgrade."
 
-### Slide 62: The Full Stack
+### Slide 66: The Full Stack
 
 Show the complete architecture:
 ```
@@ -432,15 +453,20 @@ Open floor for questions. (~5 min)
 
 ### Before the Session
 - [ ] McKay's template cloned and running locally
-- [ ] All API keys tested and working
 - [ ] Cursor signed in with Pro account
-- [ ] MCP servers configured and verified
-- [ ] Browser tabs ready: presentation.html, localhost:3000
 - [ ] Two Cursor windows: course repo + demo project
+- [ ] Browser tabs ready: `presentation/presentation.html`, localhost:3000
+- [ ] GitHub PAT ready (Section 01 — MCP / GitHub MCP)
+- [ ] Anthropic API key ready (Section 03)
+- [ ] Vitest (and Playwright) installed in the demo project (Section 04)
+- [ ] Mermaid preview extension installed, or [mermaid.live](https://mermaid.live) open (Section 05)
+- [ ] Supabase project, Clerk app, and Stripe test-mode keys at hand (Section 06)
+- [ ] Vercel account connected to GitHub (Section 07)
+- [ ] MCP servers configured and verified (Playwright at minimum)
 
 ### Emergency Fallbacks
 - If MCP fails: Show config and explain conceptually
 - If API keys fail: Use hardcoded data and explain the AI integration
 - If build fails: Debug live (this is actually a great teaching moment)
 - If ahead of schedule: Extra Q&A, deeper dives on any section
-- If behind schedule: Abbreviate sections 07 and 09, prioritize 05 and 08
+- If behind schedule: Abbreviate sections 06 and 07, prioritize 03 and the live build
